@@ -1,4 +1,4 @@
-import 'package:clinic/features/home/presentation/pages/splash.dart';
+import 'package:clinic/features/welcome/presentation/pages/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -15,8 +15,11 @@ class CliniApp extends StatelessWidget {
       designSize: const Size(393, 852),
       builder: (context, child) => const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          body: SplashScreen(),
+        home: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Scaffold(
+            body: SplashScreen(),
+          ),
         ),
       ),
     );

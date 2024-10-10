@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/core/util/functions/navigator.dart';
-import 'package:clinic/features/home/presentation/pages/home_page.dart';
+import 'package:clinic/features/welcome/presentation/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -11,7 +11,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Timer(const Duration(seconds: 3), () async {
-      await Navigator.of(context).push(MaterialPageRoute(
+      await Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (context) => const WelcomePage(),
       ));
     });
