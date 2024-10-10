@@ -10,71 +10,80 @@ class LoginPageBody extends StatelessWidget {
       {super.key,
       required this.hint1,
       required this.hint2,
-      required this.onTap});
+      required this.nextonTap,
+      required this.allredyAccount,
+      required this.signUp,
+      required this.signUponTap});
   final String hint1;
   final String hint2;
-  final void Function()? onTap;
+
+  final String allredyAccount;
+  final String signUp;
+  final void Function()? nextonTap;
+  final void Function()? signUponTap;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.only(top: 42.h),
-          child: CustomTextField(
-            hint: hint1,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(top: 42.h),
+            child: CustomTextField(
+              hint: hint1,
+            ),
           ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(top: 24.h),
-          child: CustomTextField(
-            hint: hint2,
+          Padding(
+            padding: EdgeInsets.only(top: 24.h),
+            child: CustomTextField(
+              hint: hint2,
+            ),
           ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(right: 15.w),
-          child: CustomBotton(
-              textColor: Colors.white,
-              bottonColor: Colors.green,
-              text: "التالي",
-              topSpace: 174.h,
-              onTap: onTap),
-        ),
-        Padding(
-          padding: EdgeInsets.only(top: 45.h, left: 10.w, right: 10.w),
-          child: const CustomDivider(),
-        ),
-        Padding(
-          padding: EdgeInsets.only(top: 36.h),
-          child: const GoogleButton(),
-        ),
-        Padding(
-          padding: EdgeInsets.only(top: 54.h),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              InkWell(
-                onTap: () {},
-                child: Text(
-                  "سجل دخول",
+          Padding(
+            padding: EdgeInsets.only(right: 15.w),
+            child: CustomBotton(
+                textColor: Colors.white,
+                bottonColor: Colors.green,
+                text: "التالي",
+                topSpace: 174.h,
+                onTap: nextonTap),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 45.h, left: 10.w, right: 10.w),
+            child: const CustomDivider(),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 36.h),
+            child: const GoogleButton(),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 54.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InkWell(
+                  onTap: signUponTap,
+                  child: Text(
+                    signUp,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: "Cairo",
+                        fontSize: 11.sp,
+                        fontWeight: FontWeight.w400),
+                  ),
+                ),
+                Text(
+                  allredyAccount,
                   style: TextStyle(
-                      color: Colors.black,
+                      color: Colors.black45,
                       fontFamily: "Cairo",
                       fontSize: 11.sp,
                       fontWeight: FontWeight.w400),
                 ),
-              ),
-              Text(
-                "لديك حساب الفعل ؟ ",
-                style: TextStyle(
-                    color: Colors.black45,
-                    fontFamily: "Cairo",
-                    fontSize: 11.sp,
-                    fontWeight: FontWeight.w400),
-              ),
-            ],
-          ),
-        )
-      ],
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

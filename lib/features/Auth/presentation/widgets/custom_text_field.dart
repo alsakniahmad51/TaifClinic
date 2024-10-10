@@ -7,6 +7,7 @@ class CustomTextField extends StatelessWidget {
     required this.hint,
   });
   final String hint;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -17,16 +18,20 @@ class CustomTextField extends StatelessWidget {
           decoration: InputDecoration(
             focusedBorder: outlineBorder(),
             hintText: hint,
-            hintStyle: TextStyle(
-                color: Colors.black,
-                fontFamily: "Cairo",
-                fontSize: 17.sp,
-                fontWeight: FontWeight.w400),
+            hintStyle: textStyle(),
             border: outlineBorder(),
           ),
         ),
       ),
     );
+  }
+
+  TextStyle textStyle() {
+    return TextStyle(
+        color: Colors.black,
+        fontFamily: "Cairo",
+        fontSize: 17.sp,
+        fontWeight: FontWeight.w400);
   }
 
   OutlineInputBorder outlineBorder() {

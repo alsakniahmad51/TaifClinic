@@ -1,5 +1,6 @@
 import 'package:clinic/core/util/functions/navigator.dart';
 import 'package:clinic/features/Auth/presentation/login_page_body.dart';
+import 'package:clinic/features/Auth/presentation/pages/login_page.dart';
 import 'package:clinic/features/Auth/presentation/pages/sign_up_page2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,9 +25,14 @@ class SignUpPage1 extends StatelessWidget {
         body: LoginPageBody(
           hint1: "الاسم الأول",
           hint2: "الاسم الثاني",
-          onTap: () {
+          signUponTap: () {
+            Moving.navToPage(context: context, page: LoginPage());
+          },
+          signUp: "سجل دخول",
+          nextonTap: () {
             Moving.navToPage(context: context, page: const SignUpPage2());
           },
+          allredyAccount: 'لديك حساب بالفعل؟',
         ));
   }
 }
