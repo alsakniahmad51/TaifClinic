@@ -1,3 +1,6 @@
+import 'package:clinic/core/util/functions/navigator.dart';
+import 'package:clinic/core/util/text_style.dart';
+import 'package:clinic/features/Auth/presentation/pages/forget_password.dart';
 import 'package:clinic/features/Auth/presentation/widgets/custom_divider.dart';
 import 'package:clinic/features/Auth/presentation/widgets/custom_text_field.dart';
 import 'package:clinic/features/Auth/presentation/widgets/google_button.dart';
@@ -13,10 +16,11 @@ class LoginPageBody extends StatelessWidget {
       required this.nextonTap,
       required this.allredyAccount,
       required this.signUp,
-      required this.signUponTap});
+      required this.signUponTap,
+      required this.forgetPassWord});
   final String hint1;
   final String hint2;
-
+  final String forgetPassWord;
   final String allredyAccount;
   final String signUp;
   final void Function()? nextonTap;
@@ -39,12 +43,29 @@ class LoginPageBody extends StatelessWidget {
             ),
           ),
           Padding(
+            padding: EdgeInsets.only(
+                top: 10.h, right: MediaQuery.of(context).size.width / 1.72),
+            child: InkWell(
+              onTap: () {
+                Moving.navToPage(
+                    context: context, page: const ForgetPassword());
+              },
+              child: Text(
+                forgetPassWord,
+                style: MyTextStyle.textStyle(
+                    fontSize: 15,
+                    color: const Color(0xff898A8F),
+                    fontWeight: FontWeight.w400),
+              ),
+            ),
+          ),
+          Padding(
             padding: EdgeInsets.only(right: 15.w),
             child: CustomBotton(
                 textColor: Colors.white,
                 bottonColor: Colors.green,
                 text: "التالي",
-                topSpace: 174.h,
+                topSpace: 164.h,
                 onTap: nextonTap),
           ),
           Padding(
@@ -64,19 +85,17 @@ class LoginPageBody extends StatelessWidget {
                   onTap: signUponTap,
                   child: Text(
                     signUp,
-                    style: TextStyle(
+                    style: MyTextStyle.textStyle(
+                        fontSize: 11,
                         color: Colors.black,
-                        fontFamily: "Cairo",
-                        fontSize: 11.sp,
                         fontWeight: FontWeight.w400),
                   ),
                 ),
                 Text(
                   allredyAccount,
-                  style: TextStyle(
+                  style: MyTextStyle.textStyle(
+                      fontSize: 11,
                       color: Colors.black45,
-                      fontFamily: "Cairo",
-                      fontSize: 11.sp,
                       fontWeight: FontWeight.w400),
                 ),
               ],

@@ -1,5 +1,6 @@
 import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/core/util/functions/navigator.dart';
+import 'package:clinic/features/Auth/presentation/pages/login_page.dart';
 import 'package:clinic/features/Auth/presentation/pages/sign_up_page1.dart';
 import 'package:clinic/features/welcome/presentation/bottonsbackground.dart';
 import 'package:clinic/features/welcome/presentation/custom_botton.dart';
@@ -32,7 +33,9 @@ class WelcomePage extends StatelessWidget {
             topSpace: MediaQuery.of(context).size.height - 233.h,
           ),
           CustomBotton(
-            onTap: () {},
+            onTap: () {
+              Moving.navToPage(context: context, page: const LoginPage());
+            },
             textColor: Colors.black,
             bottonColor: const Color(0xffE4F3E5),
             text: 'تسجيل دخول',

@@ -18,7 +18,7 @@ class GoogleButton extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: 68.w,
+            width: 75.w,
           ),
           Text(
             "أنشئ حساب بواسطة جوجل  ",

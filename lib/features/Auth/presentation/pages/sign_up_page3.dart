@@ -31,6 +31,7 @@ class SignUpPage3 extends StatelessWidget {
           signUp: "سجل دخول",
           nextonTap: () {},
           allredyAccount: 'لديك حساب بالفعل؟',
+          forgetPassWord: '',
         ));
   }
 }

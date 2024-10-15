@@ -33,6 +33,7 @@ class SignUpPage2 extends StatelessWidget {
             Moving.navToPage(context: context, page: const SignUpPage3());
           },
           allredyAccount: 'لديك حساب بالفعل؟',
+          forgetPassWord: '',
         ));
   }
 }

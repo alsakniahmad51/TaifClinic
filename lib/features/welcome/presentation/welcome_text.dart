@@ -10,7 +10,7 @@ class WelcomeText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-          left: 40.w, top: MediaQuery.of(context).size.height - 322.h),
+          left: 60.w, top: MediaQuery.of(context).size.height - 322.h),
       child: Text(
         "أهلاً بك في تطبيق طيف للأشعة",
         style: TextStyle(
