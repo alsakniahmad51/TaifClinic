@@ -29,18 +29,14 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.8
+  
+  external_app_launcher: ^4.0.0
   flutter:
     sdk: flutter
   flutter_screenutil: ^5.9.3
   flutter_svg: ^2.0.10+1
 
 dev_dependencies:
-
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
@@ -59,6 +55,7 @@ flutter:
   assets:
     - assets/images/logo.png
     - assets/images/google.svg
+    - assets/images/Gmail_logo.svg
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

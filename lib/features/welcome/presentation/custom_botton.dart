@@ -14,13 +14,14 @@ class CustomBotton extends StatelessWidget {
   final Color? textColor;
   final Color? bottonColor;
   final String text;
+
   final double topSpace;
   final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: topSpace, left: 15.w),
+      padding: EdgeInsets.only(top: topSpace.h, left: 15.w),
       child: InkWell(
         onTap: onTap,
         child: Container(

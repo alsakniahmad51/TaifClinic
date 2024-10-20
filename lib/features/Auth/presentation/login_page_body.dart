@@ -62,11 +62,12 @@ class LoginPageBody extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(right: 15.w),
             child: CustomBotton(
-                textColor: Colors.white,
-                bottonColor: Colors.green,
-                text: "التالي",
-                topSpace: 164.h,
-                onTap: nextonTap),
+              textColor: Colors.white,
+              bottonColor: Colors.green,
+              text: "التالي",
+              topSpace: 164.h,
+              onTap: nextonTap,
+            ),
           ),
           Padding(
             padding: EdgeInsets.only(top: 45.h, left: 10.w, right: 10.w),
