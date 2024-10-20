@@ -26,7 +26,7 @@ class SignUpPage1 extends StatelessWidget {
           hint1: "الاسم الأول",
           hint2: "الاسم الثاني",
           signUponTap: () {
-            Moving.navToPage(context: context, page: LoginPage());
+            Moving.navToPage(context: context, page: const LoginPage());
           },
           signUp: "سجل دخول",
           nextonTap: () {
