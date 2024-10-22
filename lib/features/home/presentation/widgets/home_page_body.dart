@@ -1,3 +1,4 @@
+import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/features/home/presentation/widgets/filter_botton.dart';
 import 'package:clinic/features/home/presentation/widgets/home_text_field.dart';
 import 'package:flutter/material.dart';
@@ -30,14 +31,13 @@ class HomePageBody extends StatelessWidget {
                   InkWell(
                     onTap: () {},
                     child: SvgPicture.asset(
-                        width: 170.w,
-                        height: 110.h,
-                        'assets/images/orders_history.svg'),
+                        width: 170.w, height: 110.h, ordersHistory),
                   ),
-                  SvgPicture.asset(
-                      width: 170.w,
-                      height: 110.h,
-                      'assets/images/orders_day.svg'),
+                  InkWell(
+                    onTap: () {},
+                    child: SvgPicture.asset(
+                        width: 170.w, height: 110.h, ordersDay),
+                  ),
                 ],
               ),
             )

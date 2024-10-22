@@ -1,3 +1,4 @@
+import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/core/util/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,7 +23,7 @@ class HomeAppBar extends StatelessWidget {
         SizedBox(
           width: 4.w,
         ),
-        SvgPicture.asset(width: 24.w, height: 24.h, 'assets/images/doctor.svg'),
+        SvgPicture.asset(width: 24.w, height: 24.h, logoDoctor),
         SizedBox(
           width: 16.w,
         )

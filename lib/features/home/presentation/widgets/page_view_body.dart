@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/features/home/presentation/pages/doctors_page.dart';
 import 'package:clinic/features/home/presentation/pages/home_page.dart';
 import 'package:clinic/features/notification/presentation/pages/notification_page.dart';
@@ -14,23 +15,23 @@ class PageViewBody extends StatefulWidget {
 
   int currentIndex = 0;
   // EdgeInsetsGeometry padding = const EdgeInsets.only();
-  String imagePath = 'assets/images/nav/1.svg';
+  String imagePath = home;
   var pageController = PageController(
     initialPage: 4,
   );
   void animateNavBar(int value) {
     if (value == 0) {
       // padding = EdgeInsets.only(right: 220.w);
-      imagePath = 'assets/images/nav/4.svg';
+      imagePath = settings;
     } else if (value == 1) {
       // padding = EdgeInsets.zero;
-      imagePath = 'assets/images/nav/3.svg';
+      imagePath = doctor;
     } else if (value == 2) {
       // padding = EdgeInsets.only(left: 220.w);
-      imagePath = 'assets/images/nav/2.svg';
+      imagePath = notification;
     } else if (value == 3) {
       // padding = EdgeInsets.only(left: 220.w);
-      imagePath = 'assets/images/nav/1.svg';
+      imagePath = home;
     }
   }
 

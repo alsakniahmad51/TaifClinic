@@ -2,6 +2,7 @@ import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/core/util/functions/navigator.dart';
 import 'package:clinic/features/Auth/presentation/pages/login_page.dart';
 import 'package:clinic/features/Auth/presentation/pages/sign_up_page1.dart';
+import 'package:clinic/features/home/presentation/pages/page_view.dart';
 import 'package:clinic/features/welcome/presentation/bottonsbackground.dart';
 import 'package:clinic/features/welcome/presentation/custom_botton.dart';
 import 'package:clinic/features/welcome/presentation/welcome_text.dart';
@@ -14,6 +15,9 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        Moving.navToPage(context: context, page: const Pageview());
+      }),
       backgroundColor: const Color(0xffF3F8FF),
       body: Stack(
         children: [

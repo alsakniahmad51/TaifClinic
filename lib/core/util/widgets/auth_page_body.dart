@@ -1,15 +1,15 @@
 import 'package:clinic/core/util/functions/navigator.dart';
 import 'package:clinic/core/util/text_style.dart';
 import 'package:clinic/features/Auth/presentation/pages/forget_password.dart';
-import 'package:clinic/features/Auth/presentation/widgets/custom_divider.dart';
-import 'package:clinic/features/Auth/presentation/widgets/custom_text_field.dart';
-import 'package:clinic/features/Auth/presentation/widgets/google_button.dart';
+import 'package:clinic/core/util/widgets/custom_divider.dart';
+import 'package:clinic/core/util/widgets/custom_text_field.dart';
+import 'package:clinic/core/util/widgets/google_button.dart';
 import 'package:clinic/features/welcome/presentation/custom_botton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class LoginPageBody extends StatelessWidget {
-  const LoginPageBody(
+class AuthPageBody extends StatelessWidget {
+  const AuthPageBody(
       {super.key,
       required this.hint1,
       required this.hint2,

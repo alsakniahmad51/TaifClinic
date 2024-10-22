@@ -13,11 +13,8 @@ class ForgetPassword2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        Moving.navToPage(context: context, page: const Pageview());
-      }),
-      body: const Column(
+    return const Scaffold(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [GmailLogo(), HelperText(), OpenGmail(), SkipToLater()],
       ),

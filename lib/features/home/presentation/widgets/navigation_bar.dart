@@ -21,15 +21,10 @@ class _NavBarState extends State<NavBar> {
           child:
               SvgPicture.asset(fit: BoxFit.fill, widget.pageViewBody.imagePath),
         ),
-        // AnimatedContainer(
-        //   padding: widget.pageViewBody.padding,
-        //   duration: const Duration(milliseconds: 200),
-        //   child: SvgPicture.asset('assets/svgimages/navBarSellect.svg'),
-        // ),
         Row(
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 64.w, top: 3.h),
+              padding: EdgeInsets.only(left: 64.w, bottom: 25.h),
               child: InkWell(
                 onTap: () {
                   setState(() {

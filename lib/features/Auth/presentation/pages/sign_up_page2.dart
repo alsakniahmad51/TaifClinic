@@ -1,5 +1,5 @@
 import 'package:clinic/core/util/functions/navigator.dart';
-import 'package:clinic/features/Auth/presentation/login_page_body.dart';
+import 'package:clinic/core/util/widgets/auth_page_body.dart';
 import 'package:clinic/features/Auth/presentation/pages/login_page.dart';
 import 'package:clinic/features/Auth/presentation/pages/sign_up_page3.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +22,7 @@ class SignUpPage2 extends StatelessWidget {
                 fontWeight: FontWeight.w600),
           ),
         ),
-        body: LoginPageBody(
+        body: AuthPageBody(
           hint1: "البريد الإلكتروني",
           hint2: "رقم الهاتف",
           signUponTap: () {

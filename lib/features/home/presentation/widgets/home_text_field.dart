@@ -1,3 +1,4 @@
+import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/core/util/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,7 +28,7 @@ class HomeTextField extends StatelessWidget {
                 prefixIconConstraints: BoxConstraints.loose(Size(50.w, 35.h)),
                 prefixIcon: Padding(
                   padding: EdgeInsets.only(left: 1.w, right: 10.w),
-                  child: SvgPicture.asset('assets/images/search.svg'),
+                  child: SvgPicture.asset(iconSearch),
                 ),
                 isCollapsed: true,
                 contentPadding: const EdgeInsets.all(12),
