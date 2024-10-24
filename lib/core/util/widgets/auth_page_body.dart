@@ -1,6 +1,6 @@
 import 'package:clinic/core/util/functions/navigator.dart';
 import 'package:clinic/core/util/text_style.dart';
-import 'package:clinic/features/Auth/presentation/pages/forget_password.dart';
+import 'package:clinic/features/Auth/logIn/presentaion/pages/forget_password.dart';
 import 'package:clinic/core/util/widgets/custom_divider.dart';
 import 'package:clinic/core/util/widgets/custom_text_field.dart';
 import 'package:clinic/core/util/widgets/google_button.dart';
@@ -17,14 +17,20 @@ class AuthPageBody extends StatelessWidget {
       required this.allredyAccount,
       required this.signUp,
       required this.signUponTap,
-      required this.forgetPassWord});
+      required this.forgetPassWord,
+      required this.firstController,
+      required this.secondController,
+      required this.textBotton});
   final String hint1;
   final String hint2;
   final String forgetPassWord;
   final String allredyAccount;
   final String signUp;
+  final String textBotton;
   final void Function()? nextonTap;
   final void Function()? signUponTap;
+  final TextEditingController firstController;
+  final TextEditingController secondController;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -34,12 +40,14 @@ class AuthPageBody extends StatelessWidget {
             padding: EdgeInsets.only(top: 42.h),
             child: CustomTextField(
               hint: hint1,
+              textEditingController: firstController,
             ),
           ),
           Padding(
             padding: EdgeInsets.only(top: 24.h),
             child: CustomTextField(
               hint: hint2,
+              textEditingController: secondController,
             ),
           ),
           Padding(
@@ -64,7 +72,7 @@ class AuthPageBody extends StatelessWidget {
             child: CustomBotton(
               textColor: Colors.white,
               bottonColor: Colors.green,
-              text: "التالي",
+              text: textBotton,
               topSpace: 164.h,
               onTap: nextonTap,
             ),

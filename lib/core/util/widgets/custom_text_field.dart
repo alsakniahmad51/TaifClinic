@@ -4,10 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     super.key,
-    required this.hint,
+    required this.hint, required this.textEditingController,
   });
   final String hint;
-
+   final TextEditingController textEditingController;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -15,6 +15,7 @@ class CustomTextField extends StatelessWidget {
       child: Directionality(
         textDirection: TextDirection.rtl,
         child: TextField(
+          controller: textEditingController,
           decoration: InputDecoration(
             focusedBorder: outlineBorder(),
             hintText: hint,

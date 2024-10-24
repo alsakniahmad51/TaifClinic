@@ -1,6 +1,6 @@
 import 'package:clinic/core/util/functions/navigator.dart';
 import 'package:clinic/core/util/widgets/auth_page_body.dart';
-import 'package:clinic/features/Auth/presentation/pages/sign_up_page1.dart';
+import 'package:clinic/features/Auth/signUp/presentation/pages/sign_up_page1.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -9,6 +9,9 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController email = TextEditingController();
+    TextEditingController password = TextEditingController();
+
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -31,6 +34,9 @@ class LoginPage extends StatelessWidget {
           hint2: "كلمة السر",
           nextonTap: () {},
           forgetPassWord: "هل نسيت كلمة المرور ؟",
+          firstController: email,
+          secondController: password,
+          textBotton: 'تسجيل دخول',
         ));
   }
 }

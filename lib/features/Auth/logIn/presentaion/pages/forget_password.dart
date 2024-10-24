@@ -1,6 +1,6 @@
 import 'package:clinic/core/util/functions/navigator.dart';
 import 'package:clinic/core/util/text_style.dart';
-import 'package:clinic/features/Auth/presentation/pages/forget_password_2.dart';
+import 'package:clinic/features/Auth/logIn/presentaion/pages/forget_password_2.dart';
 import 'package:clinic/core/util/widgets/custom_text_field.dart';
 import 'package:clinic/features/welcome/presentation/custom_botton.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,10 @@ class ForgetPassword extends StatelessWidget {
           SizedBox(
             height: 16.h,
           ),
-          const CustomTextField(hint: "البريد الإلكتروني"),
+          CustomTextField(
+            hint: "البريد الإلكتروني",
+            textEditingController: TextEditingController(),
+          ),
           Padding(
             padding: EdgeInsets.only(right: 16.w),
             child: CustomBotton(

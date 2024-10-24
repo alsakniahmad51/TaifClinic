@@ -1,6 +1,6 @@
 import 'package:clinic/core/util/functions/navigator.dart';
 import 'package:clinic/core/util/text_style.dart';
-import 'package:clinic/features/Auth/presentation/pages/login_page.dart';
+import 'package:clinic/features/Auth/logIn/presentaion/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

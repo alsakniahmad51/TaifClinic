@@ -1,8 +1,10 @@
+import 'package:clinic/features/Auth/signUp/presentation/manager/cubit/auth_cubit.dart';
 import 'package:clinic/features/welcome/presentation/pages/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 Future<void> main() async {
   await Supabase.initialize(

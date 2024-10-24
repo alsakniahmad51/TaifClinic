@@ -1,7 +1,7 @@
 import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/core/util/functions/navigator.dart';
-import 'package:clinic/features/Auth/presentation/pages/login_page.dart';
-import 'package:clinic/features/Auth/presentation/pages/sign_up_page1.dart';
+import 'package:clinic/features/Auth/logIn/presentaion/pages/login_page.dart';
+import 'package:clinic/features/Auth/signUp/presentation/pages/sign_up_page1.dart';
 import 'package:clinic/features/home/presentation/pages/page_view.dart';
 import 'package:clinic/features/welcome/presentation/bottonsbackground.dart';
 import 'package:clinic/features/welcome/presentation/custom_botton.dart';
