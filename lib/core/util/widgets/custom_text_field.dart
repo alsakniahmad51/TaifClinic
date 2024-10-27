@@ -4,17 +4,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     super.key,
-    required this.hint, required this.textEditingController,
+    required this.hint,
+    required this.textEditingController,
+    this.validator,
   });
+
   final String hint;
-   final TextEditingController textEditingController;
+  final TextEditingController textEditingController;
+  final String? Function(String?)? validator;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Directionality(
         textDirection: TextDirection.rtl,
-        child: TextField(
+        child: TextFormField(
           controller: textEditingController,
           decoration: InputDecoration(
             focusedBorder: outlineBorder(),
@@ -22,6 +27,7 @@ class CustomTextField extends StatelessWidget {
             hintStyle: textStyle(),
             border: outlineBorder(),
           ),
+          validator: validator,
         ),
       ),
     );
@@ -37,7 +43,7 @@ class CustomTextField extends StatelessWidget {
 
   OutlineInputBorder outlineBorder() {
     return OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.black),
+      borderSide: const BorderSide(color: Colors.black),
       borderRadius: BorderRadius.circular(6.r),
     );
   }
