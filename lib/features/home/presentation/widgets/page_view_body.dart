@@ -3,10 +3,9 @@
 import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/features/home/presentation/pages/doctors_page.dart';
 import 'package:clinic/features/home/presentation/pages/home_page.dart';
-import 'package:clinic/features/notification/presentation/pages/notification_page.dart';
-import 'package:clinic/features/home/presentation/pages/settings_page.dart';
 import 'package:clinic/features/home/presentation/widgets/navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PageViewBody extends StatefulWidget {
   PageViewBody({
@@ -14,23 +13,21 @@ class PageViewBody extends StatefulWidget {
   });
 
   int currentIndex = 0;
-  // EdgeInsetsGeometry padding = const EdgeInsets.only();
+  double widthBotton1 = 50.w;
+  double widthBotton2 = 90.w;
   String imagePath = home;
   var pageController = PageController(
-    initialPage: 4,
+    initialPage: 1,
   );
   void animateNavBar(int value) {
     if (value == 0) {
-      // padding = EdgeInsets.only(right: 220.w);
-      imagePath = settings;
-    } else if (value == 1) {
-      // padding = EdgeInsets.zero;
+      widthBotton1 = 90.w;
+      widthBotton2 = 50.w;
       imagePath = doctor;
-    } else if (value == 2) {
-      // padding = EdgeInsets.only(left: 220.w);
-      imagePath = notification;
-    } else if (value == 3) {
-      // padding = EdgeInsets.only(left: 220.w);
+    } else if (value == 1) {
+      widthBotton1 = 50.w;
+      widthBotton2 = 90.w;
+      // padding = EdgeInsets.zero;
       imagePath = home;
     }
   }
@@ -53,9 +50,7 @@ class _PageViewBodyState extends State<PageViewBody> {
           },
           controller: widget.pageController,
           children: const [
-            SettingsPage(),
             DoctorsPage(),
-            NotificationPage(),
             HomePage(),
           ],
         ),
