@@ -24,8 +24,8 @@ class CliniApp extends StatelessWidget {
       builder: (context, child) => MaterialApp(
         theme: ThemeData(
           fontFamily: AppFont.primaryFont,
-          textTheme: const TextTheme(
-            bodyMedium: TextStyle(fontSize: 16.0),
+          textTheme: TextTheme(
+            bodyMedium: TextStyle(fontSize: 16.sp),
           ),
         ),
         debugShowCheckedModeBanner: false,

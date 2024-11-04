@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 
 const String logo = 'assets/images/logo.png';
@@ -9,6 +11,7 @@ const String ordersHistory = 'assets/images/orders_history.svg';
 const String ordersDay = 'assets/images/orders_day.svg';
 const String iconSearch = 'assets/images/search.svg';
 const String notification = 'assets/images/notification.svg';
+const String x_ray_icon = 'assets/images/x-ray_icon.svg';
 
 class AppFont {
   static const primaryFont = 'Cairo';
