@@ -1,4 +1,3 @@
-import 'package:clinic/core/util/text_style.dart';
 import 'package:clinic/core/util/widgets/custom_divider.dart';
 import 'package:clinic/core/util/widgets/google_button.dart';
 import 'package:flutter/material.dart';
@@ -48,17 +47,21 @@ class AuthPageBody extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: 42.h),
               child: CustomTextField(
-                hint: hint1,
                 textEditingController: firstController,
                 validator: firstValidator,
+                title: hint1,
+                radius: 12,
+                keyboardType: TextInputType.name,
               ),
             ),
             Padding(
               padding: EdgeInsets.only(top: 24.h),
               child: CustomTextField(
-                hint: hint2,
-                textEditingController: secondController,
-                validator: secondValidator,
+                textEditingController: firstController,
+                validator: firstValidator,
+                title: hint2,
+                radius: 12,
+                keyboardType: TextInputType.name,
               ),
             ),
             Padding(
@@ -92,18 +95,12 @@ class AuthPageBody extends StatelessWidget {
                     onTap: signUponTap,
                     child: Text(
                       signUp,
-                      style: MyTextStyle.textStyle(
-                          fontSize: 11,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w400),
+                      style: authTextStyle(),
                     ),
                   ),
                   Text(
                     allredyAccount,
-                    style: MyTextStyle.textStyle(
-                        fontSize: 11,
-                        color: Colors.black45,
-                        fontWeight: FontWeight.w400),
+                    style: authTextStyle(),
                   ),
                 ],
               ),
@@ -112,5 +109,10 @@ class AuthPageBody extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  TextStyle authTextStyle() {
+    return const TextStyle(
+        fontSize: 11, color: Colors.black, fontWeight: FontWeight.w400);
   }
 }

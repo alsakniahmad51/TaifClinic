@@ -1,5 +1,4 @@
 import 'package:clinic/core/util/functions/navigator.dart';
-import 'package:clinic/core/util/text_style.dart';
 import 'package:clinic/features/Auth/logIn/presentaion/pages/forget_password_2.dart';
 import 'package:clinic/core/util/widgets/custom_text_field.dart';
 import 'package:clinic/features/welcome/presentation/custom_botton.dart';
@@ -19,17 +18,16 @@ class ForgetPassword extends StatelessWidget {
           ),
           Text(
               textAlign: TextAlign.center,
-              style: MyTextStyle.textStyle(
-                  fontSize: 16,
-                  color: const Color(0xff020202),
-                  fontWeight: FontWeight.w400),
+              style: styleText(FontWeight.w400),
               "أدخل البريد الإلكتروني المرتبط بحسابك وسنرسل بريداً إلكترونياً مع تعليمات لإعادة ضبط كلمة المرور الخاصة بك "),
           SizedBox(
             height: 16.h,
           ),
           CustomTextField(
-            hint: "البريد الإلكتروني",
+            title: "البريد الإلكتروني",
             textEditingController: TextEditingController(),
+            radius: 12,
+            keyboardType: TextInputType.text,
           ),
           Padding(
             padding: EdgeInsets.only(right: 16.w),
@@ -50,10 +48,14 @@ class ForgetPassword extends StatelessWidget {
         centerTitle: true,
         title: Text(
           "إعادة تعيين كلمة المرور",
-          style: MyTextStyle.textStyle(
-              fontSize: 16, color: Colors.black, fontWeight: FontWeight.w600),
+          style: styleText(FontWeight.w600),
         ),
       ),
     );
+  }
+
+  TextStyle styleText(FontWeight? fontWeight) {
+    return TextStyle(
+        fontSize: 16, color: const Color(0xff020202), fontWeight: fontWeight);
   }
 }

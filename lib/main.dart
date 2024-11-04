@@ -1,16 +1,15 @@
+import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/features/Auth/signUp/presentation/manager/cubit/auth_cubit.dart';
 import 'package:clinic/features/welcome/presentation/pages/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 Future<void> main() async {
   await Supabase.initialize(
-    url: 'https://ncbjffnfecycqtlwwgco.supabase.co',
-    anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5jYmpmZm5mZWN5Y3F0bHd3Z2NvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjk1MzIyODIsImV4cCI6MjA0NTEwODI4Mn0.-dCoPEwNB8ov6Lpyg_RMkre27ejO7SjXnJdxgr02F6I',
+    url: SupabaseKeys.projectUrl,
+    anonKey: SupabaseKeys.anonyKey,
   );
   runApp(const CliniApp());
 }
@@ -22,9 +21,15 @@ class CliniApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(393, 852),
-      builder: (context, child) => const MaterialApp(
+      builder: (context, child) => MaterialApp(
+        theme: ThemeData(
+          fontFamily: AppFont.primaryFont,
+          textTheme: const TextTheme(
+            bodyMedium: TextStyle(fontSize: 16.0),
+          ),
+        ),
         debugShowCheckedModeBanner: false,
-        home: Directionality(
+        home: const Directionality(
           textDirection: TextDirection.rtl,
           child: Scaffold(
             body: SplashScreen(),

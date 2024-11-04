@@ -1,5 +1,4 @@
 import 'package:clinic/core/util/constants.dart';
-import 'package:clinic/features/home/presentation/widgets/filter_botton.dart';
 import 'package:clinic/features/home/presentation/widgets/home_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,12 +16,7 @@ class HomePageBody extends StatelessWidget {
         padding: EdgeInsets.only(top: 20.h),
         child: Column(
           children: [
-            const Row(
-              children: [
-                FilterBotton(),
-                HomeTextField(),
-              ],
-            ),
+            const HomeSearchTextFiled(),
             Padding(
               padding: EdgeInsets.only(top: 40.h),
               child: Row(

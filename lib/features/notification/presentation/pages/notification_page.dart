@@ -1,8 +1,6 @@
-import 'package:clinic/core/util/text_style.dart';
 import 'package:clinic/features/notification/presentation/widgets/notification_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 
 class NotificationPage extends StatelessWidget {
   const NotificationPage({super.key});
@@ -26,8 +24,8 @@ class NotificationPage extends StatelessWidget {
                 Text(
                   textAlign: TextAlign.end,
                   "الأحدث",
-                  style: MyTextStyle.textStyle(
-                      fontSize: 16,
+                  style: TextStyle(
+                      fontSize: 16.sp,
                       color: Colors.black,
                       fontWeight: FontWeight.w600),
                 ),

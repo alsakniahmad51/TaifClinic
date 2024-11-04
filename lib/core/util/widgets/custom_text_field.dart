@@ -2,49 +2,67 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField({
-    super.key,
-    required this.hint,
-    required this.textEditingController,
-    this.validator,
-  });
-
-  final String hint;
+  const CustomTextField(
+      {super.key,
+      this.validator,
+      required this.title,
+      required this.radius,
+      required this.textEditingController,
+      required this.keyboardType,
+      this.prefix,
+      this.suffix,
+      this.enableColor,
+      this.focuseColor});
+  final String title;
+  final double radius;
   final TextEditingController textEditingController;
+  final TextInputType keyboardType;
   final String? Function(String?)? validator;
+  final Widget? prefix;
+  final Widget? suffix;
+  final Color? enableColor;
+  final Color? focuseColor;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
-      child: Directionality(
+    return SizedBox(
+      width: 361.w,
+      child: TextFormField(
+        validator: validator,
+        keyboardType: keyboardType,
+        controller: textEditingController,
+        style: const TextStyle(fontSize: 12, height: 1),
         textDirection: TextDirection.rtl,
-        child: TextFormField(
-          controller: textEditingController,
-          decoration: InputDecoration(
-            focusedBorder: outlineBorder(),
-            hintText: hint,
-            hintStyle: textStyle(),
-            border: outlineBorder(),
-          ),
-          validator: validator,
-        ),
+        decoration: InputDecoration(
+            suffixIcon: suffix,
+            prefixIcon: prefix,
+            focusColor: Colors.black,
+            hintText: title,
+            hintTextDirection: TextDirection.rtl,
+            hintStyle: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 13.sp,
+            ),
+            border: outLineInputBorder(
+                width: 1,
+                radius: radius,
+                color: enableColor ?? Colors.transparent),
+            enabledBorder: outLineInputBorder(
+                width: 1,
+                radius: radius,
+                color: enableColor ?? Colors.transparent),
+            focusedBorder: outLineInputBorder(
+                width: 2,
+                radius: radius,
+                color: focuseColor ?? Colors.transparent)),
       ),
     );
   }
 
-  TextStyle textStyle() {
-    return TextStyle(
-        color: Colors.black,
-        fontFamily: "Cairo",
-        fontSize: 17.sp,
-        fontWeight: FontWeight.w400);
-  }
-
-  OutlineInputBorder outlineBorder() {
+  OutlineInputBorder outLineInputBorder(
+      {required double width, required double radius, required Color color}) {
     return OutlineInputBorder(
-      borderSide: const BorderSide(color: Colors.black),
-      borderRadius: BorderRadius.circular(6.r),
-    );
+        borderRadius: BorderRadius.circular(radius),
+        borderSide: BorderSide(color: color, width: width));
   }
 }

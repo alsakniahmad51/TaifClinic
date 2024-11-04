@@ -1,4 +1,3 @@
-import 'package:clinic/core/util/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -17,7 +16,7 @@ class NotificationAppBar extends StatelessWidget {
           padding: EdgeInsets.only(right: 20.w, left: 250.w),
           child: Text(
             "الإشعارات",
-            style: MyTextStyle.textStyle(
+            style: TextStyle(
                 fontSize: 22.sp,
                 color: Colors.black,
                 fontWeight: FontWeight.w600),

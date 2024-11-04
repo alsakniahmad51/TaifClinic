@@ -1,4 +1,3 @@
-import 'package:clinic/core/util/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -34,8 +33,8 @@ class CustomBotton extends StatelessWidget {
             child: Center(
               child: Text(
                 text,
-                style: MyTextStyle.textStyle(
-                    fontSize: 17,
+                style: TextStyle(
+                    fontSize: 17.sp,
                     color: textColor,
                     fontWeight: FontWeight.w400),
               ),
