@@ -6,9 +6,10 @@ import 'package:flutter_svg/svg.dart';
 
 class OredersDayItem extends StatelessWidget {
   const OredersDayItem({
-    super.key,
+    super.key, required this.papatientName, required this.type,
   });
-
+final String papatientName;
+  final String type;
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -40,7 +41,7 @@ class OredersDayItem extends StatelessWidget {
                   width: 44.w,
                 ),
               ),
-              title: const TitleListTile(),
+              title:  TitleListTile(patientName: papatientName, type: type,),
             ),
           ),
         ),

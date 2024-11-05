@@ -4,20 +4,21 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TitleListTile extends StatelessWidget {
   const TitleListTile({
-    super.key,
+    super.key, required this.patientName, required this.type,
   });
-
+  final String patientName;
+  final String type;
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "اسم المريض",
-          style: TextStyle(fontWeight: FontWeight.w400),
+         Text(
+          patientName,
+          style:const TextStyle(fontWeight: FontWeight.w400),
         ),
         Text(
-          "طلب تصوير شعاعي لمريض",
+          type,
           style: TextStyle(
               fontSize: 13.sp, fontWeight: FontWeight.w400, color: Colors.grey),
         ),
