@@ -1,24 +1,28 @@
 import 'package:clinic/core/util/constants.dart';
+import 'package:clinic/core/util/functions/navigator.dart';
+import 'package:clinic/features/home/domain/Entities/order.dart';
+import 'package:clinic/features/home/presentation/pages/order_detailes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TitleListTile extends StatelessWidget {
   const TitleListTile({
-    super.key, required this.patientName, required this.type,
+    super.key,
+    required this.data,
   });
-  final String patientName;
-  final String type;
+
+  final Order data;
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-         Text(
-          patientName,
-          style:const TextStyle(fontWeight: FontWeight.w400),
+        Text(
+          data.patientName,
+          style: const TextStyle(fontWeight: FontWeight.w400),
         ),
         Text(
-          type,
+          data.type,
           style: TextStyle(
               fontSize: 13.sp, fontWeight: FontWeight.w400, color: Colors.grey),
         ),
@@ -26,7 +30,13 @@ class TitleListTile extends StatelessWidget {
           height: 3.h,
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Moving.navToPage(
+                context: context,
+                page: OrderDetailes(
+                  data: data,
+                ));
+          },
           child: Row(
             children: [
               Text(

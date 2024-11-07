@@ -1,5 +1,3 @@
-
-
 import 'dart:developer';
 
 import 'package:clinic/features/home/domain/Entities/doctor.dart';
@@ -59,14 +57,13 @@ class RemoteDataSource {
 
   Future<List<Order>> fetchAllOrders() async {
     try {
-      final response =
-          await supabase.from('orders').select('*, patients(patient_name)');
+      final response = await supabase
+          .from('orders')
+          .select('*, patients(patient_name), doctors(doctor_name)');
       log(response.toString());
 
-      // تأكد من أن البيانات ليست null واحتوائها على قائمة
       final List<dynamic> data = response as List<dynamic>;
 
-      // تحويل البيانات إلى List<Order>
       return data.map((item) => Order.fromJson(item)).toList();
     } catch (e) {
       throw Exception('Failed to load orders: ${e.toString()}');

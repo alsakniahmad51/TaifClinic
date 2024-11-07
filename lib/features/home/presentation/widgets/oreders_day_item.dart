@@ -1,15 +1,16 @@
 import 'package:clinic/core/util/constants.dart';
-import 'package:clinic/features/home/presentation/widgets/title_lis_tile.dart';
+import 'package:clinic/features/home/domain/Entities/order.dart';
+import 'package:clinic/features/home/presentation/widgets/title_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class OredersDayItem extends StatelessWidget {
   const OredersDayItem({
-    super.key, required this.papatientName, required this.type,
+    super.key,
+    required this.data,
   });
-final String papatientName;
-  final String type;
+  final Order data;
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -41,7 +42,9 @@ final String papatientName;
                   width: 44.w,
                 ),
               ),
-              title:  TitleListTile(patientName: papatientName, type: type,),
+              title: TitleListTile(
+                data: data,
+              ),
             ),
           ),
         ),
