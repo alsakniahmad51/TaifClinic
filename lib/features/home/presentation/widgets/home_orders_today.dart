@@ -39,8 +39,16 @@ class HomeOrdersTody extends StatelessWidget {
                 itemCount: ordersToday.length,
                 itemBuilder: (context, index) {
                   final data = ordersToday[index];
+
+                  String dateTime = data.date.toString();
+                  var parts = dateTime.split(' ');
+
+                  String timefake = parts[1];
+                  var partTime = timefake.split('.');
+                  String time = partTime[0];
                   return OredersDayItem(
                     data: data,
+                    time: time,
                   );
                 },
               ),

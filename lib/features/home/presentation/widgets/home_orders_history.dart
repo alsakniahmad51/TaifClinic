@@ -16,6 +16,7 @@ class HomeOrdersHistory extends StatelessWidget {
           order.date.month == today.month &&
           order.date.day == today.day);
     }).toList();
+
     return Padding(
       padding: EdgeInsets.only(top: 24.h),
       child: SizedBox(
@@ -37,8 +38,14 @@ class HomeOrdersHistory extends StatelessWidget {
                 itemCount: 2,
                 itemBuilder: (context, index) {
                   final data = ordersExceptToday[index];
+
+                  String dateTime = data.date.toString();
+                  var parts = dateTime.split(' ');
+                  String date = parts[0];
+
                   return OredersDayItem(
                     data: data,
+                    time: date,
                   );
                 },
               ),

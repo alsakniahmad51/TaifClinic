@@ -1,5 +1,5 @@
 import 'package:clinic/features/home/domain/Entities/order.dart';
-import 'package:clinic/features/home/presentation/widgets/table_item.dart';
+import 'package:clinic/features/home/presentation/widgets/table_item_order_detailes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -22,64 +22,66 @@ class OrderDetailes extends StatelessWidget {
           style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TableItem(
-            title: 'اسم المريض',
-            value: data.patientName,
-            topradius: 12,
-            buttomradius: 0,
-          ),
-          TableItem(
-            title: 'اسم الطبيب',
-            value: data.doctorName,
-            topradius: 0,
-            buttomradius: 0,
-          ),
-          TableItem(
-            title: 'نوع الصورة',
-            value: data.type,
-            topradius: 0,
-            buttomradius: 0,
-          ),
-          TableItem(
-            title: 'العمر',
-            value: "${data.patientAge}",
-            topradius: 0,
-            buttomradius: 0,
-          ),
-          TableItem(
-            title: 'الجزء المراد تصويره',
-            value: data.examinationOptions ?? "لا يوجد",
-            topradius: 0,
-            buttomradius: 0,
-          ),
-          TableItem(
-            title: 'شكل الصورة',
-            value: data.outputType ?? "لا يوجد",
-            topradius: 0,
-            buttomradius: 0,
-          ),
-          TableItem(
-            title: 'التاريخ',
-            value: date,
-            topradius: 0,
-            buttomradius: 0,
-          ),
-          TableItem(
-            title: 'التوقيت',
-            value: time,
-            topradius: 0,
-            buttomradius: 0,
-          ),
-          TableItem(
-            title: 'ملاحظات',
-            value: data.additionalNotes ?? "لا يوجد",
-            topradius: 0,
-            buttomradius: 12,
-          ),
-        ],
+      body: Padding(
+        padding: EdgeInsets.only(top: 34.h),
+        child: Column(
+          children: [
+            TableItem(
+              title: 'اسم المريض',
+              value: data.patientName,
+              topradius: 12,
+              buttomradius: 0,
+            ),
+            TableItem(
+              title: 'اسم الطبيب',
+              value: data.doctorName,
+              topradius: 0,
+              buttomradius: 0,
+            ),
+            TableItem(
+              title: 'نوع الصورة',
+              value: data.type,
+              topradius: 0,
+              buttomradius: 0,
+            ),
+            TableItem(
+              title: 'العمر',
+              value: "${data.patientAge}",
+              topradius: 0,
+              buttomradius: 0,
+            ),
+            TableItem(
+              title: 'الجزء المراد تصويره',
+              value: data.examinationOptions ?? "لا يوجد",
+              topradius: 0,
+              buttomradius: 0,
+            ),
+            TableItem(
+              title: 'شكل الصورة',
+              value: data.outputType ?? "لا يوجد",
+              topradius: 0,
+              buttomradius: 0,
+            ),
+            TableItem(
+              title: 'التاريخ',
+              value: date,
+              topradius: 0,
+              buttomradius: 0,
+            ),
+            TableItem(
+              title: 'التوقيت',
+              value: time,
+              topradius: 0,
+              buttomradius: 0,
+            ),
+            TableItem(
+              title: 'ملاحظات',
+              value: data.additionalNotes ?? "لا يوجد",
+              topradius: 0,
+              buttomradius: 12,
+            ),
+          ],
+        ),
       ),
     );
   }

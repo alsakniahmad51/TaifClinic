@@ -23,7 +23,9 @@ class HomePageBody extends StatelessWidget {
       builder: (context, state) {
         if (state is OrderLoading) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+              color: AppColor.primaryColor,
+            ),
           );
         } else if (state is OrderLoaded) {
           final order = state.orders;

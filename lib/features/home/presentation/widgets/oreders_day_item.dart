@@ -9,8 +9,10 @@ class OredersDayItem extends StatelessWidget {
   const OredersDayItem({
     super.key,
     required this.data,
+    required this.time,
   });
   final Order data;
+  final String time;
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -29,7 +31,7 @@ class OredersDayItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    'منذ ساعة',
+                    time,
                     style: TextStyle(fontSize: 13.sp),
                   ),
                 ],
