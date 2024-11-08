@@ -1,5 +1,4 @@
 import 'package:clinic/features/welcome/presentation/custom_botton.dart';
-import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -18,8 +17,8 @@ class OpenGmail extends StatelessWidget {
         text: "فتح تطبيق البريد الإلكتروني",
         topSpace: 26,
         onTap: () async {
-          await LaunchApp.openApp(
-              androidPackageName: 'com.google.android.gm', openStore: true);
+          // await LaunchApp.openApp(
+          //     androidPackageName: 'com.google.android.gm', openStore: true);
         },
       ),
     );
