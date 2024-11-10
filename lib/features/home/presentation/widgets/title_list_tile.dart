@@ -22,7 +22,7 @@ class TitleListTile extends StatelessWidget {
           style: const TextStyle(fontWeight: FontWeight.w400),
         ),
         Text(
-          data.type,
+          data.detail!.type.toString(),
           style: TextStyle(
               fontSize: 13.sp, fontWeight: FontWeight.w400, color: Colors.grey),
         ),

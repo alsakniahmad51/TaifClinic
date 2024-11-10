@@ -40,7 +40,7 @@ class OrderDetailes extends StatelessWidget {
             ),
             TableItem(
               title: 'نوع الصورة',
-              value: data.type,
+              value: data.detail!.type.toString(),
               topradius: 0,
               buttomradius: 0,
             ),
@@ -52,13 +52,13 @@ class OrderDetailes extends StatelessWidget {
             ),
             TableItem(
               title: 'الجزء المراد تصويره',
-              value: data.examinationOptions ?? "لا يوجد",
+              value: data.detail!.option.toString() ?? "لا يوجد",
               topradius: 0,
               buttomradius: 0,
             ),
             TableItem(
               title: 'شكل الصورة',
-              value: data.outputType ?? "لا يوجد",
+              value: data.detail!.mode.toString() ?? "لا يوجد",
               topradius: 0,
               buttomradius: 0,
             ),
