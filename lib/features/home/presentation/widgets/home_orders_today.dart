@@ -2,6 +2,7 @@ import 'package:clinic/features/home/domain/Entities/order.dart';
 import 'package:clinic/features/home/presentation/widgets/orders_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class HomeOrdersTody extends StatelessWidget {
   const HomeOrdersTody({
@@ -40,15 +41,17 @@ class HomeOrdersTody extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final data = ordersToday[index];
 
-                  String dateTime = data.date.toString();
-                  var parts = dateTime.split(' ');
+                  // String dateTime = data.date.toString();
+                  // var parts = dateTime.split(' ');
 
-                  String timefake = parts[1];
-                  var partTime = timefake.split('.');
-                  String time = partTime[0];
+                  // String timefake = parts[1];
+                  // var partTime = timefake.split('.');
+                  // String time = partTime[0];
+                  timeago.setLocaleMessages('ar', timeago.ArMessages());
+                  String timePassed = timeago.format(data.date, locale: 'ar');
                   return OrdersItem(
                     data: data,
-                    time: time,
+                    time: timePassed,
                   );
                 },
               ),

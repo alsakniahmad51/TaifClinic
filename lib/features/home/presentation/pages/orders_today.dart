@@ -1,10 +1,7 @@
 import 'package:clinic/features/home/domain/Entities/order.dart';
-import 'package:clinic/features/home/presentation/widgets/header_table_orders_today.dart';
 import 'package:clinic/features/home/presentation/widgets/orders_item.dart';
-import 'package:clinic/features/home/presentation/widgets/table_row_orders_today.dart';
-import 'package:clinic/features/home/presentation/widgets/table_row_orders_today_cell.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class OrdersTodayPage extends StatelessWidget {
   final List<Order> allOrders;
@@ -30,20 +27,19 @@ class OrdersTodayPage extends StatelessWidget {
       ),
       body: ordersToday.isEmpty
           ? const Center(child: Text('لا توجد طلبات لليوم'))
-          : Column(
-              children: [
-                const HeaderTableOrdersToday(),
-                SizedBox(
-                  height: 300.h,
-                  child: ListView.builder(
-                    itemCount: ordersToday.length,
-                    itemBuilder: (context, index) {
-                      return TableRowOrdersToday(data: ordersToday[index]);
-                    },
-                  ),
-                ),
-              ],
+          : ListView.builder(
+              itemCount: ordersToday.length,
+              itemBuilder: (context, index) {
+                timeago.setLocaleMessages('ar', timeago.ArMessages());
+                String timePassed =
+                    timeago.format(ordersToday[index].date, locale: 'ar');
+
+                return OrdersItem(data: ordersToday[index], time: timePassed);
+              },
             ),
     );
   }
 }
+
+
+// TableRowOrdersToday(data: ordersToday[index])

@@ -20,16 +20,20 @@ class TableItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-            height: 40.h,
-            width: 252.w,
-            decoration: BoxDecoration(
-                border: Border.all(color: const Color(0xffE4F3E5))),
-            child: Center(
-              child: Text(
-                value,
-                style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w400),
-              ),
-            )),
+          height: 40.h,
+          width: 252.w,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: const Color(0xffE4F3E5),
+            ),
+          ),
+          child: Center(
+            child: Text(
+              value,
+              style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w400),
+            ),
+          ),
+        ),
         Container(
           height: 40.h,
           width: 109.w,

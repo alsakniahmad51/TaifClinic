@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:clinic/features/home/domain/Entities/order.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -29,7 +27,6 @@ class RemoteDataSource {
       final List<dynamic> data = response as List<dynamic>;
       final orders = data.map((item) => Order.fromJson(item)).toList();
 
-      log(orders.toString());
       return orders;
     } catch (e) {
       throw Exception('Failed to load orders: ${e.toString()}');

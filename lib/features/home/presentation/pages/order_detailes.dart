@@ -2,6 +2,7 @@ import 'package:clinic/features/home/domain/Entities/order.dart';
 import 'package:clinic/features/home/presentation/widgets/table_item_order_detailes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 class OrderDetailes extends StatelessWidget {
   const OrderDetailes({super.key, required this.data});
@@ -11,9 +12,11 @@ class OrderDetailes extends StatelessWidget {
     String dateTime = data.date.toString();
     var parts = dateTime.split(' ');
     String date = parts[0];
-    String timefake = parts[1];
-    var partTime = timefake.split('.');
-    String time = partTime[0];
+    // String timefake = parts[1];
+    // var partTime = timefake.split('.');
+    // String time = partTime[0];
+    DateTime time = data.date;
+    String formattedTime = DateFormat('hh:mm a').format(time);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -70,7 +73,7 @@ class OrderDetailes extends StatelessWidget {
             ),
             TableItem(
               title: 'التوقيت',
-              value: time,
+              value: formattedTime,
               topradius: 0,
               buttomradius: 0,
             ),
