@@ -29,7 +29,7 @@ class TableRowOrdersToday extends StatelessWidget {
           ),
           TableRowOrdersTodayCell(
             childCell: Text(
-              data.detail!.option.toString() ?? "",
+              data.detail!.option.optionName,
               style: styleTableText(),
             ),
           ),

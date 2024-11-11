@@ -10,26 +10,22 @@ class RemoteDataSource {
 
   Future<List<Order>> fetchAllOrders() async {
     try {
-      final response = await supabase.from('orders').select('''
-        order_id,
-        doctor_id,
-        patient_id,
-        date,
-        patient_age,
-        additional_notes,
-      
-        examinationdetails(
-          detail_id,
-          examinationmodes(mode_id, mode_name),
-          examinationoptions(option_id, option_name),
-          examinationtypes(examination_type_id, type_name)
-        )
-      ''');
-
-      if (response == null) {
-        throw Exception('No data returned');
-      }
-
+      final response = await Supabase.instance.client.from('orders').select('''
+          order_id,
+          doctor_id,
+          patient_id,
+          date,
+          patient_age,
+          additional_notes,
+          
+          examinationdetails!inner(
+            detail_id,
+            mode:examinationmodes(mode_id, mode_name),
+            option:examinationoptions(option_id, option_name),
+            type:examinationtypes(examination_type_id, type_name)
+          )
+        ''');
+// patients(patient_name),
       final List<dynamic> data = response as List<dynamic>;
       final orders = data.map((item) => Order.fromJson(item)).toList();
 

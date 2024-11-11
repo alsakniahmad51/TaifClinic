@@ -4,7 +4,6 @@ class Order {
   final int id;
   final int doctorId;
   final int patientId;
-
   String patientName;
   String doctorName;
   final DateTime date;
@@ -26,19 +25,18 @@ class Order {
 
   factory Order.fromJson(Map<String, dynamic> json) {
     return Order(
-      id: json['order_id'],
-      doctorId: json['doctor_id'],
-      patientId: json['patient_id'],
-      patientName: json['patients'] != null
-          ? json['patients']['patient_name'] ?? 'غير معروف'
-          : 'غير معروف',
-      doctorName: json['doctors'] != null
-          ? json['doctors']['doctor_name'] ?? 'غير معروف'
-          : 'غير معروف',
-      date: DateTime.parse(json['date']),
-      patientAge: json['patient_age'],
-      detail: ExaminationDetail.fromJson(json['examinationdetails']),
-      additionalNotes: json['additional_notes'],
+      id: json['order_id'] ?? 0,
+      doctorId: json['doctor_id'] ?? 0,
+      patientId: json['patient_id'] ?? 0,
+      patientName: json['patients']?['patient_name'] ?? 'غير معروف',
+      doctorName: json['doctors']?['doctor_name'] ?? 'غير معروف',
+      date:
+          json['date'] != null ? DateTime.parse(json['date']) : DateTime.now(),
+      patientAge: json['patient_age'] ?? 0,
+      detail: json['examinationdetails'] != null
+          ? ExaminationDetail.fromJson(json['examinationdetails'])
+          : null,
+      additionalNotes: json['additional_notes'] ?? 'لا يوجد',
     );
   }
 }

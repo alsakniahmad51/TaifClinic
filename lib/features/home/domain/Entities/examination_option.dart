@@ -4,11 +4,10 @@ class ExaminationOption {
 
   ExaminationOption({required this.optionId, required this.optionName});
 
-  // تحويل JSON إلى كائن Dart
   factory ExaminationOption.fromJson(Map<String, dynamic> json) {
     return ExaminationOption(
-      optionId: json['option_id'],
-      optionName: json['option_name'],
+      optionId: json['option_id'], // يمكن أن يكون null
+      optionName: json['option_name'] ?? "غير معروف",
     );
   }
 }

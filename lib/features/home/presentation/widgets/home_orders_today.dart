@@ -1,5 +1,5 @@
 import 'package:clinic/features/home/domain/Entities/order.dart';
-import 'package:clinic/features/home/presentation/widgets/oreders_day_item.dart';
+import 'package:clinic/features/home/presentation/widgets/orders_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -46,7 +46,7 @@ class HomeOrdersTody extends StatelessWidget {
                   String timefake = parts[1];
                   var partTime = timefake.split('.');
                   String time = partTime[0];
-                  return OredersDayItem(
+                  return OrdersItem(
                     data: data,
                     time: time,
                   );

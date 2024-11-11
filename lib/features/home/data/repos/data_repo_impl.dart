@@ -1,7 +1,5 @@
 import 'package:clinic/features/home/data/datasources/remote_data_source.dart';
-import 'package:clinic/features/home/domain/Entities/doctor.dart';
 import 'package:clinic/features/home/domain/Entities/order.dart';
-import 'package:clinic/features/home/domain/Entities/patient.dart';
 import 'package:clinic/features/home/domain/repos/data_repo.dart';
 
 class DataRepositoryImpl implements DataRepository {

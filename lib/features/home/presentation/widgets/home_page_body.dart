@@ -45,10 +45,11 @@ class HomePageBody extends StatelessWidget {
                     child: LableOrders(
                       onTap: () {
                         Moving.navToPage(
-                            context: context,
-                            page: OrdersTodayPage(
-                              allOrders: order,
-                            ));
+                          context: context,
+                          page: OrdersTodayPage(
+                            allOrders: order,
+                          ),
+                        );
                       },
                       text: 'طلبات اليوم',
                       padding: 200,

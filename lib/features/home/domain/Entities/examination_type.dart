@@ -4,11 +4,10 @@ class ExaminationType {
 
   ExaminationType({required this.examinationTypeId, required this.typeName});
 
-  // تحويل JSON إلى كائن Dart
   factory ExaminationType.fromJson(Map<String, dynamic> json) {
     return ExaminationType(
-      examinationTypeId: json['examination_type_id'] ?? '',
-      typeName: json['type_name'] ?? '',
+      examinationTypeId: json['examination_type_id'], // يمكن أن يكون null
+      typeName: json['type_name'] ?? "غير معروف",
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:clinic/features/home/domain/Entities/order.dart';
 import 'package:clinic/features/home/presentation/widgets/header_table_orders_today.dart';
-import 'package:clinic/features/home/presentation/widgets/oreders_day_item.dart';
+import 'package:clinic/features/home/presentation/widgets/orders_item.dart';
 import 'package:clinic/features/home/presentation/widgets/table_row_orders_today.dart';
 import 'package:clinic/features/home/presentation/widgets/table_row_orders_today_cell.dart';
 import 'package:flutter/material.dart';
