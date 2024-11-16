@@ -37,7 +37,8 @@ class HomeOrdersTody extends StatelessWidget {
                 ),
               )
             : ListView.builder(
-                itemCount: ordersToday.length,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 2,
                 itemBuilder: (context, index) {
                   final data = ordersToday[index];
 

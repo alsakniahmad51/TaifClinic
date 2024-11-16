@@ -3,7 +3,7 @@ import 'package:clinic/features/home/data/datasources/remote_data_source.dart';
 import 'package:clinic/features/home/data/repos/data_repo_impl.dart';
 import 'package:clinic/features/home/domain/usecase/fetch_order_usecase.dart';
 import 'package:clinic/features/home/presentation/manager/cubit/order_cubit.dart';
-import 'package:clinic/features/welcome/presentation/pages/splash.dart';
+import 'package:clinic/features/home/presentation/widgets/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

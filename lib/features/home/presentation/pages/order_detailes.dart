@@ -78,6 +78,12 @@ class OrderDetailes extends StatelessWidget {
               buttomradius: 0,
             ),
             TableItem(
+              title: 'قيمة الفاتورة',
+              value: "${data.detail!.price} ل.س",
+              topradius: 0,
+              buttomradius: 0,
+            ),
+            TableItem(
               title: 'ملاحظات',
               value: data.additionalNotes ?? "لا يوجد",
               topradius: 0,

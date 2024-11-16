@@ -7,20 +7,24 @@ class Order {
   String patientName;
   String doctorName;
   final DateTime date;
-  final int patientAge;
+  int patientAge;
+  String? phoneNumber;
   final ExaminationDetail? detail;
   final String? additionalNotes;
+  final int price;
 
   Order({
-    required this.detail,
     required this.id,
     required this.doctorId,
     required this.patientId,
     this.patientName = 'غير معروف',
     this.doctorName = 'غير معروف',
     required this.date,
-    required this.patientAge,
+    this.patientAge = 0,
+    this.phoneNumber,
+    this.detail,
     this.additionalNotes,
+    required this.price,
   });
 
   factory Order.fromJson(Map<String, dynamic> json) {
@@ -32,11 +36,13 @@ class Order {
       doctorName: json['doctors']?['doctor_name'] ?? 'غير معروف',
       date:
           json['date'] != null ? DateTime.parse(json['date']) : DateTime.now(),
-      patientAge: json['patient_age'] ?? 0,
+      patientAge: json['patients']?['age'] ?? 0,
+      phoneNumber: json['patients']?['phone_number'],
       detail: json['examinationdetails'] != null
           ? ExaminationDetail.fromJson(json['examinationdetails'])
           : null,
       additionalNotes: json['additional_notes'] ?? 'لا يوجد',
+      price: json['order_price'] ?? 0,
     );
   }
 }

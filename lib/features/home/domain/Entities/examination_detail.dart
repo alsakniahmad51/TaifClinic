@@ -7,8 +7,9 @@ class ExaminationDetail {
   final ExaminationMode mode;
   final ExaminationOption option;
   final ExaminationType type;
-
+  final int price;
   ExaminationDetail({
+    required this.price,
     required this.detailId,
     required this.mode,
     required this.option,
@@ -21,6 +22,7 @@ class ExaminationDetail {
       mode: ExaminationMode.fromJson(json['mode']),
       option: ExaminationOption.fromJson(json['option']),
       type: ExaminationType.fromJson(json['type']),
+      price: json['price'],
     );
   }
 }

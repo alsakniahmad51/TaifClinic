@@ -7,36 +7,16 @@ class DataRepositoryImpl implements DataRepository {
 
   DataRepositoryImpl(this.remoteDataSource);
 
-  // @override
-  // Future<List<Doctor>> fetchAllDoctors() async {
-  //   return await remoteDataSource.fetchAllDoctors();
-  // }
-
-  // @override
-  // Future<List<Examination>> fetchAllExaminations() async {
-  //   return await remoteDataSource
-  //       .fetchAllExaminations(); // تأكد من أن لديك دالة fetchAllExaminations في RemoteDataSource
-  // }
-
-  // @override
-  // Future<List<Note>> fetchAllNotes() async {
-  //   return await remoteDataSource
-  //       .fetchAllNotes(); // تأكد من أن لديك دالة fetchAllNotes في RemoteDataSource
-  // }
-
   @override
   Future<List<Order>> fetchAllOrders() async {
+    // Fetch all orders
     final orders = await remoteDataSource.fetchAllOrders();
+
+    // Update doctor names for each order asynchronously
     for (var order in orders) {
       order.doctorName = await remoteDataSource.fetchDoctorName(order.doctorId);
-      order.patientName =
-          await remoteDataSource.fetchPatientName(order.patientId);
     }
+
     return orders;
   }
-
-  // @override
-  // Future<List<Patient>> fetchAllPatients() async {
-  //   return await remoteDataSource.fetchAllPatients();
-  // }
 }
