@@ -11,11 +11,11 @@ class OrderCubit extends Cubit<OrderState> {
 
   Future<void> fetchOrders() async {
     emit(OrderLoading());
-    // try {
-    final orders = await fetchOrdersUseCase();
-    emit(OrderLoaded(orders));
-    // } catch (e) {
-    //   emit(OrderError(e.toString()));
-    // }
+    try {
+      final orders = await fetchOrdersUseCase();
+      emit(OrderLoaded(orders));
+    } catch (e) {
+      emit(OrderError(e.toString()));
+    }
   }
 }

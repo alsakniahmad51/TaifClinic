@@ -35,44 +35,49 @@ class HomePageBody extends StatelessWidget {
               context.read<OrderCubit>().fetchOrders();
             },
             color: AppColor.primaryColor,
-            child: Padding(
-              padding: EdgeInsets.only(top: 20.h),
-              child: Column(
-                children: [
-                  const HomeSearchTextFiled(),
-                  Padding(
-                    padding: EdgeInsets.only(top: 24.h),
-                    child: LableOrders(
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Padding(
+                padding: EdgeInsets.only(top: 20.h),
+                child: Column(
+                  children: [
+                    const HomeSearchTextFiled(
+                      hint: "مريض,تصوير مقطعي",
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 24.h),
+                      child: LableOrders(
+                        onTap: () {
+                          Moving.navToPage(
+                            context: context,
+                            page: OrdersTodayPage(
+                              allOrders: order,
+                            ),
+                          );
+                        },
+                        text: 'طلبات اليوم',
+                        padding: 200,
+                      ),
+                    ),
+                    HomeOrdersTody(
+                      order: order,
+                    ),
+                    LableOrders(
+                      text: 'سجل الطلبات السابقة',
+                      padding: 120,
                       onTap: () {
                         Moving.navToPage(
-                          context: context,
-                          page: OrdersTodayPage(
-                            allOrders: order,
-                          ),
-                        );
+                            context: context,
+                            page: AllOrdersPage(
+                              allOrders: order,
+                            ));
                       },
-                      text: 'طلبات اليوم',
-                      padding: 200,
                     ),
-                  ),
-                  HomeOrdersTody(
-                    order: order,
-                  ),
-                  LableOrders(
-                    text: 'سجل الطلبات السابقة',
-                    padding: 120,
-                    onTap: () {
-                      Moving.navToPage(
-                          context: context,
-                          page: AllOrdersPage(
-                            allOrders: order,
-                          ));
-                    },
-                  ),
-                  HomeOrdersHistory(
-                    order: order,
-                  )
-                ],
+                    HomeOrdersHistory(
+                      order: order,
+                    )
+                  ],
+                ),
               ),
             ),
           );

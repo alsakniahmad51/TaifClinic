@@ -13,6 +13,7 @@ const String iconSearch = 'assets/images/search.svg';
 const String notification = 'assets/images/notification.svg';
 const String x_ray_icon = 'assets/images/x-ray_icon.svg';
 const String info_icon = 'assets/images/Info.svg';
+const String person = 'assets/images/person.svg';
 
 class AppFont {
   static const primaryFont = 'Cairo';

@@ -7,13 +7,14 @@ import 'package:flutter_svg/svg.dart';
 class HomeSearchTextFiled extends StatelessWidget {
   const HomeSearchTextFiled({
     super.key,
+    required this.hint,
   });
-
+  final String hint;
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xffF6F7F7),
+        color: Colors.grey[200],
         borderRadius: BorderRadius.all(
           Radius.circular(12.r),
         ),
@@ -25,7 +26,7 @@ class HomeSearchTextFiled extends StatelessWidget {
           fit: BoxFit.none,
         ),
         suffix: const Icon(Icons.search),
-        title: "مريض,تصوير مقطعي",
+        title: hint,
         radius: 12.r,
         textEditingController: TextEditingController(),
         keyboardType: TextInputType.text,

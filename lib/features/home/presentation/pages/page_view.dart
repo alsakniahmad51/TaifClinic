@@ -6,10 +6,6 @@ class Pageview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      backgroundColor: const Color(0xffEBEBEB),
-      body: PageViewBody(),
-    );
+    return PageViewBody();
   }
 }

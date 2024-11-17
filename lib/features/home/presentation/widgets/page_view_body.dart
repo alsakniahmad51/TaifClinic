@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:clinic/core/util/constants.dart';
-import 'package:clinic/features/home/presentation/pages/doctors_page.dart';
+import 'package:clinic/features/doctors/presentation/pages/doctors_page.dart';
 import 'package:clinic/features/home/presentation/pages/home_page.dart';
 import 'package:clinic/features/home/presentation/widgets/navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -39,26 +39,23 @@ class PageViewBody extends StatefulWidget {
 class _PageViewBodyState extends State<PageViewBody> {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.bottomCenter,
-      children: [
-        PageView(
-          onPageChanged: (value) {
-            setState(() {
-              widget.animateNavBar(value);
-            });
-          },
-          controller: widget.pageController,
-          children: const [
-            DoctorsPage(),
-            HomePage(),
-          ],
-        ),
-        // Nav BAr
-        NavBar(
-          pageViewBody: widget,
-        )
-      ],
+    return Scaffold(
+      bottomNavigationBar: NavBar(
+        pageViewBody: widget,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      body: PageView(
+        onPageChanged: (value) {
+          setState(() {
+            widget.animateNavBar(value);
+          });
+        },
+        controller: widget.pageController,
+        children: const [
+          DoctorsPage(),
+          HomePage(),
+        ],
+      ),
     );
   }
 }
