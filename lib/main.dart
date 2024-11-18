@@ -1,4 +1,10 @@
 import 'package:clinic/core/util/constants.dart';
+import 'package:clinic/features/doctors/data/datasources/remote_doctor_datasource.dart';
+import 'package:clinic/features/doctors/data/repos/doctor_repo_impl.dart';
+import 'package:clinic/features/doctors/domain/usecases/fetch_doctor_orders.dart';
+import 'package:clinic/features/doctors/domain/usecases/fetch_doctors_usecase.dart';
+import 'package:clinic/features/doctors/presentation/manager/docotr_cubit/doctors_cubit.dart';
+import 'package:clinic/features/doctors/presentation/manager/docotr_order_cubit/doctor_order_cubit.dart';
 import 'package:clinic/features/home/data/datasources/remote_data_source.dart';
 import 'package:clinic/features/home/data/repos/data_repo_impl.dart';
 import 'package:clinic/features/home/domain/usecase/fetch_order_usecase.dart';
@@ -16,19 +22,49 @@ Future<void> main() async {
   );
   runApp(CliniApp(
     fetchOrdersUseCase: FetchOrdersUseCase(
-        (DataRepositoryImpl(RemoteDataSource(supabase.client)))),
+      (DataRepositoryImpl(
+        RemoteDataSource(supabase.client),
+      )),
+    ),
+    fetchAllDoctorsUseCase: FetchAllDoctorsUseCase(
+      DoctorRepositoryImpl(
+        DoctorRemoteDataSource(supabase.client),
+      ),
+    ),
+    fetchDoctorOrdersUseCase: FetchDoctorOrdersUseCase(
+      DoctorRepositoryImpl(
+        DoctorRemoteDataSource(supabase.client),
+      ),
+    ),
   ));
 }
 
 class CliniApp extends StatelessWidget {
-  const CliniApp({super.key, required this.fetchOrdersUseCase});
+  const CliniApp(
+      {super.key,
+      required this.fetchOrdersUseCase,
+      required this.fetchAllDoctorsUseCase,
+      required this.fetchDoctorOrdersUseCase});
   final FetchOrdersUseCase fetchOrdersUseCase;
+  final FetchAllDoctorsUseCase fetchAllDoctorsUseCase;
+  final FetchDoctorOrdersUseCase fetchDoctorOrdersUseCase;
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(393, 852),
-      builder: (context, child) => BlocProvider<OrderCubit>(
-        create: (context) => OrderCubit(fetchOrdersUseCase)..fetchOrders(),
+      builder: (context, child) => MultiBlocProvider(
+        providers: [
+          BlocProvider<OrderCubit>(
+            create: (context) => OrderCubit(fetchOrdersUseCase)..fetchOrders(),
+          ),
+          BlocProvider(
+            create: (context) =>
+                DoctorsCubit(fetchAllDoctorsUseCase)..fetchDoctors(),
+          ),
+          BlocProvider(
+            create: (context) => DoctorOrdersCubit(fetchDoctorOrdersUseCase),
+          ),
+        ],
         child: MaterialApp(
           theme: ThemeData(
             fontFamily: AppFont.primaryFont,

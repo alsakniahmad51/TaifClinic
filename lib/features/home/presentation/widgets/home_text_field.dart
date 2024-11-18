@@ -14,7 +14,7 @@ class HomeSearchTextFiled extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey[200],
+        color: const Color(0xffF6F7F7),
         borderRadius: BorderRadius.all(
           Radius.circular(12.r),
         ),

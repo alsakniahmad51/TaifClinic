@@ -26,10 +26,34 @@ class DoctorRemoteDataSource {
           date,
           additional_notes,
           order_price,
+          order_output,
+          patients(
+            patient_id,
+            patient_name,
+            age,
+            phone_number
+          ),
+          
+          examinationdetails!inner(
+            detail_id,
+            price,
+            mode:examinationmodes(mode_id, mode_name),
+            option:examinationoptions(option_id, option_name),
+            type:examinationtypes(examination_type_id, type_name)
+          )
+        ''').eq('doctor_id', doctorId);
+/**
+ * final response = await supabase.from('orders').select('''
+          order_id,
+          doctor_id,
+          patient_id,
+          date,
+          additional_notes,
+          order_price,
           patients(patient_name, age, phone_number),
           examinationdetails(detail_id, price)
-        ''').eq('doctor_id', doctorId);
-
+        ''').eq('doctor_id', doctorId)
+ */
     if (response == null) throw Exception('Failed to fetch doctor orders.');
 
     final List<dynamic> data = response as List<dynamic>;
