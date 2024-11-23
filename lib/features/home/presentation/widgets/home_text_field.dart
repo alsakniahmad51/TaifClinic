@@ -4,12 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-class HomeSearchTextFiled extends StatelessWidget {
-  const HomeSearchTextFiled({
+class SearchTextFiled extends StatelessWidget {
+  const SearchTextFiled({
     super.key,
     required this.hint,
+    this.onChanged,
+    this.focusNode,
+    this.textEditingController,
+    this.enabled,
   });
+
   final String hint;
+  final ValueChanged<String>? onChanged;
+  final FocusNode? focusNode;
+  final TextEditingController? textEditingController;
+  final bool? enabled;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,6 +29,7 @@ class HomeSearchTextFiled extends StatelessWidget {
         ),
       ),
       child: CustomTextField(
+        enabled: enabled,
         focuseColor: AppColor.primaryColor,
         prefix: SvgPicture.asset(
           filter,
@@ -28,8 +38,9 @@ class HomeSearchTextFiled extends StatelessWidget {
         suffix: const Icon(Icons.search),
         title: hint,
         radius: 12.r,
-        textEditingController: TextEditingController(),
+        textEditingController: textEditingController ?? TextEditingController(),
         keyboardType: TextInputType.text,
+        onSearch: onChanged, // تمرير حدث البحث
       ),
     );
   }

@@ -3,7 +3,6 @@ import 'package:clinic/core/util/functions/navigator.dart';
 import 'package:clinic/features/notification/presentation/pages/notification_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({
@@ -13,13 +12,14 @@ class HomeAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(right: 16.w, top: 10.h),
+      padding: EdgeInsets.only(right: 16.w, bottom: 15.h),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Text(
             "!أهلاً وسهلاً",
             style: TextStyle(
-                fontSize: 12.sp,
+                fontSize: 18.sp,
                 color: const Color(0xff6a6a6a),
                 fontWeight: FontWeight.w400),
           ),

@@ -4,6 +4,7 @@ import 'package:clinic/core/util/widgets/custom_button.dart';
 import 'package:clinic/features/home/presentation/manager/cubit/order_cubit.dart';
 import 'package:clinic/features/home/presentation/pages/orders_history.dart';
 import 'package:clinic/features/home/presentation/pages/orders_today.dart';
+import 'package:clinic/features/home/presentation/widgets/home_app_bar.dart';
 import 'package:clinic/features/home/presentation/widgets/home_orders_history.dart';
 import 'package:clinic/features/home/presentation/widgets/home_text_field.dart';
 import 'package:clinic/features/home/presentation/widgets/lable_orders.dart';
@@ -35,48 +36,61 @@ class HomePageBody extends StatelessWidget {
               context.read<OrderCubit>().fetchOrders();
             },
             color: AppColor.primaryColor,
-            child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              child: Padding(
-                padding: EdgeInsets.only(top: 20.h),
-                child: Column(
-                  children: [
-                    const HomeSearchTextFiled(
-                      hint: "مريض,تصوير مقطعي",
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 24.h),
-                      child: LableOrders(
+            child: SafeArea(
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Padding(
+                  padding: EdgeInsets.only(top: 10.h),
+                  child: Column(
+                    children: [
+                      const HomeAppBar(),
+                      InkWell(
                         onTap: () {
                           Moving.navToPage(
-                            context: context,
-                            page: OrdersTodayPage(
-                              allOrders: order,
-                            ),
-                          );
+                              context: context,
+                              page: OrdersHistoryPage(
+                                allOrders: order,
+                              ));
                         },
-                        text: 'طلبات اليوم',
-                        padding: 200,
+                        child: const SearchTextFiled(
+                          enabled: false,
+                          hint: "مريض, تصوير مقطعي",
+                        ),
                       ),
-                    ),
-                    HomeOrdersTody(
-                      order: order,
-                    ),
-                    LableOrders(
-                      text: 'سجل الطلبات السابقة',
-                      padding: 120,
-                      onTap: () {
-                        Moving.navToPage(
-                            context: context,
-                            page: AllOrdersPage(
-                              allOrders: order,
-                            ));
-                      },
-                    ),
-                    HomeOrdersHistory(
-                      order: order,
-                    )
-                  ],
+                      Padding(
+                        padding: EdgeInsets.only(top: 24.h),
+                        child: LableOrders(
+                          onTap: () {
+                            Moving.navToPage(
+                              context: context,
+                              page: OrdersTodayPage(
+                                allOrders: order,
+                              ),
+                            );
+                          },
+                          text: 'طلبات اليوم',
+                          padding: 200,
+                        ),
+                      ),
+                      HomeOrdersTody(
+                        order: order,
+                      ),
+                      LableOrders(
+                        text: 'سجل الطلبات السابقة',
+                        padding: 120,
+                        onTap: () {
+                          Moving.navToPage(
+                              context: context,
+                              page: OrdersHistoryPage(
+                                allOrders: order,
+                              ));
+                        },
+                      ),
+                      HomeOrdersHistory(
+                        order: order,
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

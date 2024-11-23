@@ -28,7 +28,7 @@ class DoctorsPageBody extends StatelessWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.only(top: 16.h, right: 16.w, left: 16.w),
-                  child: const HomeSearchTextFiled(
+                  child: const SearchTextFiled(
                     hint: 'اسم الطبيب',
                   ),
                 ),

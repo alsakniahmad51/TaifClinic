@@ -8,23 +8,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        actions: [
-          Text(
-            "!أهلاً وسهلاً",
-            style: TextStyle(
-                fontSize: 18.sp,
-                color: Colors.black,
-                fontWeight: FontWeight.w500),
-          ),
-          SizedBox(
-            width: 10.w,
-          ),
-        ],
-      ),
-      body: const HomePageBody(),
+    return const Scaffold(
+      body: HomePageBody(),
     );
   }
 }

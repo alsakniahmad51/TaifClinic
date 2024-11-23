@@ -20,7 +20,7 @@ class DoctorDetailesBody extends StatelessWidget {
         DoctorInfo(
           doctor: doctor,
         ),
-        OrdersHistory(
+        DoctorOrdersHistory(
           doctorId: doctor.id,
         ),
       ],

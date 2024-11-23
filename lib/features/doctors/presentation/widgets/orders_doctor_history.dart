@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class OrdersHistory extends StatelessWidget {
-  const OrdersHistory({
+class DoctorOrdersHistory extends StatelessWidget {
+  const DoctorOrdersHistory({
     super.key,
     required this.doctorId,
   });
