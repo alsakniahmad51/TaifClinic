@@ -20,11 +20,17 @@ class _OrdersHistoryPageState extends State<OrdersHistoryPage> {
   List<Order> filteredOrders = [];
   String? selectedImageType;
   TextEditingController searchController = TextEditingController();
+  FocusNode searchFocusNode = FocusNode(); // FocusNode للتحكم في الفوكس
 
   @override
   void initState() {
     super.initState();
     filteredOrders = widget.allOrders; // جميع الطلبات بشكل افتراضي
+
+    // تفعيل الفوكس على TextField عند دخول الصفحة
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FocusScope.of(context).requestFocus(searchFocusNode);
+    });
   }
 
   void _applyFilters(List<String>? doctorNames, String? imageType) {
@@ -33,7 +39,6 @@ class _OrdersHistoryPageState extends State<OrdersHistoryPage> {
         bool matchesDoctor = doctorNames == null ||
             doctorNames.isEmpty ||
             doctorNames.contains(order.doctorName);
-
         bool matchesType = imageType == null ||
             order.detail!.type.typeName.toLowerCase() ==
                 imageType.toLowerCase();
@@ -53,6 +58,13 @@ class _OrdersHistoryPageState extends State<OrdersHistoryPage> {
   }
 
   @override
+  void dispose() {
+    // لا تنسى تنظيف الـ FocusNode عند التخلص من الويجت
+    searchFocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
@@ -69,6 +81,7 @@ class _OrdersHistoryPageState extends State<OrdersHistoryPage> {
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
               child: SearchTextFiled(
                 textEditingController: searchController,
+                focusNode: searchFocusNode, // ربط FocusNode بـ TextField
                 hint: 'ابحث عن اسم المريض',
                 onChanged: _filterOrders,
                 onTap: () async {

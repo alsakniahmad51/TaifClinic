@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FilterPage extends StatefulWidget {
   const FilterPage({super.key});
-
   @override
   _FilterPageState createState() => _FilterPageState();
 }
@@ -13,7 +12,6 @@ class FilterPage extends StatefulWidget {
 class _FilterPageState extends State<FilterPage> {
   List<String> selectedDoctors = [];
   String? selectedImageType;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +64,6 @@ class _FilterPageState extends State<FilterPage> {
               },
             ),
             SizedBox(height: 16.h),
-
             // قائمة نوع الصورة
             const Text(
               'اختيار نوع الصورة',
@@ -97,7 +94,6 @@ class _FilterPageState extends State<FilterPage> {
               },
             ),
             SizedBox(height: 16.h),
-
             // زر تطبيق الفلترة
             ElevatedButton(
               style: ElevatedButton.styleFrom(
