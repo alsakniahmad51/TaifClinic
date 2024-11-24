@@ -16,6 +16,7 @@ class CustomTextField extends StatelessWidget {
     this.focuseColor,
     this.onSearch,
     this.enabled,
+    this.focusNode,
   });
   final String title;
   final double radius;
@@ -28,11 +29,13 @@ class CustomTextField extends StatelessWidget {
   final Color? focuseColor;
   final ValueChanged<String>? onSearch;
   final bool? enabled;
+  final FocusNode? focusNode;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 361.w,
       child: TextFormField(
+        focusNode: focusNode,
         enabled: enabled ?? true,
         cursorColor: Colors.green,
         onChanged: onSearch,

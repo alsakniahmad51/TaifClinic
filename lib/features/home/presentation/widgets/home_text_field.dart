@@ -12,6 +12,7 @@ class SearchTextFiled extends StatelessWidget {
     this.focusNode,
     this.textEditingController,
     this.enabled,
+    this.onTap,
   });
 
   final String hint;
@@ -19,6 +20,7 @@ class SearchTextFiled extends StatelessWidget {
   final FocusNode? focusNode;
   final TextEditingController? textEditingController;
   final bool? enabled;
+  final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,11 +31,15 @@ class SearchTextFiled extends StatelessWidget {
         ),
       ),
       child: CustomTextField(
+        focusNode: focusNode,
         enabled: enabled,
         focuseColor: AppColor.primaryColor,
-        prefix: SvgPicture.asset(
-          filter,
-          fit: BoxFit.none,
+        prefix: InkWell(
+          onTap: onTap,
+          child: SvgPicture.asset(
+            filter,
+            fit: BoxFit.none,
+          ),
         ),
         suffix: const Icon(Icons.search),
         title: hint,
