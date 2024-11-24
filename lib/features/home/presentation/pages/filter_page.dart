@@ -16,8 +16,7 @@ class _FilterPageState extends State<FilterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green,
-        title: const Text('فلترة البيانات'),
+        title: const Text('فلترة'),
         centerTitle: true,
       ),
       body: Padding(
@@ -37,11 +36,11 @@ class _FilterPageState extends State<FilterPage> {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is DoctorsLoaded) {
                   return DropdownButtonFormField<String>(
+                    focusColor: Colors.green,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                    ),
+                        border: border(width: 1),
+                        enabledBorder: border(width: 1),
+                        focusedBorder: border(width: 2)),
                     hint: const Text('اختر طبيباً'),
                     items: state.doctors.map((doctor) {
                       return DropdownMenuItem<String>(
@@ -71,11 +70,11 @@ class _FilterPageState extends State<FilterPage> {
             ),
             SizedBox(height: 8.h),
             DropdownButtonFormField<String>(
+              focusColor: Colors.green,
               decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-              ),
+                  border: border(width: 1),
+                  enabledBorder: border(width: 1),
+                  focusedBorder: border(width: 2)),
               hint: const Text('اختر نوع الصورة'),
               items: [
                 'سيفالوماتريك',
@@ -93,7 +92,7 @@ class _FilterPageState extends State<FilterPage> {
                 });
               },
             ),
-            SizedBox(height: 16.h),
+            SizedBox(height: 45.h),
             // زر تطبيق الفلترة
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -106,10 +105,25 @@ class _FilterPageState extends State<FilterPage> {
                   'selectedImageType': selectedImageType,
                 });
               },
-              child: const Text('تطبيق الفلترة'),
+              child: Text(
+                'تطبيق الفلترة',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18.sp),
+              ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  OutlineInputBorder border({required double width}) {
+    return OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.green, width: width),
+      borderRadius: BorderRadius.circular(
+        12.r,
       ),
     );
   }

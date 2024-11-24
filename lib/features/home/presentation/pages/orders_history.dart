@@ -39,6 +39,7 @@ class _OrdersHistoryPageState extends State<OrdersHistoryPage> {
         bool matchesDoctor = doctorNames == null ||
             doctorNames.isEmpty ||
             doctorNames.contains(order.doctorName);
+
         bool matchesType = imageType == null ||
             order.detail!.type.typeName.toLowerCase() ==
                 imageType.toLowerCase();
@@ -61,11 +62,13 @@ class _OrdersHistoryPageState extends State<OrdersHistoryPage> {
   void dispose() {
     // لا تنسى تنظيف الـ FocusNode عند التخلص من الويجت
     searchFocusNode.dispose();
+    searchController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    filteredOrders.sort((a, b) => b.date.compareTo(a.date));
     return BlocProvider(
       create: (context) =>
           DoctorsCubit(RepositoryProvider.of(context))..fetchDoctors(),

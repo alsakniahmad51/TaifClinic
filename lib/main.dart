@@ -67,6 +67,7 @@ class CliniApp extends StatelessWidget {
         ],
         child: MaterialApp(
           theme: ThemeData(
+            primaryColor: AppColor.primaryColor,
             fontFamily: AppFont.primaryFont,
             textTheme: TextTheme(
               bodyMedium: TextStyle(fontSize: 16.sp),
