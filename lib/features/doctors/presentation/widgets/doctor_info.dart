@@ -1,5 +1,6 @@
 import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/features/doctors/domain/entities/doctor.dart';
+import 'package:clinic/features/doctors/presentation/widgets/custom_doctor_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -50,37 +51,6 @@ class DoctorInfo extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class CustomDoctorInfo extends StatelessWidget {
-  const CustomDoctorInfo({
-    super.key,
-    required this.title,
-    required this.value,
-  });
-  final String title;
-  final String value;
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: TextStyle(fontSize: 18.sp, color: const Color(0xff6A6A6A)),
-        ),
-        SizedBox(
-          height: 5.h,
-        ),
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: 16.sp,
-          ),
-        ),
-      ],
     );
   }
 }

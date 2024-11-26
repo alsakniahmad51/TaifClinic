@@ -1,3 +1,4 @@
+import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/features/doctors/presentation/manager/docotr_cubit/doctors_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class FilterPage extends StatefulWidget {
   const FilterPage({super.key});
   @override
+  // ignore: library_private_types_in_public_api
   _FilterPageState createState() => _FilterPageState();
 }
 
@@ -33,7 +35,10 @@ class _FilterPageState extends State<FilterPage> {
             BlocBuilder<DoctorsCubit, DoctorsState>(
               builder: (context, state) {
                 if (state is DoctorsLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(
+                      child: CircularProgressIndicator(
+                    color: AppColor.primaryColor,
+                  ));
                 } else if (state is DoctorsLoaded) {
                   return DropdownButtonFormField<String>(
                     focusColor: Colors.green,

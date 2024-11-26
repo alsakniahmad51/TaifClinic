@@ -51,7 +51,8 @@ class CliniApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(393, 852),
+      designSize: Size(MediaQuery.of(context).size.width,
+          MediaQuery.of(context).size.height),
       builder: (context, child) => MultiBlocProvider(
         providers: [
           BlocProvider<OrderCubit>(
@@ -80,11 +81,8 @@ class CliniApp extends StatelessWidget {
             ),
           ),
           debugShowCheckedModeBanner: false,
-          home: const Directionality(
-            textDirection: TextDirection.rtl,
-            child: Scaffold(
-              body: SplashScreen(),
-            ),
+          home: const Scaffold(
+            body: SplashScreen(),
           ),
         ),
       ),

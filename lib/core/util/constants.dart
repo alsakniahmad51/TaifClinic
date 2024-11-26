@@ -15,6 +15,7 @@ const String x_ray_icon = 'assets/images/x-ray_icon.svg';
 const String info_icon = 'assets/images/Info.svg';
 const String person = 'assets/images/person.svg';
 const String line = 'assets/images/Line.svg';
+const String calendar = 'assets/images/Calendar.svg';
 
 class AppFont {
   static const primaryFont = 'Cairo';

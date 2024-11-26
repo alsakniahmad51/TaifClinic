@@ -1,5 +1,7 @@
+import 'package:clinic/core/util/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 class HomeAppBar extends StatelessWidget {
   final void Function(DateTime selectedDate)
@@ -17,7 +19,7 @@ class HomeAppBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
-            icon: const Icon(Icons.calendar_today, color: Color(0xff6a6a6a)),
+            icon: SvgPicture.asset(calendar),
             onPressed: () async {
               // اختيار الشهر والسنة
               final selectedDate = await showDatePicker(

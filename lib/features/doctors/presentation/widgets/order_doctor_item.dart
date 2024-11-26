@@ -15,16 +15,10 @@ class OrderDoctorItem extends StatelessWidget {
   final Order order;
   @override
   Widget build(BuildContext context) {
-    String dateTime = order.date.toString();
-    var parts = dateTime.split(' ');
-    String date = parts[0];
-    // String timefake = parts[1];
-    // var partTime = timefake.split('.');
-    // String time = partTime[0];
     DateTime time = order.date;
     String formattedTime = DateFormat('hh:mm a').format(time);
     return Padding(
-      padding: EdgeInsets.only(bottom: 10.h, left: 16.w, right: 16.w),
+      padding: EdgeInsets.only(top: 10.h, left: 16.w, right: 16.w),
       child: InkWell(
         onTap: () {
           Moving.navToPage(context: context, page: OrderDetailes(data: order));

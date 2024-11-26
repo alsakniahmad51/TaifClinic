@@ -27,7 +27,7 @@ class HomePageBody extends StatelessWidget {
           );
         } else if (state is OrderLoaded) {
           final orders = state.orders;
-
+          orders.sort((a, b) => b.date.compareTo(a.date));
           return RefreshIndicator(
             color: AppColor.primaryColor,
             onRefresh: () async {
