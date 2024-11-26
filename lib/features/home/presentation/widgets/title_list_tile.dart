@@ -1,7 +1,5 @@
 import 'package:clinic/core/util/constants.dart';
-import 'package:clinic/core/util/functions/navigator.dart';
 import 'package:clinic/features/home/domain/Entities/order.dart';
-import 'package:clinic/features/home/presentation/pages/order_detailes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

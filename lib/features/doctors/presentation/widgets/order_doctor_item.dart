@@ -1,7 +1,7 @@
 import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/core/util/functions/navigator.dart';
+import 'package:clinic/features/doctors/presentation/pages/doctor_order_detailes.dart';
 import 'package:clinic/features/home/domain/Entities/order.dart';
-import 'package:clinic/features/home/presentation/pages/order_detailes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,8 +11,10 @@ class OrderDoctorItem extends StatelessWidget {
   const OrderDoctorItem({
     super.key,
     required this.order,
+    required this.doctorName,
   });
   final Order order;
+  final String doctorName;
   @override
   Widget build(BuildContext context) {
     DateTime time = order.date;
@@ -21,7 +23,12 @@ class OrderDoctorItem extends StatelessWidget {
       padding: EdgeInsets.only(top: 10.h, left: 16.w, right: 16.w),
       child: InkWell(
         onTap: () {
-          Moving.navToPage(context: context, page: OrderDetailes(data: order));
+          Moving.navToPage(
+              context: context,
+              page: DoctorOrderDetailes(
+                data: order,
+                doctorName: doctorName,
+              ));
         },
         child: SizedBox(
           height: 67.h,

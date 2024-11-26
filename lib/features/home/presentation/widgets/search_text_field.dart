@@ -2,7 +2,6 @@ import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/core/util/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 
 class SearchTextFiled extends StatelessWidget {
   const SearchTextFiled({
@@ -12,7 +11,8 @@ class SearchTextFiled extends StatelessWidget {
     this.focusNode,
     this.textEditingController,
     this.enabled,
-    this.onTap,
+    this.prefix,
+    this.suffix,
   });
 
   final String hint;
@@ -20,7 +20,9 @@ class SearchTextFiled extends StatelessWidget {
   final FocusNode? focusNode;
   final TextEditingController? textEditingController;
   final bool? enabled;
-  final void Function()? onTap;
+
+  final Widget? prefix;
+  final Widget? suffix;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,14 +36,8 @@ class SearchTextFiled extends StatelessWidget {
         focusNode: focusNode,
         enabled: enabled,
         focuseColor: AppColor.primaryColor,
-        prefix: InkWell(
-          onTap: onTap,
-          child: SvgPicture.asset(
-            filter,
-            fit: BoxFit.none,
-          ),
-        ),
-        suffix: const Icon(Icons.search),
+        prefix: prefix,
+        suffix: suffix,
         title: hint,
         radius: 12.r,
         textEditingController: textEditingController ?? TextEditingController(),

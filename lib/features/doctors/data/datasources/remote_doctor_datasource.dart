@@ -12,8 +12,6 @@ class DoctorRemoteDataSource {
         .from('doctors')
         .select('doctor_id, user_id, doctor_name, phone_number');
 
-    if (response == null) throw Exception('Failed to fetch doctors.');
-
     final List<dynamic> data = response as List<dynamic>;
     return data.map((item) => Doctor.fromJson(item)).toList();
   }
@@ -42,19 +40,6 @@ class DoctorRemoteDataSource {
             type:examinationtypes(examination_type_id, type_name)
           )
         ''').eq('doctor_id', doctorId);
-/**
- * final response = await supabase.from('orders').select('''
-          order_id,
-          doctor_id,
-          patient_id,
-          date,
-          additional_notes,
-          order_price,
-          patients(patient_name, age, phone_number),
-          examinationdetails(detail_id, price)
-        ''').eq('doctor_id', doctorId)
- */
-    if (response == null) throw Exception('Failed to fetch doctor orders.');
 
     final List<dynamic> data = response as List<dynamic>;
     return data.map((item) => Order.fromJson(item)).toList();

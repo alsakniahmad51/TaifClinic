@@ -1,6 +1,5 @@
 import 'package:clinic/features/doctors/domain/entities/doctor.dart';
 import 'package:clinic/features/doctors/presentation/widgets/doctor_detailes_body.dart';
-import 'package:clinic/features/home/presentation/widgets/home_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -21,9 +20,9 @@ class DoctorDetailes extends StatelessWidget {
               indicatorColor: Colors.green,
               labelColor: Colors.green,
               unselectedLabelColor: Colors.grey,
-              overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                (Set<MaterialState> states) {
-                  if (states.contains(MaterialState.pressed)) {
+              overlayColor: WidgetStateProperty.resolveWith<Color?>(
+                (Set<WidgetState> states) {
+                  if (states.contains(WidgetState.pressed)) {
                     return Colors.green[100]; // اللون عند النقر
                   }
                   return null; // بدون تأثير إضافي

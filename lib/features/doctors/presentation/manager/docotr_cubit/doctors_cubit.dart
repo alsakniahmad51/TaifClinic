@@ -7,8 +7,8 @@ part 'doctors_state.dart';
 
 class DoctorsCubit extends Cubit<DoctorsState> {
   final FetchAllDoctorsUseCase getAllDoctorsUseCase;
-  List<Doctor> allDoctors = []; // القائمة الأصلية لجميع الأطباء
-  List<Doctor> filteredDoctors = []; // القائمة المفلترة
+  List<Doctor> allDoctors = [];
+  List<Doctor> filteredDoctors = [];
 
   DoctorsCubit(this.getAllDoctorsUseCase) : super(DoctorsInitial());
 
@@ -17,7 +17,7 @@ class DoctorsCubit extends Cubit<DoctorsState> {
     try {
       final doctors = await getAllDoctorsUseCase();
       allDoctors = doctors;
-      filteredDoctors = doctors; // في البداية تكون نفس القائمة
+      filteredDoctors = doctors;
       emit(DoctorsLoaded(filteredDoctors));
     } catch (e) {
       emit(DoctorsError('Failed to fetch doctors: $e'));
@@ -26,8 +26,8 @@ class DoctorsCubit extends Cubit<DoctorsState> {
 
   void searchDoctors(String query) {
     filteredDoctors = allDoctors
-        .where((doctor) =>
-            doctor.name.toLowerCase().contains(query)) // البحث حسب الاسم
+        .where(
+            (doctor) => doctor.name.toLowerCase().contains(query.toLowerCase()))
         .toList();
     emit(DoctorsLoaded(filteredDoctors));
   }

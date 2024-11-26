@@ -1,7 +1,7 @@
 import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/core/util/functions/navigator.dart';
 import 'package:clinic/features/doctors/domain/entities/doctor.dart';
-import 'package:clinic/features/doctors/presentation/pages/doctor_detailes.dart';
+import 'package:clinic/features/doctors/presentation/pages/doctor_detailes_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';

@@ -6,11 +6,12 @@ import 'package:clinic/features/home/presentation/pages/orders_today.dart';
 import 'package:clinic/features/home/presentation/widgets/home_app_bar.dart';
 import 'package:clinic/features/home/presentation/widgets/home_orders_history.dart';
 import 'package:clinic/features/home/presentation/widgets/home_orders_today.dart';
-import 'package:clinic/features/home/presentation/widgets/home_text_field.dart';
+import 'package:clinic/features/home/presentation/widgets/search_text_field.dart';
 import 'package:clinic/features/home/presentation/widgets/lable_orders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 class HomePageBody extends StatelessWidget {
   const HomePageBody({super.key});
@@ -60,7 +61,14 @@ class HomePageBody extends StatelessWidget {
                               allOrders: orders,
                             ));
                       },
-                      child: const SearchTextFiled(
+                      child: SearchTextFiled(
+                        suffix: const Icon(Icons.search),
+                        prefix: InkWell(
+                          child: SvgPicture.asset(
+                            filter,
+                            fit: BoxFit.none,
+                          ),
+                        ),
                         enabled: false,
                         hint: "مريض, تصوير مقطعي",
                       ),

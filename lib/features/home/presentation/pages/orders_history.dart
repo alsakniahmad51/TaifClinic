@@ -1,10 +1,14 @@
+// ignore_for_file: library_private_types_in_public_api
+
+import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/features/doctors/presentation/manager/docotr_cubit/doctors_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:clinic/features/home/domain/Entities/order.dart';
-import 'package:clinic/features/home/presentation/widgets/home_text_field.dart';
+import 'package:clinic/features/home/presentation/widgets/search_text_field.dart';
 import 'package:clinic/features/home/presentation/widgets/orders_item.dart';
+import 'package:flutter_svg/svg.dart';
 import 'filter_page.dart';
 
 class OrdersHistoryPage extends StatefulWidget {
@@ -83,22 +87,29 @@ class _OrdersHistoryPageState extends State<OrdersHistoryPage> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
               child: SearchTextFiled(
+                suffix: const Icon(Icons.search),
+                prefix: InkWell(
+                  onTap: () async {
+                    final result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const FilterPage(),
+                      ),
+                    );
+                    if (result != null) {
+                      _applyFilters(result['selectedDoctors'],
+                          result['selectedImageType']);
+                    }
+                  },
+                  child: SvgPicture.asset(
+                    filter,
+                    fit: BoxFit.none,
+                  ),
+                ),
                 textEditingController: searchController,
                 focusNode: searchFocusNode, // ربط FocusNode بـ TextField
                 hint: 'ابحث عن اسم المريض',
                 onChanged: _filterOrders,
-                onTap: () async {
-                  final result = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const FilterPage(),
-                    ),
-                  );
-                  if (result != null) {
-                    _applyFilters(
-                        result['selectedDoctors'], result['selectedImageType']);
-                  }
-                },
               ),
             ),
             Expanded(

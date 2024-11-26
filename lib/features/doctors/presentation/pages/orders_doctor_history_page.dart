@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/features/doctors/presentation/manager/docotr_order_cubit/doctor_order_cubit.dart';
 import 'package:clinic/features/doctors/presentation/widgets/order_doctor_item.dart';
-import 'package:clinic/features/home/presentation/widgets/home_text_field.dart';
+import 'package:clinic/features/home/presentation/widgets/search_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,12 +12,15 @@ class DoctorOrdersHistory extends StatelessWidget {
   const DoctorOrdersHistory({
     super.key,
     required this.doctorId,
+    required this.doctorName,
   });
   final int doctorId;
-
+  final String doctorName;
   @override
   Widget build(BuildContext context) {
-    if (context.read<DoctorOrdersCubit>().state is DoctorOrdersInitial) {
+    TextEditingController search = TextEditingController();
+    if (context.read<DoctorOrdersCubit>().state is DoctorOrdersInitial ||
+        context.read<DoctorOrdersCubit>().state is DoctorOrdersLoaded) {
       context.read<DoctorOrdersCubit>().fetchOrders(doctorId);
     }
     return BlocBuilder<DoctorOrdersCubit, DoctorOrdersState>(
@@ -29,7 +32,7 @@ class DoctorOrdersHistory extends StatelessWidget {
             ),
           );
         } else if (state is DoctorOrdersLoaded) {
-          final order = state.orders;
+          final orders = state.orders;
 
           return RefreshIndicator(
             color: AppColor.primaryColor,
@@ -41,18 +44,24 @@ class DoctorOrdersHistory extends StatelessWidget {
                 SizedBox(
                   height: 10.h,
                 ),
-                const SearchTextFiled(
+                SearchTextFiled(
+                  prefix: const Icon(Icons.search),
+                  textEditingController: search,
                   hint: 'ابحث عن اسم المريض',
+                  onChanged: (query) {
+                    context.read<DoctorOrdersCubit>().searchOrders(query);
+                  },
                 ),
                 SizedBox(
                   height: 10.h,
                 ),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: order.length,
+                    itemCount: orders.length,
                     itemBuilder: (context, index) {
                       return OrderDoctorItem(
-                        order: order[index],
+                        order: orders[index],
+                        doctorName: doctorName,
                       );
                     },
                   ),
@@ -75,3 +84,4 @@ class DoctorOrdersHistory extends StatelessWidget {
     );
   }
 }
+//  
