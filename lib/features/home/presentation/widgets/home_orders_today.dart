@@ -10,6 +10,7 @@ class HomeOrdersTody extends StatelessWidget {
     required this.order,
   });
   final List<Order> order;
+
   @override
   Widget build(BuildContext context) {
     final today = DateTime.now();
@@ -20,6 +21,7 @@ class HomeOrdersTody extends StatelessWidget {
           order.date.month == today.month &&
           order.date.day == today.day;
     }).toList();
+
     return Padding(
       padding: EdgeInsets.only(top: 24.h),
       child: SizedBox(
@@ -38,18 +40,17 @@ class HomeOrdersTody extends StatelessWidget {
               )
             : ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: 2,
+                itemCount: ordersToday.length,
                 itemBuilder: (context, index) {
                   final data = ordersToday[index];
 
-                  // String dateTime = data.date.toString();
-                  // var parts = dateTime.split(' ');
+                  // ضبط الوقت ليعكس توقيت سوريا (+03:00)
+                  final syrianTime = data.date.add(const Duration(hours: 3));
 
-                  // String timefake = parts[1];
-                  // var partTime = timefake.split('.');
-                  // String time = partTime[0];
+                  // إعداد النص لعرض الوقت الماضي
                   timeago.setLocaleMessages('ar', timeago.ArMessages());
-                  String timePassed = timeago.format(data.date, locale: 'ar');
+                  String timePassed = timeago.format(syrianTime, locale: 'ar');
+
                   return OrdersItem(
                     data: data,
                     time: timePassed,
