@@ -7,12 +7,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DoctorsPageBody extends StatelessWidget {
-  const DoctorsPageBody({
-    super.key,
-  });
-
+  const DoctorsPageBody({super.key});
   @override
   Widget build(BuildContext context) {
+    TextEditingController search = TextEditingController();
+
     return BlocBuilder<DoctorsCubit, DoctorsState>(
       builder: (context, state) {
         if (state is DoctorsLoading) {
@@ -28,13 +27,17 @@ class DoctorsPageBody extends StatelessWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.only(top: 16.h, right: 16.w, left: 16.w),
-                  child: const SearchTextFiled(
+                  child: SearchTextFiled(
+                    textEditingController: search,
+                    onChanged: (query) {
+                      context
+                          .read<DoctorsCubit>()
+                          .searchDoctors(query.toLowerCase());
+                    },
                     hint: 'اسم الطبيب',
                   ),
                 ),
-                SizedBox(
-                  height: 20.h,
-                ),
+                SizedBox(height: 20.h),
                 Expanded(
                   child: ListView.builder(
                     itemCount: doctors.length,
@@ -44,13 +47,20 @@ class DoctorsPageBody extends StatelessWidget {
                       );
                     },
                   ),
-                )
+                ),
               ],
             ),
           );
-        } else
-          return Text('data');
+        } else if (state is DoctorsError) {
+          return Center(child: Text(state.message));
+        } else {
+          return const Center(child: Text('لا يوجد بيانات'));
+        }
       },
     );
   }
 }
+
+
+
+///  

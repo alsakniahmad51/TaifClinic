@@ -32,9 +32,9 @@ class OrderDoctorItem extends StatelessWidget {
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.2),
-                  spreadRadius: 4,
+                  spreadRadius: 3,
                   blurRadius: 3,
-                  offset: const Offset(0.5, 1), // changes position of shadow
+                  offset: const Offset(1, 1), // changes position of shadow
                 ),
               ],
             ),
@@ -44,6 +44,7 @@ class OrderDoctorItem extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(right: 10.w, top: 10.h),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         textAlign: TextAlign.start,

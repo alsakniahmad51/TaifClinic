@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/features/doctors/presentation/manager/docotr_order_cubit/doctor_order_cubit.dart';
-import 'package:clinic/features/doctors/presentation/widgets/doctor_detailes_body.dart';
 import 'package:clinic/features/doctors/presentation/widgets/order_doctor_item.dart';
 import 'package:clinic/features/home/presentation/widgets/home_text_field.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +14,7 @@ class DoctorOrdersHistory extends StatelessWidget {
     required this.doctorId,
   });
   final int doctorId;
+
   @override
   Widget build(BuildContext context) {
     if (context.read<DoctorOrdersCubit>().state is DoctorOrdersInitial) {
@@ -30,6 +30,7 @@ class DoctorOrdersHistory extends StatelessWidget {
           );
         } else if (state is DoctorOrdersLoaded) {
           final order = state.orders;
+
           return RefreshIndicator(
             color: AppColor.primaryColor,
             onRefresh: () {
@@ -40,7 +41,9 @@ class DoctorOrdersHistory extends StatelessWidget {
                 SizedBox(
                   height: 10.h,
                 ),
-                const SearchTextFiled(hint: 'ابحث عن اسم المريض'),
+                const SearchTextFiled(
+                  hint: 'ابحث عن اسم المريض',
+                ),
                 SizedBox(
                   height: 10.h,
                 ),
