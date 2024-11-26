@@ -8,7 +8,9 @@ class OrderLoading extends OrderState {}
 
 class OrderLoaded extends OrderState {
   final List<Order> orders;
-  OrderLoaded(this.orders);
+
+  final DateTime? selectedDate; // تاريخ المستخدم
+  OrderLoaded(this.orders, {this.selectedDate});
 }
 
 class OrderError extends OrderState {

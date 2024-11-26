@@ -6,7 +6,7 @@ class FetchOrdersUseCase {
 
   FetchOrdersUseCase(this.repository);
 
-  Future<List<Order>> call() async {
-    return await repository.fetchAllOrders();
+  Future<List<Order>> call(DateTime startDate, DateTime endDate) async {
+    return await repository.fetchAllOrders(startDate, endDate);
   }
 }

@@ -9,10 +9,10 @@ class OrderCubit extends Cubit<OrderState> {
 
   OrderCubit(this.fetchOrdersUseCase) : super(OrderInitial());
 
-  Future<void> fetchOrders() async {
+  Future<void> fetchOrders(DateTime startDate, DateTime endDate) async {
     emit(OrderLoading());
     try {
-      final orders = await fetchOrdersUseCase();
+      final orders = await fetchOrdersUseCase(startDate, endDate);
       emit(OrderLoaded(orders));
     } catch (e) {
       emit(OrderError(e.toString()));

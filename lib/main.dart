@@ -55,7 +55,13 @@ class CliniApp extends StatelessWidget {
       builder: (context, child) => MultiBlocProvider(
         providers: [
           BlocProvider<OrderCubit>(
-            create: (context) => OrderCubit(fetchOrdersUseCase)..fetchOrders(),
+            create: (context) {
+              final now = DateTime.now();
+              final startOfMonth = DateTime(now.year, now.month, 1);
+              final endOfMonth = DateTime(now.year, now.month + 1, 0);
+              return OrderCubit(fetchOrdersUseCase)
+                ..fetchOrders(startOfMonth, endOfMonth);
+            },
           ),
           BlocProvider(
             create: (context) =>
