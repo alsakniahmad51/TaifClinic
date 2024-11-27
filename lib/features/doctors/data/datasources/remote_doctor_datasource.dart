@@ -50,6 +50,7 @@ class DoctorRemoteDataSource {
             type:examinationtypes(examination_type_id, type_name)
           )
         ''')
+          .eq('doctor_id', doctorId)
           .gte('date', startDate.toIso8601String()) // تاريخ البداية
           .lte('date', endDate.toIso8601String()); // تاريخ النهاية
 
