@@ -88,7 +88,7 @@ class HomePageBody extends StatelessWidget {
                         padding: 200,
                       ),
                     ),
-                    HomeOrdersTody(
+                    HomeOrdersToday(
                       order: orders,
                     ),
                     LableOrders(

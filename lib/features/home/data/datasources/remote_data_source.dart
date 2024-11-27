@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:clinic/features/home/domain/Entities/order.dart';
 
@@ -26,6 +28,11 @@ class RemoteDataSource {
             age,
             phone_number
           ),
+          output:order_output(
+          id,
+          output_type,
+          price
+        ),
           examinationdetails!inner(
             detail_id,
             price,
@@ -38,12 +45,14 @@ class RemoteDataSource {
           .lte('date', endDate.toIso8601String()); // تاريخ النهاية
 
       final List<dynamic> data = response as List<dynamic>;
+      log(data.toString());
       return data.map((item) => Order.fromJson(item)).toList();
     } catch (e) {
       throw Exception('Failed to load orders: ${e.toString()}');
     }
   }
 
+/** */
   /// Fetch all orders with related patient and examination details
   // Future<List<Order>> fetchAllOrders() async {
   //   try {

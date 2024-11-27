@@ -40,6 +40,12 @@ class DoctorOrderDetailes extends StatelessWidget {
                 buttomradius: 0,
               ),
               TableItem(
+                title: 'العمر',
+                value: "${data.patientAge}",
+                topradius: 0,
+                buttomradius: 0,
+              ),
+              TableItem(
                 title: 'اسم الطبيب',
                 value: doctorName,
                 topradius: 0,
@@ -52,20 +58,20 @@ class DoctorOrderDetailes extends StatelessWidget {
                 buttomradius: 0,
               ),
               TableItem(
-                title: 'العمر',
-                value: "${data.patientAge}",
-                topradius: 0,
-                buttomradius: 0,
-              ),
-              TableItem(
                 title: 'الجزء المراد تصويره',
                 value: data.detail!.option.optionName,
                 topradius: 0,
                 buttomradius: 0,
               ),
               TableItem(
-                title: 'شكل الصورة',
+                title: 'وضعية الصورة',
                 value: data.detail!.mode.modeName,
+                topradius: 0,
+                buttomradius: 0,
+              ),
+              TableItem(
+                title: 'شكل الصورة',
+                value: data.output!.type,
                 topradius: 0,
                 buttomradius: 0,
               ),

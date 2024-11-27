@@ -17,6 +17,9 @@ class OrderDoctorItem extends StatelessWidget {
   final String doctorName;
   @override
   Widget build(BuildContext context) {
+    String dateTime = order.date.toString();
+    var parts = dateTime.split(' ');
+    String date = parts[0];
     DateTime time = order.date;
     String formattedTime = DateFormat('hh:mm a').format(time);
     return Padding(
@@ -63,7 +66,7 @@ class OrderDoctorItem extends StatelessWidget {
                       ),
                       Text(
                         textAlign: TextAlign.start,
-                        formattedTime,
+                        date,
                         style: TextStyle(fontSize: 12.sp, color: Colors.grey),
                       )
                     ],

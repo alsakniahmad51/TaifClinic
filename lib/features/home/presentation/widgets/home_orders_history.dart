@@ -35,7 +35,7 @@ class HomeOrdersHistory extends StatelessWidget {
               )
             : ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: 2,
+                itemCount: ordersExceptToday.length == 1 ? 1 : 2,
                 itemBuilder: (context, index) {
                   final data = ordersExceptToday[index];
 

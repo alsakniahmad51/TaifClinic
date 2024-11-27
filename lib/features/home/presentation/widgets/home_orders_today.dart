@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class HomeOrdersTody extends StatelessWidget {
-  const HomeOrdersTody({
+class HomeOrdersToday extends StatelessWidget {
+  const HomeOrdersToday({
     super.key,
     required this.order,
   });
@@ -40,7 +40,7 @@ class HomeOrdersTody extends StatelessWidget {
               )
             : ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: ordersToday.length,
+                itemCount: ordersToday.length == 1 ? 1 : 2,
                 itemBuilder: (context, index) {
                   final data = ordersToday[index];
 

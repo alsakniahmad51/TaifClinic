@@ -6,7 +6,11 @@ class FetchDoctorOrdersUseCase {
 
   FetchDoctorOrdersUseCase(this.repository);
 
-  Future<List<Order>> call(int doctorId) async {
-    return await repository.getDoctorOrders(doctorId);
+  Future<List<Order>> call(
+    int doctorId,
+    int? month,
+    int? year,
+  ) async {
+    return await repository.getDoctorOrders(doctorId, month, year);
   }
 }

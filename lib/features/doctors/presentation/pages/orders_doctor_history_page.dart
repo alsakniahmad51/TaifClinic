@@ -13,16 +13,27 @@ class DoctorOrdersHistory extends StatelessWidget {
     super.key,
     required this.doctorId,
     required this.doctorName,
+    this.selectedMonth,
+    this.selectedYear,
   });
   final int doctorId;
   final String doctorName;
+  final int? selectedMonth;
+  final int? selectedYear;
   @override
   Widget build(BuildContext context) {
     TextEditingController search = TextEditingController();
+
+    // الحصول على الشهر والسنة الحاليين إذا لم يتم تحديدهما
+    final currentDate = DateTime.now();
+    final month = selectedMonth ?? currentDate.month;
+    final year = selectedYear ?? currentDate.year;
+
     if (context.read<DoctorOrdersCubit>().state is DoctorOrdersInitial ||
         context.read<DoctorOrdersCubit>().state is DoctorOrdersLoaded) {
-      context.read<DoctorOrdersCubit>().fetchOrders(doctorId);
+      context.read<DoctorOrdersCubit>().fetchOrders(doctorId, month, year);
     }
+
     return BlocBuilder<DoctorOrdersCubit, DoctorOrdersState>(
       builder: (context, state) {
         if (state is DoctorOrdersLoading) {
@@ -33,11 +44,14 @@ class DoctorOrdersHistory extends StatelessWidget {
           );
         } else if (state is DoctorOrdersLoaded) {
           final orders = state.orders;
-
+          orders.sort((a, b) => b.date.compareTo(a.date));
           return RefreshIndicator(
+            backgroundColor: Colors.white,
             color: AppColor.primaryColor,
             onRefresh: () {
-              return context.read<DoctorOrdersCubit>().fetchOrders(doctorId);
+              return context
+                  .read<DoctorOrdersCubit>()
+                  .fetchOrders(doctorId, month, year);
             },
             child: Column(
               children: [

@@ -1,4 +1,5 @@
 import 'package:clinic/features/home/domain/Entities/examination_detail.dart';
+import 'package:clinic/features/home/domain/Entities/output.dart';
 
 class Order {
   final int id;
@@ -12,8 +13,9 @@ class Order {
   final ExaminationDetail? detail;
   final String? additionalNotes;
   final int price;
-
+  final Output? output;
   Order({
+    required this.output,
     required this.id,
     required this.doctorId,
     required this.patientId,
@@ -38,11 +40,10 @@ class Order {
           json['date'] != null ? DateTime.parse(json['date']) : DateTime.now(),
       patientAge: json['patients']?['age'] ?? 0,
       phoneNumber: json['patients']?['phone_number'],
-      detail: json['examinationdetails'] != null
-          ? ExaminationDetail.fromJson(json['examinationdetails'])
-          : null,
+      detail: ExaminationDetail.fromJson(json['examinationdetails']),
       additionalNotes: json['additional_notes'] ?? 'لا يوجد',
       price: json['order_price'] ?? 0,
+      output: Output.fromjson(json['output']),
     );
   }
 }

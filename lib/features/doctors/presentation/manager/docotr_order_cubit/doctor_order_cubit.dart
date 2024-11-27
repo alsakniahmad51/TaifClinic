@@ -13,15 +13,17 @@ class DoctorOrdersCubit extends Cubit<DoctorOrdersState> {
 
   DoctorOrdersCubit(this.getDoctorOrdersUseCase) : super(DoctorOrdersInitial());
 
-  Future<void> fetchOrders(int doctorId) async {
+  Future<void> fetchOrders(int doctorId, int? month, int? year) async {
     emit(DoctorOrdersLoading());
     try {
-      final orders = await getDoctorOrdersUseCase(doctorId);
-      allOrders = orders;
-      filteredOrders = orders; // في البداية يتم عرض كل الطلبات
-      emit(DoctorOrdersLoaded(filteredOrders));
-    } catch (e) {
-      emit(DoctorOrdersError('Failed to fetch orders: $e'));
+      final orders = await getDoctorOrdersUseCase.call(
+        doctorId,
+        month,
+        year,
+      );
+      emit(DoctorOrdersLoaded(orders));
+    } catch (error) {
+      emit(DoctorOrdersError(error.toString()));
     }
   }
 

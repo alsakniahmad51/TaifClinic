@@ -14,8 +14,12 @@ class DoctorRepositoryImpl implements DoctorRepository {
   }
 
   @override
-  Future<List<Order>> getDoctorOrders(int doctorId) async {
-    return await remoteDataSource.fetchDoctorOrders(doctorId);
+  Future<List<Order>> getDoctorOrders(
+    int doctorId,
+    int? month,
+    int? year,
+  ) async {
+    return await remoteDataSource.fetchDoctorOrders(doctorId, month, year);
   }
 }
 
