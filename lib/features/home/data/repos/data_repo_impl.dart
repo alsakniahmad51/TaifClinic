@@ -10,14 +10,11 @@ class DataRepositoryImpl implements DataRepository {
   @override
   Future<List<Order>> fetchAllOrders(
       DateTime startDate, DateTime endDate) async {
-    // Fetch all orders
-    final orders = await remoteDataSource.fetchAllOrders(startDate, endDate);
+    return await remoteDataSource.fetchAllOrders(startDate, endDate);
+  }
 
-    // Update doctor names for each order asynchronously
-    for (var order in orders) {
-      order.doctorName = await remoteDataSource.fetchDoctorName(order.doctorId);
-    }
-
-    return orders;
+  @override
+  Future<Map<int, String>> fetchDoctorNames(Set<int> doctorIds) async {
+    return await remoteDataSource.fetchDoctorNames(doctorIds);
   }
 }

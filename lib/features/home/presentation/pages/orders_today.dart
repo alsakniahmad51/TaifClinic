@@ -30,9 +30,10 @@ class OrdersTodayPage extends StatelessWidget {
           : ListView.builder(
               itemCount: ordersToday.length,
               itemBuilder: (context, index) {
+                final syrianTime =
+                    ordersToday[index].date.add(const Duration(hours: 3));
                 timeago.setLocaleMessages('ar', timeago.ArMessages());
-                String timePassed =
-                    timeago.format(ordersToday[index].date, locale: 'ar');
+                String timePassed = timeago.format(syrianTime, locale: 'ar');
 
                 return OrdersItem(data: ordersToday[index], time: timePassed);
               },

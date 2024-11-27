@@ -56,10 +56,11 @@ class HomePageBody extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         Moving.navToPage(
-                            context: context,
-                            page: OrdersHistoryPage(
-                              allOrders: orders,
-                            ));
+                          context: context,
+                          page: OrdersHistoryPage(
+                            allOrders: orders,
+                          ),
+                        );
                       },
                       child: SearchTextFiled(
                         suffix: const Icon(Icons.search),
@@ -96,15 +97,16 @@ class HomePageBody extends StatelessWidget {
                       padding: 120,
                       onTap: () {
                         Moving.navToPage(
-                            context: context,
-                            page: OrdersHistoryPage(
-                              allOrders: orders,
-                            ));
+                          context: context,
+                          page: OrdersHistoryPage(
+                            allOrders: orders,
+                          ),
+                        );
                       },
                     ),
                     HomeOrdersHistory(
                       order: orders,
-                    )
+                    ),
                   ],
                 ),
               ),

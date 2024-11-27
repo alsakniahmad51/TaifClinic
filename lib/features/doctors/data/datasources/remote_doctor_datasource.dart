@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:clinic/features/doctors/domain/entities/doctor.dart';
 import 'package:clinic/features/home/domain/Entities/order.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -17,56 +19,46 @@ class DoctorRemoteDataSource {
   }
 
   Future<List<Order>> fetchDoctorOrders(
-    int doctorId,
-    int? month,
-    int? year,
-  ) async {
-    // بناء التاريخين: بداية ونهاية الشهر
-    DateTime? startDate;
-    DateTime? endDate;
-    if (month != null && year != null) {
-      startDate = DateTime(year, month, 1);
-      endDate = DateTime(year, month + 1, 1).subtract(const Duration(days: 1));
-    }
-
-    final query = supabase.from('orders').select('''
-        order_id,
-        doctor_id,
-        patient_id,
-        date,
-        additional_notes,
-        order_price,
-        order_output,
-        patients(
+      int doctorId, DateTime startDate, DateTime endDate) async {
+    try {
+      final response = await supabase
+          .from('orders')
+          .select('''
+          order_id,
+          doctor_id,
           patient_id,
-          patient_name,
-          age,
-          phone_number
-        ),
-        output:order_output(
+          date,
+          additional_notes,
+          order_price,
+          order_output,
+          patients(
+            patient_id,
+            patient_name,
+            age,
+            phone_number
+          ),
+          output:order_output(
           id,
           output_type,
           price
         ),
-        examinationdetails!inner(
-          detail_id,
-          price,
-          mode:examinationmodes(mode_id, mode_name),
-          option:examinationoptions(option_id, option_name),
-          type:examinationtypes(examination_type_id, type_name)
-        )
-      ''').eq('doctor_id', doctorId);
+          examinationdetails!inner(
+            detail_id,
+            price,
+            mode:examinationmodes(mode_id, mode_name),
+            option:examinationoptions(option_id, option_name),
+            type:examinationtypes(examination_type_id, type_name)
+          )
+        ''')
+          .gte('date', startDate.toIso8601String()) // تاريخ البداية
+          .lte('date', endDate.toIso8601String()); // تاريخ النهاية
 
-    // إضافة تصفية التاريخ إذا كان الشهر والسنة محددين
-    if (startDate != null && endDate != null) {
-      query
-          .gte('date', startDate.toIso8601String())
-          .lte('date', endDate.toIso8601String());
+      final List<dynamic> data = response as List<dynamic>;
+      log(data.toString());
+      return data.map((item) => Order.fromJson(item)).toList();
+    } catch (e) {
+      throw Exception('Failed to load orders: ${e.toString()}');
     }
-
-    final response = await query;
-    final List<dynamic> data = response as List<dynamic>;
-    return data.map((item) => Order.fromJson(item)).toList();
   }
 
   // Future<List<Order>> fetchDoctorOrders(int doctorId) async {

@@ -14,6 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:month_year_picker/month_year_picker.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 Future<void> main() async {
   final supabase = await Supabase.initialize(
@@ -22,9 +24,9 @@ Future<void> main() async {
   );
   runApp(CliniApp(
     fetchOrdersUseCase: FetchOrdersUseCase(
-      (DataRepositoryImpl(
+      DataRepositoryImpl(
         RemoteDataSource(supabase.client),
-      )),
+      ),
     ),
     fetchAllDoctorsUseCase: FetchAllDoctorsUseCase(
       DoctorRepositoryImpl(
@@ -40,19 +42,25 @@ Future<void> main() async {
 }
 
 class CliniApp extends StatelessWidget {
-  const CliniApp(
-      {super.key,
-      required this.fetchOrdersUseCase,
-      required this.fetchAllDoctorsUseCase,
-      required this.fetchDoctorOrdersUseCase});
+  const CliniApp({
+    super.key,
+    required this.fetchOrdersUseCase,
+    required this.fetchAllDoctorsUseCase,
+    required this.fetchDoctorOrdersUseCase,
+  });
+
   final FetchOrdersUseCase fetchOrdersUseCase;
   final FetchAllDoctorsUseCase fetchAllDoctorsUseCase;
   final FetchDoctorOrdersUseCase fetchDoctorOrdersUseCase;
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(MediaQuery.of(context).size.width,
-          MediaQuery.of(context).size.height),
+      designSize: Size(
+          MediaQuery.of(context).size.width,
+          MediaQuery.of(context)
+              .size
+              .height), // إعداد مقاسات التصميم الافتراضية
       builder: (context, child) => MultiBlocProvider(
         providers: [
           BlocProvider<OrderCubit>(
@@ -81,9 +89,17 @@ class CliniApp extends StatelessWidget {
             ),
           ),
           debugShowCheckedModeBanner: false,
-          home: const Scaffold(
-            body: SplashScreen(),
-          ),
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            MonthYearPickerLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('en', ''),
+            Locale('ar', ''),
+          ],
+          home: const SplashScreen(),
         ),
       ),
     );

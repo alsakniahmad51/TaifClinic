@@ -22,7 +22,7 @@ class DoctorItem extends StatelessWidget {
           onTap: () {
             Moving.navToPage(
                 context: context,
-                page: DoctorDetailes(
+                page: DoctorDetails(
                   doctor: doctor,
                 ));
           },

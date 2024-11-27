@@ -1,18 +1,34 @@
-import 'package:clinic/features/doctors/domain/entities/doctor.dart';
-import 'package:clinic/features/doctors/presentation/widgets/doctor_detailes_body.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart' as intl; // لعرض التواريخ بطريقة مناسبة
+import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/features/doctors/domain/entities/doctor.dart';
 import 'package:clinic/features/doctors/presentation/pages/doctor_info_page.dart';
 import 'package:clinic/features/doctors/presentation/pages/orders_doctor_history_page.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:month_year_picker/month_year_picker.dart';
 
-class DoctorDetailes extends StatelessWidget {
-  const DoctorDetailes({super.key, required this.doctor});
+class DoctorDetails extends StatefulWidget {
+  const DoctorDetails({
+    super.key,
+    required this.doctor,
+  });
+
   final Doctor doctor;
+
+  @override
+  State<DoctorDetails> createState() => _DoctorDetailsState();
+}
+
+class _DoctorDetailsState extends State<DoctorDetails> {
+  int? selectedMonth;
+  int? selectedYear;
+
+  void _updateDate(DateTime selectedDate) {
+    setState(() {
+      selectedMonth = selectedDate.month;
+      selectedYear = selectedDate.year;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,29 +46,12 @@ class DoctorDetailes extends StatelessWidget {
             ),
             actions: [
               IconButton(
-                icon: const Icon(Icons.calendar_month, color: Colors.green),
+                icon: SvgPicture.asset(calendar),
                 onPressed: () async {
-                  final DateTime? selectedDate = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2020), // الحد الأدنى للتاريخ
-                    lastDate: DateTime.now(), // الحد الأقصى للتاريخ
-                  );
-
-                  if (selectedDate != null) {
-                    // تمرير الشهر والسنة إلى صفحة الطلبات
-                    final selectedMonth = selectedDate.month;
-                    final selectedYear = selectedDate.year;
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => DoctorOrdersHistory(
-                          doctorId: doctor.id,
-                          doctorName: doctor.name,
-                          selectedMonth: selectedMonth,
-                          selectedYear: selectedYear,
-                        ),
-                      ),
-                    );
+                  final DateTime? pickedDate =
+                      await _showMonthYearPicker(context);
+                  if (pickedDate != null) {
+                    _updateDate(pickedDate);
                   }
                 },
               ),
@@ -81,10 +80,12 @@ class DoctorDetailes extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
-              DoctorInfo(doctor: doctor),
+              DoctorInfo(doctor: widget.doctor),
               DoctorOrdersHistory(
-                doctorId: doctor.id,
-                doctorName: doctor.name,
+                selectedYear: selectedYear,
+                selectedMonth: selectedMonth,
+                doctorId: widget.doctor.id,
+                doctorName: widget.doctor.name,
               ),
             ],
           ),
@@ -93,70 +94,25 @@ class DoctorDetailes extends StatelessWidget {
     );
   }
 
-  Future<DateTime?> showMonthYearPicker({
-    required BuildContext context,
-    required DateTime initialDate,
-  }) async {
-    DateTime? selectedDate;
-    await showDialog(
+  Future<DateTime?> _showMonthYearPicker(BuildContext context) {
+    return showMonthYearPicker(
       context: context,
-      builder: (BuildContext context) {
-        int selectedMonth = initialDate.month;
-        int selectedYear = initialDate.year;
-
-        return AlertDialog(
-          title: const Text("اختر الشهر والسنة"),
-          content: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              DropdownButton<int>(
-                value: selectedMonth,
-                items: List.generate(12, (index) {
-                  final month = index + 1;
-                  return DropdownMenuItem<int>(
-                    value: month,
-                    child: Text(
-                        intl.DateFormat.MMMM('ar').format(DateTime(0, month))),
-                  );
-                }),
-                onChanged: (value) {
-                  if (value != null) {
-                    selectedMonth = value;
-                  }
-                },
-              ),
-              DropdownButton<int>(
-                value: selectedYear,
-                items: List.generate(
-                    10,
-                    (index) => DropdownMenuItem(
-                        value: 2020 + index, child: Text('${2020 + index}'))),
-                onChanged: (value) {
-                  if (value != null) {
-                    selectedYear = value;
-                  }
-                },
-              ),
-            ],
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme:
+                const ColorScheme.light(primary: AppColor.primaryColor),
+            dialogBackgroundColor: Colors.white,
+            textTheme: TextTheme(
+              bodyMedium: TextStyle(fontSize: 16.sp),
+            ),
           ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                selectedDate = DateTime(selectedYear, selectedMonth);
-                Navigator.of(context).pop();
-              },
-              child: const Text("تأكيد"),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("إلغاء"),
-            ),
-          ],
+          child: child!,
         );
       },
     );
-    return selectedDate;
   }
 }
