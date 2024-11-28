@@ -20,8 +20,8 @@ class OrdersItem extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Padding(
-        padding: EdgeInsets.only(bottom: 10.h),
-        child: InkWell(
+        padding: EdgeInsets.only(bottom: 10.h, right: 10.w, left: 10.w),
+        child: GestureDetector(
           onTap: () {
             Moving.navToPage(
                 context: context,
@@ -30,32 +30,44 @@ class OrdersItem extends StatelessWidget {
                 ));
           },
           child: SizedBox(
-            height: 80.h,
-            child: Card(
-              margin: EdgeInsets.symmetric(
-                horizontal: 16.w,
+            height: 85.h,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                // color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    blurRadius: 4,
+
+                    offset: const Offset(1, 1), // changes position of shadow
+                  ),
+                ],
               ),
-              color: const Color(0xfffefefe),
-              child: ListTile(
-                trailing: Padding(
-                  padding: EdgeInsets.only(bottom: 20.h),
-                  child: const Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    size: 15,
-                    color: Colors.grey,
+              child: Card(
+                color: const Color(0xfffefefe),
+                child: ListTile(
+                  trailing: Padding(
+                    padding: EdgeInsets.only(bottom: 20.h),
+                    child: const Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      size: 15,
+                      color: Colors.grey,
+                    ),
                   ),
-                ),
-                leading: Padding(
-                  padding: EdgeInsets.only(bottom: 13.h),
-                  child: SvgPicture.asset(
-                    x_ray_icon,
-                    height: 44.h,
-                    width: 44.w,
+                  leading: Padding(
+                    padding: EdgeInsets.only(bottom: 15.h),
+                    child: SvgPicture.asset(
+                      fit: BoxFit.cover,
+                      x_ray_icon,
+                      height: 44.h,
+                      width: 44.w,
+                    ),
                   ),
-                ),
-                title: TitleListTile(
-                  data: data,
-                  time: time,
+                  title: TitleListTile(
+                    data: data,
+                    time: time,
+                  ),
                 ),
               ),
             ),

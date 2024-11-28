@@ -1,6 +1,7 @@
 import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/features/doctors/presentation/manager/docotr_order_cubit/doctor_order_cubit.dart';
 import 'package:clinic/features/doctors/presentation/widgets/order_doctor_item.dart';
+import 'package:clinic/features/home/presentation/pages/summary_page.dart';
 import 'package:clinic/features/home/presentation/widgets/search_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -65,6 +66,23 @@ class DoctorOrdersHistory extends StatelessWidget {
               children: [
                 SizedBox(height: 10.h),
                 SearchTextFiled(
+                  suffix: GestureDetector(
+                    child: const Icon(
+                      Icons.bar_chart,
+                      size: 28,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SummaryPage(
+                            ordersToday: orders,
+                            title: 'الجرد الشهري',
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                   prefix: const Icon(Icons.search),
                   textEditingController: searchController,
                   hint: 'ابحث عن اسم المريض',

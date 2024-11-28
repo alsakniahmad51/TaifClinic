@@ -21,13 +21,3 @@ class FetchOrdersUseCase {
     return orders;
   }
 }
-
-// class FetchOrdersUseCase {
-//   final DataRepository repository;
-
-//   FetchOrdersUseCase(this.repository);
-
-//   Future<List<Order>> call(DateTime startDate, DateTime endDate) async {
-//     return await repository.fetchAllOrders(startDate, endDate);
-//   }
-// }

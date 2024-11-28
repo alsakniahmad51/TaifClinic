@@ -20,7 +20,9 @@ class OrderDetailes extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
+          backgroundColor: Colors.white,
           centerTitle: true,
           title: Text(
             'معلومات الطلب',
@@ -87,7 +89,7 @@ class OrderDetailes extends StatelessWidget {
               ),
               TableItem(
                 title: 'قيمة الفاتورة',
-                value: "${data.detail!.price} ل.س",
+                value: "${data.detail!.price + data.output!.price} ل.س",
                 topradius: 0,
                 buttomradius: 0,
               ),

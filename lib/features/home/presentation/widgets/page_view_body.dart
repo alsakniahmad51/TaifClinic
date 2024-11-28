@@ -40,6 +40,7 @@ class _PageViewBodyState extends State<PageViewBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       bottomNavigationBar: NavBar(
         pageViewBody: widget,
       ),

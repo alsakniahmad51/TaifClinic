@@ -16,109 +16,112 @@ class _FilterPageState extends State<FilterPage> {
   String? selectedImageType;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('فلترة'),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // قائمة الأطباء
-            const Text(
-              'اختيار الأطباء',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 8.h),
-            BlocBuilder<DoctorsCubit, DoctorsState>(
-              builder: (context, state) {
-                if (state is DoctorsLoading) {
-                  return const Center(
-                      child: CircularProgressIndicator(
-                    color: AppColor.primaryColor,
-                  ));
-                } else if (state is DoctorsLoaded) {
-                  return DropdownButtonFormField<String>(
-                    focusColor: Colors.green,
-                    decoration: InputDecoration(
-                        border: border(width: 1),
-                        enabledBorder: border(width: 1),
-                        focusedBorder: border(width: 2)),
-                    hint: const Text('اختر طبيباً'),
-                    items: state.doctors.map((doctor) {
-                      return DropdownMenuItem<String>(
-                        value: doctor.name,
-                        child: Text(doctor.name),
-                      );
-                    }).toList(),
-                    onChanged: (doctorName) {
-                      setState(() {
-                        if (doctorName != null &&
-                            !selectedDoctors.contains(doctorName)) {
-                          selectedDoctors.add(doctorName);
-                        }
-                      });
-                    },
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('فلترة'),
+          centerTitle: true,
+        ),
+        body: Padding(
+          padding: EdgeInsets.all(16.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // قائمة الأطباء
+              const Text(
+                'اختيار الأطباء',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8.h),
+              BlocBuilder<DoctorsCubit, DoctorsState>(
+                builder: (context, state) {
+                  if (state is DoctorsLoading) {
+                    return const Center(
+                        child: CircularProgressIndicator(
+                      color: AppColor.primaryColor,
+                    ));
+                  } else if (state is DoctorsLoaded) {
+                    return DropdownButtonFormField<String>(
+                      focusColor: Colors.green,
+                      decoration: InputDecoration(
+                          border: border(width: 1),
+                          enabledBorder: border(width: 1),
+                          focusedBorder: border(width: 2)),
+                      hint: const Text('اختر طبيباً'),
+                      items: state.doctors.map((doctor) {
+                        return DropdownMenuItem<String>(
+                          value: doctor.name,
+                          child: Text(doctor.name),
+                        );
+                      }).toList(),
+                      onChanged: (doctorName) {
+                        setState(() {
+                          if (doctorName != null &&
+                              !selectedDoctors.contains(doctorName)) {
+                            selectedDoctors.add(doctorName);
+                          }
+                        });
+                      },
+                    );
+                  } else {
+                    return const Text('حدث خطأ بتحميل الأطباء');
+                  }
+                },
+              ),
+              SizedBox(height: 16.h),
+              // قائمة نوع الصورة
+              const Text(
+                'اختيار نوع الصورة',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8.h),
+              DropdownButtonFormField<String>(
+                focusColor: Colors.green,
+                decoration: InputDecoration(
+                    border: border(width: 1),
+                    enabledBorder: border(width: 1),
+                    focusedBorder: border(width: 2)),
+                hint: const Text('اختر نوع الصورة'),
+                items: [
+                  'سيفالوماتريك',
+                  'C.B.C.T',
+                  'بانوراما',
+                ].map((type) {
+                  return DropdownMenuItem<String>(
+                    value: type,
+                    child: Text(type),
                   );
-                } else {
-                  return const Text('حدث خطأ بتحميل الأطباء');
-                }
-              },
-            ),
-            SizedBox(height: 16.h),
-            // قائمة نوع الصورة
-            const Text(
-              'اختيار نوع الصورة',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 8.h),
-            DropdownButtonFormField<String>(
-              focusColor: Colors.green,
-              decoration: InputDecoration(
-                  border: border(width: 1),
-                  enabledBorder: border(width: 1),
-                  focusedBorder: border(width: 2)),
-              hint: const Text('اختر نوع الصورة'),
-              items: [
-                'سيفالوماتريك',
-                'C.B.C.T',
-                'بانوراما',
-              ].map((type) {
-                return DropdownMenuItem<String>(
-                  value: type,
-                  child: Text(type),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  selectedImageType = value;
-                });
-              },
-            ),
-            SizedBox(height: 45.h),
-            // زر تطبيق الفلترة
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                minimumSize: Size(double.infinity, 48.h),
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    selectedImageType = value;
+                  });
+                },
               ),
-              onPressed: () {
-                Navigator.pop(context, {
-                  'selectedDoctors': selectedDoctors,
-                  'selectedImageType': selectedImageType,
-                });
-              },
-              child: Text(
-                'تطبيق الفلترة',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18.sp),
+              SizedBox(height: 45.h),
+              // زر تطبيق الفلترة
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  minimumSize: Size(double.infinity, 48.h),
+                ),
+                onPressed: () {
+                  Navigator.pop(context, {
+                    'selectedDoctors': selectedDoctors,
+                    'selectedImageType': selectedImageType,
+                  });
+                },
+                child: Text(
+                  'تطبيق الفلترة',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18.sp),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

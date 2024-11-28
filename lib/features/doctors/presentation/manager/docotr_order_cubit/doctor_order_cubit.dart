@@ -27,9 +27,11 @@ class DoctorOrdersCubit extends Cubit<DoctorOrdersState> {
 
   void searchOrders(String query) {
     filteredOrders = orders
-        .where((order) => order.patientName
-            .toLowerCase()
-            .contains(query.toLowerCase())) // البحث حسب اسم المريض
+        .where(
+          (order) => order.patientName.toLowerCase().contains(
+                query.toLowerCase(),
+              ),
+        ) // البحث حسب اسم المريض
         .toList();
     emit(DoctorOrdersLoaded(filteredOrders));
   }

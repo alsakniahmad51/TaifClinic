@@ -15,7 +15,7 @@ class DoctorItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 16.h),
+      padding: EdgeInsets.only(bottom: 16.h, right: 10.w, left: 10.w),
       child: Directionality(
         textDirection: TextDirection.rtl,
         child: InkWell(
@@ -27,34 +27,46 @@ class DoctorItem extends StatelessWidget {
                 ));
           },
           child: SizedBox(
-            height: 70.h,
-            child: Card(
-              margin: EdgeInsets.symmetric(
-                horizontal: 16.w,
+            height: 80.h,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                // color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    blurRadius: 4,
+
+                    offset: const Offset(1, 1), // changes position of shadow
+                  ),
+                ],
               ),
-              child: ListTile(
-                trailing: Padding(
-                  padding: EdgeInsets.only(top: 10.h),
-                  child: const Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    size: 15,
-                    color: Colors.grey,
+              child: Card(
+                color: Colors.white,
+                child: ListTile(
+                  trailing: Padding(
+                    padding: EdgeInsets.only(top: 10.h),
+                    child: const Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      size: 15,
+                      color: Colors.grey,
+                    ),
                   ),
-                ),
-                title: Padding(
-                  padding: EdgeInsets.only(top: 7.h),
-                  child: Text(
-                    doctor.name,
-                    style:
-                        TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w400),
+                  title: Padding(
+                    padding: EdgeInsets.only(top: 7.h),
+                    child: Text(
+                      doctor.name,
+                      style: TextStyle(
+                          fontSize: 16.sp, fontWeight: FontWeight.w400),
+                    ),
                   ),
-                ),
-                leading: Padding(
-                  padding: EdgeInsets.only(top: 15.h),
-                  child: SvgPicture.asset(
-                    person,
-                    height: 44.h,
-                    width: 44.w,
+                  leading: Padding(
+                    padding: EdgeInsets.only(top: 15.h),
+                    child: SvgPicture.asset(
+                      person,
+                      height: 44.h,
+                      width: 44.w,
+                    ),
                   ),
                 ),
               ),
