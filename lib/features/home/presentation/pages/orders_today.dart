@@ -45,6 +45,7 @@ class OrdersTodayPage extends StatelessWidget {
                       builder: (context) => SummaryPage(
                         ordersToday: ordersToday,
                         title: 'الجرد اليومي',
+                        doctorName: '',
                       ),
                     ),
                   );

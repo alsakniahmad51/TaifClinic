@@ -99,6 +99,7 @@ class _OrdersHistoryPageState extends State<OrdersHistoryPage> {
                         builder: (context) => SummaryPage(
                           ordersToday: filteredOrders,
                           title: 'الجرد الشهري',
+                          doctorName: '',
                         ),
                       ),
                     );

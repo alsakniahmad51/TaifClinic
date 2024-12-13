@@ -77,7 +77,8 @@ class DoctorOrdersHistory extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => SummaryPage(
                             ordersToday: orders,
-                            title: 'الجرد الشهري',
+                            title: 'ملخص الجرد الشهري',
+                            doctorName: 'الطبيب: $doctorName',
                           ),
                         ),
                       );
