@@ -1,13 +1,17 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:io';
+
 import 'package:clinic/features/home/domain/Entities/order.dart';
-import 'package:clinic/features/home/presentation/widgets/left_row_item_with_border.dart';
-import 'package:clinic/features/home/presentation/widgets/right_row_item.dart';
+import 'package:clinic/features/home/presentation/widgets/summary_body_pdf.dart';
+import 'package:clinic/features/home/presentation/widgets/summary_page_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart' as intl;
-import 'package:pdf/pdf.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
+import 'package:share_plus/share_plus.dart';
 
 class SummaryPage extends StatelessWidget {
   final List<Order> ordersToday;
@@ -30,6 +34,15 @@ class SummaryPage extends StatelessWidget {
       'C.B.C.T': 0,
     };
     double totalPrice = 0;
+    String formattedDate = '';
+    if (ordersToday.isNotEmpty) {
+      String dateTime = ordersToday[0].date.toString();
+      var parts = dateTime.split(' ');
+      String date = parts[0];
+
+      var dateParts = date.split('-');
+      formattedDate = '${dateParts[1]}-${dateParts[0]}';
+    }
 
     for (var order in ordersToday) {
       final typeName = order.detail!.type.typeName;
@@ -38,17 +51,24 @@ class SummaryPage extends StatelessWidget {
     }
     final formattedPrice = intl.NumberFormat("#,###", "ar").format(totalPrice);
 
-    return SingleChildScrollView(
-      child: Directionality(
-        textDirection: TextDirection.rtl,
-        child: Scaffold(
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
           backgroundColor: Colors.white,
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            centerTitle: true,
-            title: Column(
+          centerTitle: true,
+          title: SingleChildScrollView(
+            child: Column(
               children: [
-                Text(title),
+                SizedBox(
+                  height: 15.h,
+                ),
+                Text(
+                  title,
+                  style:
+                      TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+                ),
                 SizedBox(height: 5.h),
                 Text(
                   doctorName,
@@ -56,208 +76,60 @@ class SummaryPage extends StatelessWidget {
                 )
               ],
             ),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.share),
-                onPressed: () async {
-                  await _sharePdf(orderCounts, formattedPrice);
-                },
-              ),
-            ],
           ),
-          body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'جدول الجرد:',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 10),
-                Table(
-                  columnWidths: const {
-                    0: FlexColumnWidth(2),
-                    1: FlexColumnWidth(2),
-                  },
-                  children: [
-                    TableRow(
-                      children: [
-                        RightRowItem(
-                          topRadius: 8.r,
-                          child: const Text(
-                            'نوع الطلب',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.black),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        const LeftRowItemWithBorder(
-                          child: Text(
-                            'عدد الطلبات',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.black),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ],
-                    ),
-                    ...orderCounts.entries.map((entry) {
-                      return TableRow(
-                        children: [
-                          Container(
-                            height: 40.h,
-                            decoration: const BoxDecoration(
-                              color: Color(0xffE4F3E5),
-                            ),
-                            child: Center(
-                              child: Text(
-                                entry.key,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                          LeftRowItemWithBorder(
-                              child: Text(
-                            entry.value.toString(),
-                            textAlign: TextAlign.center,
-                          )),
-                        ],
-                      );
-                    }),
-                    TableRow(
-                      children: [
-                        RightRowItem(
-                            bottomRadius: 8.r,
-                            child: const Text(
-                              'إجمالي الفواتير',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
-                            )),
-                        LeftRowItemWithBorder(
-                            child: Text(
-                          '$formattedPrice ل.س',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
-                        )),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+          actions: [
+            IconButton(
+              highlightColor: Colors.transparent,
+              icon: const Icon(Icons.share),
+              onPressed: () async {
+                await _sharePdf(
+                    orderCounts, formattedPrice, formattedDate, context);
+              },
             ),
-          ),
+          ],
+        ),
+        body: SummaryPageBody(
+          orderCounts: orderCounts,
+          formattedPrice: formattedPrice,
+          date: formattedDate,
         ),
       ),
     );
   }
 
-  Future<void> _sharePdf(
-      Map<String, int> orderCounts, String formattedPrice) async {
+  Future<void> _sharePdf(Map<String, int> orderCounts, String formattedPrice,
+      String formattedDate, BuildContext context) async {
     try {
       final pdf = pw.Document();
-
       final fontData = await rootBundle.load("assets/fonts/Cairo.ttf");
       final font = pw.Font.ttf(fontData);
-
       pdf.addPage(
         pw.Page(
           theme: pw.ThemeData.withFont(base: font),
           build: (context) => pw.Directionality(
-              textDirection: pw.TextDirection.rtl,
-              child: pw.Column(
-                crossAxisAlignment: pw.CrossAxisAlignment.center,
-                children: [
-                  pw.Text(
-                    title,
-                    textDirection: pw.TextDirection.rtl,
-                    textAlign: pw.TextAlign.start,
-                    style: const pw.TextStyle(fontSize: 18),
-                  ),
-                  pw.SizedBox(height: 10),
-                  pw.Row(
-                      mainAxisAlignment: pw.MainAxisAlignment.center,
-                      children: [
-                        pw.Text(
-                          doctorName,
-                          textAlign: pw.TextAlign.start,
-                          textDirection: pw.TextDirection.rtl,
-                          style: const pw.TextStyle(fontSize: 16),
-                        ),
-                      ]),
-                  pw.SizedBox(height: 20),
-                  pw.Text(
-                    'جدول الجرد:',
-                    textDirection: pw.TextDirection.rtl,
-                    textAlign: pw.TextAlign.start,
-                    style: const pw.TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                  pw.SizedBox(height: 10),
-                  pw.Table(
-                    border: pw.TableBorder.all(),
-                    columnWidths: {
-                      0: const pw.FlexColumnWidth(2),
-                      1: const pw.FlexColumnWidth(2),
-                    },
-                    children: [
-                      pw.TableRow(
-                        children: [
-                          pw.Text(
-                            'نوع الطلب',
-                            textAlign: pw.TextAlign.center,
-                            textDirection: pw.TextDirection.rtl,
-                          ),
-                          pw.Text(
-                            'عدد الطلبات',
-                            textAlign: pw.TextAlign.center,
-                            textDirection: pw.TextDirection.rtl,
-                          ),
-                        ],
-                      ),
-                      ...orderCounts.entries.map((entry) {
-                        return pw.TableRow(
-                          children: [
-                            pw.Text(
-                              entry.key,
-                              textAlign: pw.TextAlign.center,
-                              textDirection: pw.TextDirection.rtl,
-                            ),
-                            pw.Text(
-                              entry.value.toString(),
-                              textAlign: pw.TextAlign.center,
-                              textDirection: pw.TextDirection.rtl,
-                            ),
-                          ],
-                        );
-                      }),
-                      pw.TableRow(
-                        children: [
-                          pw.Text(
-                            'إجمالي الفواتير',
-                            textAlign: pw.TextAlign.center,
-                            textDirection: pw.TextDirection.rtl,
-                          ),
-                          pw.Text(
-                            '$formattedPrice ل.س',
-                            textAlign: pw.TextAlign.center,
-                            textDirection: pw.TextDirection.rtl,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              )),
+            textDirection: pw.TextDirection.rtl,
+            child: SummaryBodyPdf(
+                title: title,
+                doctorName: doctorName,
+                formattedPrice: formattedPrice,
+                orderCounts: orderCounts,
+                date: formattedDate),
+          ),
         ),
       );
+      final directory = await getApplicationDocumentsDirectory();
+      final filePath =
+          '${directory.path}/${title}_${DateTime.now().millisecondsSinceEpoch}.pdf';
+      final file = File(filePath);
+      await file.writeAsBytes(await pdf.save());
 
-      await Printing.sharePdf(bytes: await pdf.save(), filename: '$title.pdf');
-    } catch (e) {}
+      final xFile = XFile(filePath);
+
+      await Share.shareXFiles([xFile], text: 'إليك $title');
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("فشل المشاركة: $e")),
+      );
+    }
   }
 }

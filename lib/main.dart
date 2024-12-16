@@ -18,10 +18,12 @@ import 'package:month_year_picker/month_year_picker.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   final supabase = await Supabase.initialize(
     url: SupabaseKeys.projectUrl,
     anonKey: SupabaseKeys.anonyKey,
   );
+
   runApp(CliniApp(
     fetchOrdersUseCase: FetchOrdersUseCase(
       DataRepositoryImpl(

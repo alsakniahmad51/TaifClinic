@@ -66,23 +66,4 @@ class RemoteDataSource {
       throw Exception('Failed to load doctor names: ${e.toString()}');
     }
   }
-
-  /// Fetch doctor name by ID
-  // Future<String> fetchDoctorName(int doctorId) async {
-  //   try {
-  //     final response = await supabase
-  //         .from('doctors')
-  //         .select('doctor_name')
-  //         .eq('doctor_id', doctorId)
-  //         .maybeSingle();
-
-  //     if (response == null) {
-  //       return 'غير معروف';
-  //     }
-
-  //     return response['doctor_name'] ?? 'غير معروف';
-  //   } catch (e) {
-  //     throw Exception('Failed to load doctor name: ${e.toString()}');
-  //   }
-  // }
 }
