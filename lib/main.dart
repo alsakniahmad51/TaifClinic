@@ -5,6 +5,11 @@ import 'package:clinic/features/doctors/domain/usecases/fetch_doctor_orders.dart
 import 'package:clinic/features/doctors/domain/usecases/fetch_doctors_usecase.dart';
 import 'package:clinic/features/doctors/presentation/manager/docotr_cubit/doctors_cubit.dart';
 import 'package:clinic/features/doctors/presentation/manager/docotr_order_cubit/doctor_order_cubit.dart';
+import 'package:clinic/features/examinatios_prices/data/datasources/remote/remote_data_source.dart';
+import 'package:clinic/features/examinatios_prices/data/repo/examination_repository_impl.dart';
+import 'package:clinic/features/examinatios_prices/domain/usecases/fetch_examination_details_usecase.dart';
+import 'package:clinic/features/examinatios_prices/domain/usecases/update_price_usecase.dart';
+import 'package:clinic/features/examinatios_prices/presentation/manager/examination_cubit/examination_cubit.dart';
 import 'package:clinic/features/home/data/datasources/remote_data_source.dart';
 import 'package:clinic/features/home/data/repos/data_repo_impl.dart';
 import 'package:clinic/features/home/domain/usecase/fetch_order_usecase.dart';
@@ -25,6 +30,9 @@ Future<void> main() async {
   );
 
   runApp(CliniApp(
+    fetchExaminationDetailsUseCase: FetchExaminationDetailsUseCase(
+        ExaminationRepositoryImpl(
+            ExaminationRemoteDataSource(supabase.client))),
     fetchOrdersUseCase: FetchOrdersUseCase(
       DataRepositoryImpl(
         RemoteDataSource(supabase.client),
@@ -40,6 +48,8 @@ Future<void> main() async {
         DoctorRemoteDataSource(supabase.client),
       ),
     ),
+    updatePriceUseCase: UpdatePriceUseCase(ExaminationRepositoryImpl(
+        ExaminationRemoteDataSource(supabase.client))),
   ));
 }
 
@@ -49,12 +59,15 @@ class CliniApp extends StatelessWidget {
     required this.fetchOrdersUseCase,
     required this.fetchAllDoctorsUseCase,
     required this.fetchDoctorOrdersUseCase,
+    required this.fetchExaminationDetailsUseCase,
+    required this.updatePriceUseCase,
   });
 
   final FetchOrdersUseCase fetchOrdersUseCase;
   final FetchAllDoctorsUseCase fetchAllDoctorsUseCase;
   final FetchDoctorOrdersUseCase fetchDoctorOrdersUseCase;
-
+  final FetchExaminationDetailsUseCase fetchExaminationDetailsUseCase;
+  final UpdatePriceUseCase updatePriceUseCase;
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -65,6 +78,11 @@ class CliniApp extends StatelessWidget {
               .height), // إعداد مقاسات التصميم الافتراضية
       builder: (context, child) => MultiBlocProvider(
         providers: [
+          BlocProvider<ExaminationCubit>(
+              create: (context) => ExaminationCubit(
+                    fetchDetailsUseCase: fetchExaminationDetailsUseCase,
+                    updatePriceUseCase: updatePriceUseCase,
+                  )),
           BlocProvider<OrderCubit>(
             create: (context) {
               final now = DateTime.now();

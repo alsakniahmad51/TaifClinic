@@ -45,6 +45,7 @@ dependencies:
   pdf: ^3.11.1
   printing: ^5.13.4
   share_plus: ^10.1.2
+  shimmer: ^3.0.0
   supabase_flutter: ^2.8.0
   timeago: ^3.7.0
 

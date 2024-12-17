@@ -1,17 +1,18 @@
 import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/core/util/functions/navigator.dart';
+import 'package:clinic/features/examinatios_prices/presentation/pages/examination_page.dart';
 import 'package:clinic/features/home/presentation/manager/cubit/order_cubit.dart';
 import 'package:clinic/features/home/presentation/pages/orders_history.dart';
 import 'package:clinic/features/home/presentation/pages/orders_today.dart';
+import 'package:clinic/features/home/presentation/widgets/custom_shimmer.dart';
 import 'package:clinic/features/home/presentation/widgets/home_app_bar.dart';
 import 'package:clinic/features/home/presentation/widgets/home_orders_history.dart';
 import 'package:clinic/features/home/presentation/widgets/home_orders_today.dart';
-import 'package:clinic/features/home/presentation/widgets/search_text_field.dart';
+import 'package:clinic/features/home/presentation/widgets/home_search_text_field.dart';
 import 'package:clinic/features/home/presentation/widgets/lable_orders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 
 class HomePageBody extends StatelessWidget {
   const HomePageBody({super.key});
@@ -21,9 +22,14 @@ class HomePageBody extends StatelessWidget {
     return BlocBuilder<OrderCubit, OrderState>(
       builder: (context, state) {
         if (state is OrderLoading) {
-          return const Center(
-            child: CircularProgressIndicator(
-              color: AppColor.primaryColor,
+          return Directionality(
+            textDirection: TextDirection.rtl,
+            child: Column(
+              children: [
+                SizedBox(height: 30.h),
+                SizedBox(height: 70.h),
+                const Expanded(child: CustomShimmer()),
+              ],
             ),
           );
         } else if (state is OrderLoaded) {
@@ -53,26 +59,28 @@ class HomePageBody extends StatelessWidget {
                             .fetchOrders(startOfMonth, endOfMonth);
                       },
                     ),
-                    InkWell(
-                      onTap: () {
-                        Moving.navToPage(
-                          context: context,
-                          page: OrdersHistoryPage(
-                            allOrders: orders,
-                          ),
-                        );
-                      },
-                      child: SearchTextFiled(
-                        suffix: const Icon(Icons.search),
-                        prefix: InkWell(
-                          child: SvgPicture.asset(
-                            filter,
-                            fit: BoxFit.none,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Moving.navToPage(
+                                context: context,
+                                page: const ExaminationPage());
+                          },
+                          child: const Icon(
+                            size: 30,
+                            Icons.monetization_on_outlined,
+                            color: AppColor.primaryColor,
                           ),
                         ),
-                        enabled: false,
-                        hint: "مريض, تصوير مقطعي",
-                      ),
+                        SizedBox(
+                          width: 10.w,
+                        ),
+                        SizedBox(
+                            width: 330.w,
+                            child: HomeSearchTextField(orders: orders)),
+                      ],
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 24.h),

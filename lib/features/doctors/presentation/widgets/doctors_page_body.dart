@@ -30,12 +30,6 @@ class DoctorsPageBody extends StatelessWidget {
                   padding: EdgeInsets.only(top: 16.h, right: 16.w, left: 16.w),
                   child: SearchTextFiled(
                     suffix: const Icon(Icons.search),
-                    prefix: InkWell(
-                      child: SvgPicture.asset(
-                        filter,
-                        fit: BoxFit.none,
-                      ),
-                    ),
                     textEditingController: search,
                     onChanged: (query) {
                       context.read<DoctorsCubit>().searchDoctors(query);
