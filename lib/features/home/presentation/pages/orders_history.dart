@@ -1,10 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:clinic/core/util/constants.dart';
-import 'package:clinic/features/doctors/presentation/manager/docotr_cubit/doctors_cubit.dart';
 import 'package:clinic/features/home/presentation/pages/summary_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:clinic/features/home/domain/Entities/order.dart';
 import 'package:clinic/features/home/presentation/widgets/search_text_field.dart';
@@ -74,92 +72,87 @@ class _OrdersHistoryPageState extends State<OrdersHistoryPage> {
   @override
   Widget build(BuildContext context) {
     filteredOrders.sort((a, b) => b.date.compareTo(a.date));
-    return BlocProvider(
-      create: (context) =>
-          DoctorsCubit(RepositoryProvider.of(context))..fetchDoctors(),
-      child: Directionality(
-        textDirection: TextDirection.rtl,
-        child: Scaffold(
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
           backgroundColor: Colors.white,
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            actions: [
-              Padding(
-                padding: EdgeInsets.only(left: 10.w),
-                child: GestureDetector(
-                  child: const Icon(
-                    color: AppColor.primaryColor,
-                    Icons.bar_chart,
-                    size: 28,
-                  ),
-                  onTap: () {
-                    Navigator.push(
+          actions: [
+            Padding(
+              padding: EdgeInsets.only(left: 10.w),
+              child: GestureDetector(
+                child: const Icon(
+                  color: AppColor.primaryColor,
+                  Icons.bar_chart,
+                  size: 28,
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SummaryPage(
+                        ordersToday: filteredOrders,
+                        title: 'الجرد الشهري',
+                        doctorName: '',
+                      ),
+                    ),
+                  );
+                },
+              ),
+            )
+          ],
+          forceMaterialTransparency: true,
+          centerTitle: true,
+          title: const Text('سجل الطلبات'),
+        ),
+        body: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+              child: SearchTextFiled(
+                prefix: const Icon(Icons.search),
+                suffix: InkWell(
+                  onTap: () async {
+                    final result = await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SummaryPage(
-                          ordersToday: filteredOrders,
-                          title: 'الجرد الشهري',
-                          doctorName: '',
-                        ),
+                        builder: (context) => const FilterPage(),
                       ),
                     );
+                    if (result != null) {
+                      _applyFilters(result['selectedDoctors'],
+                          result['selectedImageType']);
+                    }
                   },
-                ),
-              )
-            ],
-            forceMaterialTransparency: true,
-            centerTitle: true,
-            title: const Text('سجل الطلبات'),
-          ),
-          body: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-                child: SearchTextFiled(
-                  prefix: const Icon(Icons.search),
-                  suffix: InkWell(
-                    onTap: () async {
-                      final result = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const FilterPage(),
-                        ),
-                      );
-                      if (result != null) {
-                        _applyFilters(result['selectedDoctors'],
-                            result['selectedImageType']);
-                      }
-                    },
-                    child: SvgPicture.asset(
-                      filter,
-                      fit: BoxFit.none,
-                    ),
+                  child: SvgPicture.asset(
+                    filter,
+                    fit: BoxFit.none,
                   ),
-                  textEditingController: searchController,
-                  focusNode: searchFocusNode, // ربط FocusNode بـ TextField
-                  hint: 'ابحث عن اسم المريض',
-                  onChanged: _filterOrders,
                 ),
+                textEditingController: searchController,
+                focusNode: searchFocusNode, // ربط FocusNode بـ TextField
+                hint: 'ابحث عن اسم المريض',
+                onChanged: _filterOrders,
               ),
-              Expanded(
-                child: filteredOrders.isEmpty
-                    ? const Center(child: Text('لا توجد طلبات حالياً'))
-                    : ListView.builder(
-                        itemCount: filteredOrders.length,
-                        itemBuilder: (context, index) {
-                          String dateTime =
-                              filteredOrders[index].date.toString();
-                          var parts = dateTime.split(' ');
-                          String date = parts[0];
-                          return OrdersItem(
-                            data: filteredOrders[index],
-                            time: date,
-                          );
-                        },
-                      ),
-              ),
-            ],
-          ),
+            ),
+            Expanded(
+              child: filteredOrders.isEmpty
+                  ? const Center(child: Text('لا توجد طلبات حالياً'))
+                  : ListView.builder(
+                      itemCount: filteredOrders.length,
+                      itemBuilder: (context, index) {
+                        String dateTime = filteredOrders[index].date.toString();
+                        var parts = dateTime.split(' ');
+                        String date = parts[0];
+                        return OrdersItem(
+                          data: filteredOrders[index],
+                          time: date,
+                        );
+                      },
+                    ),
+            ),
+          ],
         ),
       ),
     );

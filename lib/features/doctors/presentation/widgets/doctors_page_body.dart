@@ -1,11 +1,13 @@
+import 'dart:developer';
+
 import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/features/doctors/presentation/manager/docotr_cubit/doctors_cubit.dart';
 import 'package:clinic/features/doctors/presentation/widgets/doctor_item.dart';
+import 'package:clinic/features/home/presentation/widgets/offlin_page.dart';
 import 'package:clinic/features/home/presentation/widgets/search_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 
 class DoctorsPageBody extends StatelessWidget {
   const DoctorsPageBody({super.key});
@@ -52,7 +54,20 @@ class DoctorsPageBody extends StatelessWidget {
             ),
           );
         } else if (state is DoctorsError) {
-          return Center(child: Text(state.message));
+          return state.message == errorDoctorOffline
+              ? OfflinPage(
+                  onTap: () {
+                    context.read<DoctorsCubit>().fetchDoctors();
+                  },
+                )
+              : Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('حدث خطأ: ${state.message}'),
+                    ],
+                  ),
+                );
         } else {
           return const Center(child: Text('لا يوجد بيانات'));
         }

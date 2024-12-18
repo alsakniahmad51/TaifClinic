@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/core/util/functions/navigator.dart';
 import 'package:clinic/features/examinatios_prices/presentation/pages/examination_page.dart';
@@ -10,6 +12,7 @@ import 'package:clinic/features/home/presentation/widgets/home_orders_history.da
 import 'package:clinic/features/home/presentation/widgets/home_orders_today.dart';
 import 'package:clinic/features/home/presentation/widgets/home_search_text_field.dart';
 import 'package:clinic/features/home/presentation/widgets/lable_orders.dart';
+import 'package:clinic/features/home/presentation/widgets/offlin_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,8 +29,7 @@ class HomePageBody extends StatelessWidget {
             textDirection: TextDirection.rtl,
             child: Column(
               children: [
-                SizedBox(height: 30.h),
-                SizedBox(height: 70.h),
+                SizedBox(height: 100.h),
                 const Expanded(child: CustomShimmer()),
               ],
             ),
@@ -121,14 +123,25 @@ class HomePageBody extends StatelessWidget {
             ),
           );
         } else if (state is OrderError) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('حدث خطأ: ${state.message}'),
-              ],
-            ),
-          );
+          return state.message == errorOrderOffline
+              ? OfflinPage(
+                  onTap: () {
+                    final now = DateTime.now();
+                    final startOfMonth = DateTime(now.year, now.month, 1);
+                    final endOfMonth = DateTime(now.year, now.month + 1, 0);
+                    context
+                        .read<OrderCubit>()
+                        .fetchOrders(startOfMonth, endOfMonth);
+                  },
+                )
+              : Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('حدث خطأ: ${state.message}'),
+                    ],
+                  ),
+                );
         } else {
           return const Center(child: Text('لم يتم العثور على طلبات.'));
         }

@@ -57,6 +57,14 @@ class _DoctorDetailsState extends State<DoctorDetails> {
               ),
             ],
             bottom: TabBar(
+              overlayColor: WidgetStateProperty.resolveWith<Color?>(
+                (Set<WidgetState> states) {
+                  if (states.contains(WidgetState.pressed)) {
+                    return Colors.green[100]; // اللون عند النقر
+                  }
+                  return null; // بدون تأثير إضافي
+                },
+              ),
               indicatorColor: Colors.green,
               labelColor: Colors.green,
               unselectedLabelColor: Colors.grey,

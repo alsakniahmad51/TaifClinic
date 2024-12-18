@@ -59,7 +59,11 @@ class OrdersItem extends StatelessWidget {
                     padding: EdgeInsets.only(bottom: 15.h),
                     child: SvgPicture.asset(
                       fit: BoxFit.cover,
-                      x_ray_icon,
+                      data.detail!.type.typeName == 'سيفالوماتريك'
+                          ? sifalo_icon
+                          : (data.detail!.type.typeName == 'بانوراما'
+                              ? 'assets/images/pano.svg'
+                              : 'assets/images/cbct.svg'),
                       height: 44.h,
                       width: 44.w,
                     ),

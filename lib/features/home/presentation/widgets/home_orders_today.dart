@@ -45,7 +45,7 @@ class HomeOrdersToday extends StatelessWidget {
                   final data = ordersToday[index];
 
                   // ضبط الوقت ليعكس توقيت سوريا (+03:00)
-                  final syrianTime = data.date.add(const Duration(hours: 3));
+                  final syrianTime = data.date.add(const Duration(hours: -3));
 
                   // إعداد النص لعرض الوقت الماضي
                   timeago.setLocaleMessages('ar', timeago.ArMessages());

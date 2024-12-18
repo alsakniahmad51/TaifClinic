@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/features/doctors/presentation/manager/docotr_order_cubit/doctor_order_cubit.dart';
 import 'package:clinic/features/doctors/presentation/widgets/order_doctor_item.dart';
 import 'package:clinic/features/home/presentation/pages/summary_page.dart';
+import 'package:clinic/features/home/presentation/widgets/offlin_page.dart';
 import 'package:clinic/features/home/presentation/widgets/search_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -107,12 +110,23 @@ class DoctorOrdersHistory extends StatelessWidget {
             ),
           );
         } else if (state is DoctorOrdersError) {
-          return Center(
-            child: Text(
-              'حدث خطأ: ${state.message}',
-              style: const TextStyle(color: Colors.red),
-            ),
-          );
+          return state.message == errorDoctorOrdersHistoryOffline
+              ? OfflinPage(onTap: () {
+                  final nowTime = DateTime.now();
+                  DateTime start = DateTime(nowTime.year, nowTime.month, 1);
+                  DateTime end = DateTime(nowTime.year, nowTime.month + 1, 0);
+                  context.read<DoctorOrdersCubit>().fetchOrders(
+                        doctorId,
+                        start,
+                        end,
+                      );
+                })
+              : Center(
+                  child: Text(
+                    'حدث خطأ: ${state.message}',
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                );
         }
 
         return const SizedBox.shrink();

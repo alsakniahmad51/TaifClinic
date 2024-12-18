@@ -62,7 +62,7 @@ class OrdersTodayPage extends StatelessWidget {
                 itemCount: ordersToday.length,
                 itemBuilder: (context, index) {
                   final syrianTime =
-                      ordersToday[index].date.add(const Duration(hours: 3));
+                      ordersToday[index].date.add(const Duration(hours: -3));
                   timeago.setLocaleMessages('ar', timeago.ArMessages());
                   String timePassed = timeago.format(syrianTime, locale: 'ar');
 
