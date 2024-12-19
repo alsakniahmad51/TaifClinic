@@ -1,18 +1,18 @@
 import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/core/util/widgets/custom_text_field.dart';
-import 'package:clinic/features/examinatios_prices/presentation/manager/examination_cubit/examination_cubit.dart';
-import 'package:clinic/features/home/domain/Entities/examination_detail.dart';
+import 'package:clinic/features/examinatios_prices/presentation/manager/output_cubit/output_cubit.dart';
+import 'package:clinic/features/home/domain/Entities/output.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ExaminationItem extends StatelessWidget {
-  const ExaminationItem({
+class OutputItem extends StatelessWidget {
+  const OutputItem({
     super.key,
-    required this.detail,
+    required this.output,
   });
 
-  final ExaminationDetail detail;
+  final Output output;
 
   @override
   Widget build(BuildContext context) {
@@ -43,23 +43,13 @@ class ExaminationItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'نوع الصورة : ${detail.type.typeName}',
+                        'نوع طباعة الصورة : ${output.type}',
                         style: style(),
                       ),
                       SizedBox(
                         height: 3.h,
                       ),
-                      Text('وضعية الصورة :${detail.mode.modeName}',
-                          style: style()),
-                      SizedBox(
-                        height: 3.h,
-                      ),
-                      Text('الجزء المراد تصويره: ${detail.option.optionName}',
-                          style: style()),
-                      SizedBox(
-                        height: 3.h,
-                      ),
-                      Text('السعر : ${detail.price}',
+                      Text('السعر : ${output.price}',
                           style:
                               style().copyWith(color: AppColor.primaryColor)),
                       SizedBox(
@@ -84,15 +74,13 @@ class ExaminationItem extends StatelessWidget {
 
   TextStyle style() => TextStyle(fontSize: 18.sp);
 
-  /// BottomSheet لإدخال السعر الجديد
   void _showEditPriceSheet(BuildContext context) {
-    final TextEditingController priceController =
-        TextEditingController(); // يتحكم بحقل النص
+    final TextEditingController priceController = TextEditingController();
     final formKey = GlobalKey<FormState>();
 
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true, // لضمان ملء الشاشة عند ظهور لوحة المفاتيح
+      isScrollControlled: true,
       builder: (context) => Padding(
         padding: EdgeInsets.only(
           left: 16,
@@ -136,15 +124,12 @@ class ExaminationItem extends StatelessWidget {
                     final newPrice = int.tryParse(priceController.text);
 
                     if (newPrice != null) {
-                      // استدعاء cubit لتحديث السعر
                       context
-                          .read<ExaminationCubit>()
-                          .updateExaminationPrice(detail.detailId, newPrice);
-                      // إعادة جلب التفاصيل بعد التحديث
-                      context
-                          .read<ExaminationCubit>()
-                          .fetchExaminationDetails();
-                      Navigator.of(context).pop(); // إغلاق الـ BottomSheet
+                          .read<OutputCubit>()
+                          .updateOutputPrice(output.id, newPrice);
+
+                      context.read<OutputCubit>().fetchOutputDetails();
+                      Navigator.of(context).pop();
                     }
                   }
                 },

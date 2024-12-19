@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/core/util/functions/navigator.dart';
 import 'package:clinic/features/examinatios_prices/presentation/pages/examination_page.dart';
@@ -38,6 +36,7 @@ class HomePageBody extends StatelessWidget {
           final orders = state.orders;
           orders.sort((a, b) => b.date.compareTo(a.date));
           return RefreshIndicator(
+            backgroundColor: Colors.white,
             color: AppColor.primaryColor,
             onRefresh: () async {
               final now = DateTime.now();
