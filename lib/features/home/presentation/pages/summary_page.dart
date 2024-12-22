@@ -103,6 +103,14 @@ class SummaryPage extends StatelessWidget {
   Future<void> _sharePdf(Map<String, int> orderCounts, String formattedPrice,
       String formattedDate, BuildContext context) async {
     try {
+      Future<Uint8List> loadImageFromAssets(String path) async {
+        ByteData byteData =
+            await rootBundle.load(path); // تحميل الصورة كـ ByteData
+        return byteData.buffer.asUint8List(); // تحويلها إلى Uint8List
+      }
+
+      Uint8List imageBytes =
+          await loadImageFromAssets('assets/images/logo.png');
       final pdf = pw.Document();
       final fontData = await rootBundle.load("assets/fonts/Cairo.ttf");
       final font = pw.Font.ttf(fontData);
@@ -117,7 +125,8 @@ class SummaryPage extends StatelessWidget {
                 formattedPrice: formattedPrice,
                 orderCounts: orderCounts,
                 date: formattedDate,
-                addressTable: addressTable),
+                addressTable: addressTable,
+                logoBytes: imageBytes),
           ),
         ),
       );
