@@ -17,4 +17,9 @@ class DataRepositoryImpl implements DataRepository {
   Future<Map<int, String>> fetchDoctorNames(Set<int> doctorIds) async {
     return await remoteDataSource.fetchDoctorNames(doctorIds);
   }
+
+  @override
+  Future<void> updateOrderPrice(int orderId, int newPrice) async {
+    return await remoteDataSource.updateOrderPrice(orderId, newPrice);
+  }
 }

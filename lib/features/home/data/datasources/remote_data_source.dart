@@ -52,6 +52,17 @@ class RemoteDataSource {
     }
   }
 
+  Future<void> updateOrderPrice(int orderId, int newPrice) async {
+    try {
+      // استدعاء Supabase لتحديث السعر في جدول الطلبات
+      await supabase
+          .from('orders')
+          .update({'order_price': newPrice}).eq('order_id', orderId);
+    } catch (e) {
+      throw Exception('فشل في تحديث السعر: ${e.toString()}');
+    }
+  }
+
   Future<Map<int, String>> fetchDoctorNames(Set<int> doctorIds) async {
     try {
       final doctorIdsString = doctorIds.join(', ');

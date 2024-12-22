@@ -1,7 +1,7 @@
 import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/core/util/functions/navigator.dart';
 import 'package:clinic/features/examinatios_prices/presentation/pages/examination_page.dart';
-import 'package:clinic/features/home/presentation/manager/cubit/order_cubit.dart';
+import 'package:clinic/features/home/presentation/manager/fetch_order_cubit/order_cubit.dart';
 import 'package:clinic/features/home/presentation/pages/orders_history.dart';
 import 'package:clinic/features/home/presentation/pages/orders_today.dart';
 import 'package:clinic/features/home/presentation/widgets/custom_shimmer.dart';

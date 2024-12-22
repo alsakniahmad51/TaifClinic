@@ -37,15 +37,15 @@ class SummaryPage extends StatelessWidget {
       'C.B.C.T': 0,
     };
     double totalPrice = 0;
-    String formattedDate = '';
-    if (ordersToday.isNotEmpty) {
-      String dateTime = ordersToday[0].date.toString();
-      var parts = dateTime.split(' ');
-      String date = parts[0];
+    // String formattedDate = '';
+    // if (ordersToday.isNotEmpty) {
+    //   String dateTime = ordersToday[0].date.toString();
+    //   var parts = dateTime.split(' ');
+    //   String date = parts[0];
 
-      var dateParts = date.split('-');
-      formattedDate = '${dateParts[1]}-${dateParts[0]}';
-    }
+    //   var dateParts = date.split('-');
+    //   formattedDate = '${dateParts[1]}-${dateParts[0]}';
+    // }
 
     for (var order in ordersToday) {
       final typeName = order.detail!.type.typeName;

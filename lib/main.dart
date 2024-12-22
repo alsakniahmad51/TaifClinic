@@ -16,7 +16,8 @@ import 'package:clinic/features/examinatios_prices/presentation/manager/output_c
 import 'package:clinic/features/home/data/datasources/remote_data_source.dart';
 import 'package:clinic/features/home/data/repos/data_repo_impl.dart';
 import 'package:clinic/features/home/domain/usecase/fetch_order_usecase.dart';
-import 'package:clinic/features/home/presentation/manager/cubit/order_cubit.dart';
+import 'package:clinic/features/home/presentation/manager/fetch_order_cubit/order_cubit.dart';
+import 'package:clinic/features/home/presentation/manager/update_price_order_cubit/update_order_cubit.dart';
 import 'package:clinic/features/splash/data/data_sources/remote/get_version_remote.dart';
 import 'package:clinic/features/splash/data/repo/get_version_repo_impl.dart';
 import 'package:clinic/features/splash/domain/usecase/get_remote_version_usecase.dart';
@@ -115,6 +116,9 @@ class CliniApp extends StatelessWidget {
             create: (context) => OutputCubit(
                 fetchOutputUseCase: fetchOutputDetailsUseCase,
                 updateOutputPriceUseCase: updateOutputPriceUseCase),
+          ),
+          BlocProvider<UpdatePriceOrderCubit>(
+            create: (context) => UpdatePriceOrderCubit(fetchOrdersUseCase),
           ),
           BlocProvider<ExaminationCubit>(
               create: (context) => ExaminationCubit(

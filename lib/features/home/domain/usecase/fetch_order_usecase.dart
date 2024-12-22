@@ -5,6 +5,9 @@ class FetchOrdersUseCase {
   final DataRepository repository;
 
   FetchOrdersUseCase(this.repository);
+  Future<void> updateOrderPrice(int orderId, int newPrice) async {
+    return await repository.updateOrderPrice(orderId, newPrice);
+  }
 
   Future<List<Order>> call(DateTime startDate, DateTime endDate) async {
     final orders = await repository.fetchAllOrders(startDate, endDate);

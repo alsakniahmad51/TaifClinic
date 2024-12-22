@@ -5,7 +5,7 @@ import 'package:clinic/features/home/domain/Entities/order.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 
 class OrderDoctorItem extends StatelessWidget {
   const OrderDoctorItem({
@@ -20,8 +20,8 @@ class OrderDoctorItem extends StatelessWidget {
     String dateTime = order.date.toString();
     var parts = dateTime.split(' ');
     String date = parts[0];
-    DateTime time = order.date;
-    String formattedTime = DateFormat('hh:mm a').format(time);
+    // DateTime time = order.date;
+    // String formattedTime = DateFormat('hh:mm a').format(time);
     return Padding(
       padding: EdgeInsets.only(top: 10.h, left: 16.w, right: 16.w),
       child: InkWell(

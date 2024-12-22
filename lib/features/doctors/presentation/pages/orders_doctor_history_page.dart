@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/features/doctors/presentation/manager/docotr_order_cubit/doctor_order_cubit.dart';
 import 'package:clinic/features/doctors/presentation/widgets/order_doctor_item.dart';
