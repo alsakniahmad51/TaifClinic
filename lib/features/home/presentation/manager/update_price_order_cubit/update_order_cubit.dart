@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:clinic/features/examinatios_prices/domain/usecases/update_price_usecase.dart';
 import 'package:clinic/features/home/domain/usecase/fetch_order_usecase.dart';
 import 'package:equatable/equatable.dart';
 

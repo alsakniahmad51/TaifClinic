@@ -7,7 +7,7 @@ import 'package:clinic/features/home/domain/Entities/order.dart';
 import 'package:clinic/features/home/presentation/manager/fetch_order_cubit/order_cubit.dart';
 import 'package:clinic/features/home/presentation/manager/update_price_order_cubit/update_order_cubit.dart';
 import 'package:clinic/features/home/presentation/pages/page_view.dart';
-import 'package:clinic/features/home/presentation/widgets/table_item_order_detailes.dart';
+import 'package:clinic/features/home/presentation/widgets/detailes_table.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -46,72 +46,8 @@ class OrderDetailes extends StatelessWidget {
             padding: EdgeInsets.only(top: 34.h),
             child: Column(
               children: [
-                TableItem(
-                  title: 'اسم المريض',
-                  value: data.patientName,
-                  topradius: 12,
-                  buttomradius: 0,
-                ),
-                TableItem(
-                  title: 'العمر',
-                  value: "${data.patientAge}",
-                  topradius: 0,
-                  buttomradius: 0,
-                ),
-                TableItem(
-                  title: 'اسم الطبيب',
-                  value: data.doctorName,
-                  topradius: 0,
-                  buttomradius: 0,
-                ),
-                TableItem(
-                  title: 'نوع الصورة',
-                  value: data.detail!.type.typeName,
-                  topradius: 0,
-                  buttomradius: 0,
-                ),
-                TableItem(
-                  title: 'الجزء المراد تصويره',
-                  value: data.detail!.option.optionName,
-                  topradius: 0,
-                  buttomradius: 0,
-                ),
-                TableItem(
-                  title: 'وضعية الصورة',
-                  value: data.detail!.mode.modeName,
-                  topradius: 0,
-                  buttomradius: 0,
-                ),
-                TableItem(
-                  title: 'شكل الصورة',
-                  value: data.output!.type,
-                  topradius: 0,
-                  buttomradius: 0,
-                ),
-                TableItem(
-                  title: 'التاريخ',
-                  value: date,
-                  topradius: 0,
-                  buttomradius: 0,
-                ),
-                TableItem(
-                  title: 'التوقيت',
-                  value: formattedTime,
-                  topradius: 0,
-                  buttomradius: 0,
-                ),
-                TableItem(
-                  title: 'قيمة الفاتورة',
-                  value: "${data.price} ل.س",
-                  topradius: 0,
-                  buttomradius: 0,
-                ),
-                TableItem(
-                  title: 'ملاحظات',
-                  value: data.additionalNotes ?? "لا يوجد",
-                  topradius: 0,
-                  buttomradius: 12,
-                ),
+                DetailesTable(
+                    data: data, date: date, formattedTime: formattedTime),
                 SizedBox(
                   height: 30.h,
                 ),
@@ -131,7 +67,7 @@ class OrderDetailes extends StatelessWidget {
                       style: TextStyle(color: Colors.white),
                     )),
                   ),
-                )
+                ),
               ],
             ),
           ),
