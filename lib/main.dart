@@ -17,7 +17,11 @@ import 'package:clinic/features/home/data/datasources/remote_data_source.dart';
 import 'package:clinic/features/home/data/repos/data_repo_impl.dart';
 import 'package:clinic/features/home/domain/usecase/fetch_order_usecase.dart';
 import 'package:clinic/features/home/presentation/manager/cubit/order_cubit.dart';
-import 'package:clinic/features/home/presentation/widgets/splash.dart';
+import 'package:clinic/features/splash/data/data_sources/remote/get_version_remote.dart';
+import 'package:clinic/features/splash/data/repo/get_version_repo_impl.dart';
+import 'package:clinic/features/splash/domain/usecase/get_remote_version_usecase.dart';
+import 'package:clinic/features/splash/presentation/manager/cubit/get_remote_version_cubit.dart';
+import 'package:clinic/features/splash/presentation/pages/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,8 +38,10 @@ Future<void> main() async {
 
   runApp(CliniApp(
     fetchExaminationDetailsUseCase: FetchExaminationDetailsUseCase(
-        ExaminationRepositoryImpl(
-            ExaminationRemoteDataSource(supabase.client))),
+      ExaminationRepositoryImpl(
+        ExaminationRemoteDataSource(supabase.client),
+      ),
+    ),
     fetchOrdersUseCase: FetchOrdersUseCase(
       DataRepositoryImpl(
         RemoteDataSource(supabase.client),
@@ -51,14 +57,26 @@ Future<void> main() async {
         DoctorRemoteDataSource(supabase.client),
       ),
     ),
-    updatePriceUseCase: UpdatePriceUseCase(ExaminationRepositoryImpl(
-        ExaminationRemoteDataSource(supabase.client))),
+    updatePriceUseCase: UpdatePriceUseCase(
+      ExaminationRepositoryImpl(
+        ExaminationRemoteDataSource(supabase.client),
+      ),
+    ),
     fetchOutputDetailsUseCase: FetchOutputDetailsUseCase(
-        ExaminationRepositoryImpl(
-            ExaminationRemoteDataSource(supabase.client))),
+      ExaminationRepositoryImpl(
+        ExaminationRemoteDataSource(supabase.client),
+      ),
+    ),
     updateOutputPriceUseCase: UpdateOutputPriceUseCase(
-        ExaminationRepositoryImpl(
-            ExaminationRemoteDataSource(supabase.client))),
+      ExaminationRepositoryImpl(
+        ExaminationRemoteDataSource(supabase.client),
+      ),
+    ),
+    getRemoteVersionUsecase: GetRemoteVersionUsecase(
+      getVersionRepoImpl: GetVersionRepoImpl(
+        getRemoteVersionC: GetRemoteVersion(supabaseClient: supabase.client),
+      ),
+    ),
   ));
 }
 
@@ -72,6 +90,7 @@ class CliniApp extends StatelessWidget {
     required this.updatePriceUseCase,
     required this.fetchOutputDetailsUseCase,
     required this.updateOutputPriceUseCase,
+    required this.getRemoteVersionUsecase,
   });
 
   final FetchOrdersUseCase fetchOrdersUseCase;
@@ -81,6 +100,7 @@ class CliniApp extends StatelessWidget {
   final UpdatePriceUseCase updatePriceUseCase;
   final FetchOutputDetailsUseCase fetchOutputDetailsUseCase;
   final UpdateOutputPriceUseCase updateOutputPriceUseCase;
+  final GetRemoteVersionUsecase getRemoteVersionUsecase;
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -109,6 +129,9 @@ class CliniApp extends StatelessWidget {
               return OrderCubit(fetchOrdersUseCase)
                 ..fetchOrders(startOfMonth, endOfMonth);
             },
+          ),
+          BlocProvider(
+            create: (context) => GetRemoteVersionCubit(getRemoteVersionUsecase),
           ),
           BlocProvider(
             create: (context) =>

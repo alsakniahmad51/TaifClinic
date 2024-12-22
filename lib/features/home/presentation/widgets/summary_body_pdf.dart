@@ -1,11 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 class SummaryBodyPdf extends pw.StatelessWidget {
   SummaryBodyPdf(
-      {required this.date,
+      {required this.addressTable,
+      required this.date,
       required this.title,
       required this.doctorName,
       required this.orderCounts,
@@ -15,6 +15,7 @@ class SummaryBodyPdf extends pw.StatelessWidget {
   final String doctorName;
   final String title;
   final String date;
+  final String addressTable;
   @override
   pw.Widget build(pw.Context context) {
     return pw.Column(
@@ -34,7 +35,7 @@ class SummaryBodyPdf extends pw.StatelessWidget {
           ),
           pw.SizedBox(height: 20),
           pw.Text(
-            'جدول الجرد لشهر  $date:',
+            '$addressTable $date',
             textDirection: pw.TextDirection.rtl,
             textAlign: pw.TextAlign.start,
             style: const pw.TextStyle(

@@ -51,6 +51,15 @@ class DoctorOrdersHistory extends StatelessWidget {
         } else if (state is DoctorOrdersLoaded) {
           final orders = state.orders;
           orders.sort((a, b) => b.date.compareTo(a.date));
+          String formattedDate = '';
+          if (orders.isNotEmpty) {
+            String dateTime = orders[0].date.toString();
+            var parts = dateTime.split(' ');
+            String date = parts[0];
+
+            var dateParts = date.split('-');
+            formattedDate = '${dateParts[1]}-${dateParts[0]}';
+          }
 
           return RefreshIndicator(
             backgroundColor: Colors.white,
@@ -82,6 +91,8 @@ class DoctorOrdersHistory extends StatelessWidget {
                             ordersToday: orders,
                             title: 'ملخص الجرد الشهري',
                             doctorName: 'الطبيب: $doctorName',
+                            addressTable: 'جدول الجرد لشهر ',
+                            date: '$formattedDate :',
                           ),
                         ),
                       );

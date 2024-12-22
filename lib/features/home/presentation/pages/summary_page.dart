@@ -21,11 +21,14 @@ class SummaryPage extends StatelessWidget {
     required this.ordersToday,
     required this.title,
     required this.doctorName,
+    required this.addressTable,
+    required this.date,
   });
 
   final String title;
   final String doctorName;
-
+  final String addressTable;
+  final String date;
   @override
   Widget build(BuildContext context) {
     final Map<String, int> orderCounts = {
@@ -82,8 +85,7 @@ class SummaryPage extends StatelessWidget {
               highlightColor: Colors.transparent,
               icon: const Icon(Icons.share),
               onPressed: () async {
-                await _sharePdf(
-                    orderCounts, formattedPrice, formattedDate, context);
+                await _sharePdf(orderCounts, formattedPrice, date, context);
               },
             ),
           ],
@@ -91,7 +93,8 @@ class SummaryPage extends StatelessWidget {
         body: SummaryPageBody(
           orderCounts: orderCounts,
           formattedPrice: formattedPrice,
-          date: formattedDate,
+          date: date,
+          title: addressTable,
         ),
       ),
     );
@@ -113,7 +116,8 @@ class SummaryPage extends StatelessWidget {
                 doctorName: doctorName,
                 formattedPrice: formattedPrice,
                 orderCounts: orderCounts,
-                date: formattedDate),
+                date: formattedDate,
+                addressTable: addressTable),
           ),
         ),
       );

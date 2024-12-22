@@ -13,6 +13,9 @@ class OrdersTodayPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String dateTime = allOrders[0].date.toString();
+    var parts = dateTime.split(' ');
+    String date = parts[0];
     // الحصول على تاريخ اليوم الحالي
     final today = DateTime.now();
 
@@ -46,6 +49,8 @@ class OrdersTodayPage extends StatelessWidget {
                         ordersToday: ordersToday,
                         title: 'الجرد اليومي',
                         doctorName: '',
+                        addressTable: 'جدول الجرد بتاريخ',
+                        date: "$date :",
                       ),
                     ),
                   );

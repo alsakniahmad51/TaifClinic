@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:clinic/core/util/constants.dart';
+import 'package:clinic/features/home/presentation/pages/all_order.dart';
 import 'package:clinic/features/home/presentation/pages/summary_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -71,6 +72,16 @@ class _OrdersHistoryPageState extends State<OrdersHistoryPage> {
 
   @override
   Widget build(BuildContext context) {
+    String formattedDate = '';
+    if (filteredOrders.isNotEmpty) {
+      String dateTime = filteredOrders[0].date.toString();
+      var parts = dateTime.split(' ');
+      String date = parts[0];
+
+      var dateParts = date.split('-');
+      formattedDate = '${dateParts[1]}-${dateParts[0]}';
+    }
+
     filteredOrders.sort((a, b) => b.date.compareTo(a.date));
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -83,7 +94,6 @@ class _OrdersHistoryPageState extends State<OrdersHistoryPage> {
               padding: EdgeInsets.only(left: 10.w),
               child: GestureDetector(
                 child: const Icon(
-                  color: AppColor.primaryColor,
                   Icons.bar_chart,
                   size: 28,
                 ),
@@ -95,12 +105,37 @@ class _OrdersHistoryPageState extends State<OrdersHistoryPage> {
                         ordersToday: filteredOrders,
                         title: 'الجرد الشهري',
                         doctorName: '',
+                        addressTable: 'جدول الجرد لشهر',
+                        date: "$formattedDate :",
                       ),
                     ),
                   );
                 },
               ),
-            )
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 10.w),
+              child: GestureDetector(
+                child: const Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Icon(
+                    Icons.list,
+                    size: 28,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Allorderview(),
+                    ),
+                  );
+                },
+              ),
+            ),
+            SizedBox(
+              width: 10.w,
+            ),
           ],
           forceMaterialTransparency: true,
           centerTitle: true,

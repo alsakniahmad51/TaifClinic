@@ -14,41 +14,39 @@ class LableOrders extends StatelessWidget {
   final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        GestureDetector(
-          onTap: onTap,
-          child: Row(
-            children: [
-              const Icon(
-                Icons.arrow_back_ios_new,
-                size: 10,
-                color: AppColor.primaryColor,
-              ),
-              Text(
-                'عرض الكل',
-                style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    decorationColor: AppColor.primaryColor,
-                    fontSize: 13.sp,
-                    fontWeight: FontWeight.w400,
-                    color: AppColor.primaryColor),
-              )
-            ],
+    return SizedBox(
+      width: MediaQuery.of(context).size.width - 30.w,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          GestureDetector(
+            onTap: onTap,
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.arrow_back_ios_new,
+                  size: 10,
+                  color: AppColor.primaryColor,
+                ),
+                Text(
+                  'عرض الكل',
+                  style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      decorationColor: AppColor.primaryColor,
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.primaryColor),
+                )
+              ],
+            ),
           ),
-        ),
-        SizedBox(
-          width: padding.w,
-        ),
-        Padding(
-          padding: EdgeInsets.only(right: 16.w),
-          child: Text(
+          const Spacer(),
+          Text(
             text,
             style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w500),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

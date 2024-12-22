@@ -9,11 +9,13 @@ class SummaryPageBody extends StatelessWidget {
     required this.orderCounts,
     required this.formattedPrice,
     required this.date,
+    required this.title,
   });
 
   final Map<String, int> orderCounts;
   final String formattedPrice;
   final String date;
+  final String title;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -22,7 +24,7 @@ class SummaryPageBody extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'جدول الجرد لشهر $date:',
+            '$title $date',
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10),

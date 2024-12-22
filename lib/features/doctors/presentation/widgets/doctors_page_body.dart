@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/features/doctors/presentation/manager/docotr_cubit/doctors_cubit.dart';
 import 'package:clinic/features/doctors/presentation/widgets/doctor_item.dart';
+import 'package:clinic/features/home/presentation/widgets/custom_shimmer.dart';
 import 'package:clinic/features/home/presentation/widgets/offlin_page.dart';
 import 'package:clinic/features/home/presentation/widgets/search_text_field.dart';
 import 'package:flutter/material.dart';
@@ -18,11 +17,8 @@ class DoctorsPageBody extends StatelessWidget {
     return BlocBuilder<DoctorsCubit, DoctorsState>(
       builder: (context, state) {
         if (state is DoctorsLoading) {
-          return const Center(
-            child: CircularProgressIndicator(
-              color: AppColor.primaryColor,
-            ),
-          );
+          return const Directionality(
+              textDirection: TextDirection.rtl, child: CustomShimmer());
         } else if (state is DoctorsLoaded) {
           final doctors = state.doctors;
           return SafeArea(

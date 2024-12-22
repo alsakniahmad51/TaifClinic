@@ -17,25 +17,23 @@ class ExaminationItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
       child: SizedBox(
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            // color: Colors.white,
+            borderRadius: BorderRadius.circular(12.r),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.2),
                 blurRadius: 4,
-
-                offset: const Offset(1, 1), // changes position of shadow
+                offset: const Offset(1, 1),
               ),
             ],
           ),
           child: Card(
             color: Colors.white,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -43,25 +41,31 @@ class ExaminationItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'نوع الصورة : ${detail.type.typeName}',
+                        _formatText('نوع الصورة : ${detail.type.typeName}'),
                         style: style(),
                       ),
                       SizedBox(
                         height: 3.h,
                       ),
-                      Text('وضعية الصورة :${detail.mode.modeName}',
-                          style: style()),
+                      Text(
+                        _formatText('وضعية الصورة : ${detail.mode.modeName}'),
+                        style: style(),
+                      ),
                       SizedBox(
                         height: 3.h,
                       ),
-                      Text('الجزء المراد تصويره: ${detail.option.optionName}',
-                          style: style()),
+                      Text(
+                        _formatText(
+                            'الجزء المراد تصويره: ${detail.option.optionName}'),
+                        style: style(),
+                      ),
                       SizedBox(
                         height: 3.h,
                       ),
-                      Text('السعر : ${detail.price}',
-                          style:
-                              style().copyWith(color: AppColor.primaryColor)),
+                      Text(
+                        'السعر : ${detail.price}',
+                        style: style().copyWith(color: AppColor.primaryColor),
+                      ),
                       SizedBox(
                         height: 3.h,
                       ),
@@ -84,6 +88,17 @@ class ExaminationItem extends StatelessWidget {
 
   TextStyle style() => TextStyle(fontSize: 18.sp);
 
+  /// دالة لتقسيم النص إذا زادت الفراغات عن اثنين
+  String _formatText(String text) {
+    int spaceCount = text.split(' ').length - 1;
+    if (spaceCount > 4) {
+      List<String> words = text.split(' ');
+      int middleIndex = (words.length / 2).ceil();
+      return '${words.sublist(0, middleIndex).join(' ')}\n${words.sublist(middleIndex).join(' ')}';
+    }
+    return text;
+  }
+
   /// BottomSheet لإدخال السعر الجديد
   void _showEditPriceSheet(BuildContext context) {
     final TextEditingController priceController =
@@ -95,26 +110,26 @@ class ExaminationItem extends StatelessWidget {
       isScrollControlled: true, // لضمان ملء الشاشة عند ظهور لوحة المفاتيح
       builder: (context) => Padding(
         padding: EdgeInsets.only(
-          left: 16,
-          right: 16,
-          bottom: MediaQuery.of(context).viewInsets.bottom + 20,
-          top: 20,
+          left: 16.w,
+          right: 16.w,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 20.h,
+          top: 20.h,
         ),
         child: Form(
           key: formKey,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
+              Text(
                 'تعديل السعر',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
               CustomTextField(
                 enableColor: AppColor.primaryColor,
                 focuseColor: AppColor.primaryColor,
                 title: 'أدخل السعر الجديد',
-                radius: 8.0,
+                radius: 8.0.r,
                 textEditingController: priceController,
                 keyboardType: TextInputType.number,
                 validator: (value) {
