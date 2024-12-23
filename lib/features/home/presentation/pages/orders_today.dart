@@ -34,10 +34,9 @@ class OrdersTodayPage extends StatelessWidget {
           backgroundColor: Colors.white,
           actions: [
             Padding(
-              padding: EdgeInsets.only(left: 10.w),
+              padding: EdgeInsets.only(left: 15.w),
               child: GestureDetector(
                 child: const Icon(
-                  color: AppColor.primaryColor,
                   Icons.bar_chart,
                   size: 28,
                 ),

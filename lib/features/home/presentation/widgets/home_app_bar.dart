@@ -48,6 +48,7 @@ class HomeAppBar extends StatelessWidget {
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
+      locale: const Locale('ar', 'Arabic'),
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
