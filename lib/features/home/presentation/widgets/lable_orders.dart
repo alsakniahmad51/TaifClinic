@@ -19,25 +19,16 @@ class LableOrders extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          GestureDetector(
-            onTap: onTap,
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.arrow_back_ios_new,
-                  size: 10,
-                  color: AppColor.primaryColor,
-                ),
-                Text(
-                  'عرض الكل',
-                  style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      decorationColor: AppColor.primaryColor,
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.primaryColor),
-                )
-              ],
+          TextButton(
+            onPressed: onTap,
+            child: Text(
+              '< عرض الكل',
+              style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  decorationColor: AppColor.primaryColor,
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.w400,
+                  color: AppColor.primaryColor),
             ),
           ),
           const Spacer(),

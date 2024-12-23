@@ -49,7 +49,7 @@ class OrderDetailes extends StatelessWidget {
                 DetailesTable(
                     data: data, date: date, formattedTime: formattedTime),
                 SizedBox(
-                  height: 30.h,
+                  height: 80.h,
                 ),
                 InkWell(
                   onTap: () {

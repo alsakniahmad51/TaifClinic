@@ -33,6 +33,12 @@ class DetailesTable extends StatelessWidget {
           buttomradius: 0,
         ),
         TableItem(
+          title: 'رقم هاتف المريض',
+          value: "${data.phoneNumber}",
+          topradius: 0,
+          buttomradius: 0,
+        ),
+        TableItem(
           title: 'اسم الطبيب',
           value: data.doctorName,
           topradius: 0,
