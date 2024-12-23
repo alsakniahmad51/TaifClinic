@@ -1,3 +1,4 @@
+import 'package:clinic/clinic_app.dart';
 import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/features/doctors/data/datasources/remote_doctor_datasource.dart';
 import 'package:clinic/features/doctors/data/repos/doctor_repo_impl.dart';
@@ -37,7 +38,7 @@ Future<void> main() async {
     anonKey: SupabaseKeys.anonyKey,
   );
 
-  runApp(CliniApp(
+  var cliniApp = ClinicApp(
     fetchExaminationDetailsUseCase: FetchExaminationDetailsUseCase(
       ExaminationRepositoryImpl(
         ExaminationRemoteDataSource(supabase.client),
@@ -78,95 +79,6 @@ Future<void> main() async {
         getRemoteVersionC: GetRemoteVersion(supabaseClient: supabase.client),
       ),
     ),
-  ));
-}
-
-class CliniApp extends StatelessWidget {
-  const CliniApp({
-    super.key,
-    required this.fetchOrdersUseCase,
-    required this.fetchAllDoctorsUseCase,
-    required this.fetchDoctorOrdersUseCase,
-    required this.fetchExaminationDetailsUseCase,
-    required this.updatePriceUseCase,
-    required this.fetchOutputDetailsUseCase,
-    required this.updateOutputPriceUseCase,
-    required this.getRemoteVersionUsecase,
-  });
-
-  final FetchOrdersUseCase fetchOrdersUseCase;
-  final FetchAllDoctorsUseCase fetchAllDoctorsUseCase;
-  final FetchDoctorOrdersUseCase fetchDoctorOrdersUseCase;
-  final FetchExaminationDetailsUseCase fetchExaminationDetailsUseCase;
-  final UpdatePriceUseCase updatePriceUseCase;
-  final FetchOutputDetailsUseCase fetchOutputDetailsUseCase;
-  final UpdateOutputPriceUseCase updateOutputPriceUseCase;
-  final GetRemoteVersionUsecase getRemoteVersionUsecase;
-  @override
-  Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: Size(
-          MediaQuery.of(context).size.width,
-          MediaQuery.of(context)
-              .size
-              .height), // إعداد مقاسات التصميم الافتراضية
-      builder: (context, child) => MultiBlocProvider(
-        providers: [
-          BlocProvider<OutputCubit>(
-            create: (context) => OutputCubit(
-                fetchOutputUseCase: fetchOutputDetailsUseCase,
-                updateOutputPriceUseCase: updateOutputPriceUseCase),
-          ),
-          BlocProvider<UpdatePriceOrderCubit>(
-            create: (context) => UpdatePriceOrderCubit(fetchOrdersUseCase),
-          ),
-          BlocProvider<ExaminationCubit>(
-              create: (context) => ExaminationCubit(
-                    fetchDetailsUseCase: fetchExaminationDetailsUseCase,
-                    updatePriceUseCase: updatePriceUseCase,
-                  )),
-          BlocProvider<OrderCubit>(
-            create: (context) {
-              final now = DateTime.now();
-              final startOfMonth = DateTime(now.year, now.month, 1);
-              final endOfMonth = DateTime(now.year, now.month + 1, 0);
-              return OrderCubit(fetchOrdersUseCase)
-                ..fetchOrders(startOfMonth, endOfMonth);
-            },
-          ),
-          BlocProvider(
-            create: (context) => GetRemoteVersionCubit(getRemoteVersionUsecase),
-          ),
-          BlocProvider(
-            create: (context) =>
-                DoctorsCubit(fetchAllDoctorsUseCase)..fetchDoctors(),
-          ),
-          BlocProvider(
-            create: (context) => DoctorOrdersCubit(fetchDoctorOrdersUseCase),
-          ),
-        ],
-        child: MaterialApp(
-          theme: ThemeData(
-            primaryColor: AppColor.primaryColor,
-            fontFamily: AppFont.primaryFont,
-            textTheme: TextTheme(
-              bodyMedium: TextStyle(fontSize: 16.sp),
-            ),
-          ),
-          debugShowCheckedModeBanner: false,
-          localizationsDelegates: const [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            MonthYearPickerLocalizations.delegate,
-          ],
-          supportedLocales: const [
-            Locale('en', ''),
-            Locale('ar', ''),
-          ],
-          home: const SplashScreen(),
-        ),
-      ),
-    );
-  }
+  );
+  runApp(cliniApp);
 }
