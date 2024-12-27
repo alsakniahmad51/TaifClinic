@@ -50,18 +50,20 @@ class DetailesTable extends StatelessWidget {
           topradius: 0,
           buttomradius: 0,
         ),
-        TableItem(
-          title: 'الجزء المراد تصويره',
-          value: data.detail!.option.optionName,
-          topradius: 0,
-          buttomradius: 0,
-        ),
-        TableItem(
-          title: 'وضعية الصورة',
-          value: data.detail!.mode.modeName,
-          topradius: 0,
-          buttomradius: 0,
-        ),
+        if (data.detail!.option.optionName != "لا يوجد")
+          TableItem(
+            title: 'الجزء المراد تصويره',
+            value: data.detail!.option.optionName,
+            topradius: 0,
+            buttomradius: 0,
+          ),
+        if (data.detail!.mode.modeName != "لا يوجد")
+          TableItem(
+            title: 'وضعية الصورة',
+            value: data.detail!.mode.modeName,
+            topradius: 0,
+            buttomradius: 0,
+          ),
         TableItem(
           title: 'شكل الصورة',
           value: data.output!.type,
@@ -88,7 +90,7 @@ class DetailesTable extends StatelessWidget {
         ),
         TableItem(
           title: 'ملاحظات',
-          value: data.additionalNotes ?? "لا يوجد",
+          value: data.additionalNotes ?? "",
           topradius: 0,
           buttomradius: 12,
         ),

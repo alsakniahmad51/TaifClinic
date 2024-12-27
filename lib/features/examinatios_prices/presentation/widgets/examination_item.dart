@@ -47,18 +47,20 @@ class ExaminationItem extends StatelessWidget {
                       SizedBox(
                         height: 3.h,
                       ),
-                      Text(
-                        _formatText('وضعية الصورة : ${detail.mode.modeName}'),
-                        style: style(),
-                      ),
+                      if (detail.mode.modeName != "لا يوجد")
+                        Text(
+                          _formatText('وضعية الصورة : ${detail.mode.modeName}'),
+                          style: style(),
+                        ),
                       SizedBox(
                         height: 3.h,
                       ),
-                      Text(
-                        _formatText(
-                            'الجزء المراد تصويره: ${detail.option.optionName}'),
-                        style: style(),
-                      ),
+                      if (detail.option.optionName != "لا يوجد")
+                        Text(
+                          _formatText(
+                              'الجزء المراد تصويره: ${detail.option.optionName}'),
+                          style: style(),
+                        ),
                       SizedBox(
                         height: 3.h,
                       ),
@@ -88,7 +90,6 @@ class ExaminationItem extends StatelessWidget {
 
   TextStyle style() => TextStyle(fontSize: 18.sp);
 
-  /// دالة لتقسيم النص إذا زادت الفراغات عن اثنين
   String _formatText(String text) {
     int spaceCount = text.split(' ').length - 1;
     if (spaceCount > 4) {
@@ -99,15 +100,13 @@ class ExaminationItem extends StatelessWidget {
     return text;
   }
 
-  /// BottomSheet لإدخال السعر الجديد
   void _showEditPriceSheet(BuildContext context) {
-    final TextEditingController priceController =
-        TextEditingController(); // يتحكم بحقل النص
+    final TextEditingController priceController = TextEditingController();
     final formKey = GlobalKey<FormState>();
 
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true, // لضمان ملء الشاشة عند ظهور لوحة المفاتيح
+      isScrollControlled: true,
       builder: (context) => Padding(
         padding: EdgeInsets.only(
           left: 16.w,
@@ -151,15 +150,14 @@ class ExaminationItem extends StatelessWidget {
                     final newPrice = int.tryParse(priceController.text);
 
                     if (newPrice != null) {
-                      // استدعاء cubit لتحديث السعر
                       context
                           .read<ExaminationCubit>()
                           .updateExaminationPrice(detail.detailId, newPrice);
-                      // إعادة جلب التفاصيل بعد التحديث
+
                       context
                           .read<ExaminationCubit>()
                           .fetchExaminationDetails();
-                      Navigator.of(context).pop(); // إغلاق الـ BottomSheet
+                      Navigator.of(context).pop();
                     }
                   }
                 },

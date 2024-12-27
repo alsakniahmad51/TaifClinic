@@ -22,7 +22,9 @@ class DoctorOrderDetailes extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
+          backgroundColor: Colors.white,
           centerTitle: true,
           title: Text(
             'معلومات الطلب',
@@ -46,6 +48,12 @@ class DoctorOrderDetailes extends StatelessWidget {
                 buttomradius: 0,
               ),
               TableItem(
+                title: 'رقم هاتف المريض',
+                value: "${data.phoneNumber}",
+                topradius: 0,
+                buttomradius: 0,
+              ),
+              TableItem(
                 title: 'اسم الطبيب',
                 value: doctorName,
                 topradius: 0,
@@ -57,18 +65,20 @@ class DoctorOrderDetailes extends StatelessWidget {
                 topradius: 0,
                 buttomradius: 0,
               ),
-              TableItem(
-                title: 'الجزء المراد تصويره',
-                value: data.detail!.option.optionName,
-                topradius: 0,
-                buttomradius: 0,
-              ),
-              TableItem(
-                title: 'وضعية الصورة',
-                value: data.detail!.mode.modeName,
-                topradius: 0,
-                buttomradius: 0,
-              ),
+              if (data.detail!.option.optionName != "لا يوجد")
+                TableItem(
+                  title: 'الجزء المراد تصويره',
+                  value: data.detail!.option.optionName,
+                  topradius: 0,
+                  buttomradius: 0,
+                ),
+              if (data.detail!.mode.modeName != "لا يوجد")
+                TableItem(
+                  title: 'وضعية الصورة',
+                  value: data.detail!.mode.modeName,
+                  topradius: 0,
+                  buttomradius: 0,
+                ),
               TableItem(
                 title: 'شكل الصورة',
                 value: data.output!.type,
@@ -95,7 +105,7 @@ class DoctorOrderDetailes extends StatelessWidget {
               ),
               TableItem(
                 title: 'ملاحظات',
-                value: data.additionalNotes ?? "لا يوجد",
+                value: data.additionalNotes ?? "",
                 topradius: 0,
                 buttomradius: 12,
               ),
