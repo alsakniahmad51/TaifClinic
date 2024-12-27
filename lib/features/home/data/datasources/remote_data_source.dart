@@ -20,6 +20,7 @@ class RemoteDataSource {
           patient_id,
           date,
           additional_notes,
+          tooth_number,
           order_price,
           order_output,
           patients(
