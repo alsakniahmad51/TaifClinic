@@ -72,6 +72,13 @@ class DoctorOrderDetailes extends StatelessWidget {
                   topradius: 0,
                   buttomradius: 0,
                 ),
+              if (data.detail!.option.optionName == 'ساحة 5*5 مميزة للبية')
+                TableItem(
+                  title: 'رقم السن',
+                  value: data.toothNumber.toString(),
+                  topradius: 0,
+                  buttomradius: 0,
+                ),
               if (data.detail!.mode.modeName != "لا يوجد")
                 TableItem(
                   title: 'وضعية الصورة',
@@ -79,12 +86,13 @@ class DoctorOrderDetailes extends StatelessWidget {
                   topradius: 0,
                   buttomradius: 0,
                 ),
-              TableItem(
-                title: 'شكل الصورة',
-                value: data.output!.type,
-                topradius: 0,
-                buttomradius: 0,
-              ),
+              if (data.detail!.type.typeName != "C.B.C.T")
+                TableItem(
+                  title: 'شكل الصورة',
+                  value: data.output!.type,
+                  topradius: 0,
+                  buttomradius: 0,
+                ),
               TableItem(
                 title: 'التاريخ',
                 value: date,

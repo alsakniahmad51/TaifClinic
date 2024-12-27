@@ -2,6 +2,7 @@ import 'package:clinic/features/home/domain/Entities/examination_detail.dart';
 import 'package:clinic/features/home/domain/Entities/output.dart';
 
 class Order {
+  final int? toothNumber;
   final int id;
   final int doctorId;
   final int patientId;
@@ -14,7 +15,8 @@ class Order {
   final String? additionalNotes;
   final int price;
   final Output? output;
-  Order({
+  Order(
+    this.toothNumber, {
     required this.output,
     required this.id,
     required this.doctorId,
@@ -31,6 +33,7 @@ class Order {
 
   factory Order.fromJson(Map<String, dynamic> json) {
     return Order(
+      json['tooth_number'],
       id: json['order_id'] ?? 0,
       doctorId: json['doctor_id'] ?? 0,
       patientId: json['patient_id'] ?? 0,

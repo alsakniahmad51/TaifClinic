@@ -26,6 +26,7 @@ class DoctorRemoteDataSource {
           .select('''
           order_id,
           doctor_id,
+          tooth_number,
           patient_id,
           date,
           additional_notes,
