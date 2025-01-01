@@ -25,48 +25,55 @@ Future<void> main() async {
     url: SupabaseKeys.projectUrl,
     anonKey: SupabaseKeys.anonyKey,
   );
+  ExaminationRemoteDataSource examinationRemoteDataSource =
+      ExaminationRemoteDataSource(supabase.client);
+  ExaminationRepositoryImpl examinationRepositoryImpl =
+      ExaminationRepositoryImpl(examinationRemoteDataSource);
+  RemoteDataSource remoteDataSource = RemoteDataSource(supabase.client);
+  DataRepositoryImpl dataRepositoryImpl = DataRepositoryImpl(remoteDataSource);
+  FetchOrdersUseCase fetchOrdersUseCase =
+      FetchOrdersUseCase(dataRepositoryImpl);
+  DoctorRemoteDataSource doctorRemoteDataSource =
+      DoctorRemoteDataSource(supabase.client);
+  DoctorRepositoryImpl doctorRepositoryImpl = DoctorRepositoryImpl(
+    doctorRemoteDataSource,
+  );
 
-  var cliniApp = ClinicApp(
-    fetchExaminationDetailsUseCase: FetchExaminationDetailsUseCase(
-      ExaminationRepositoryImpl(
-        ExaminationRemoteDataSource(supabase.client),
-      ),
-    ),
-    fetchOrdersUseCase: FetchOrdersUseCase(
-      DataRepositoryImpl(
-        RemoteDataSource(supabase.client),
-      ),
-    ),
-    fetchAllDoctorsUseCase: FetchAllDoctorsUseCase(
-      DoctorRepositoryImpl(
-        DoctorRemoteDataSource(supabase.client),
-      ),
-    ),
-    fetchDoctorOrdersUseCase: FetchDoctorOrdersUseCase(
-      DoctorRepositoryImpl(
-        DoctorRemoteDataSource(supabase.client),
-      ),
-    ),
-    updatePriceUseCase: UpdatePriceUseCase(
-      ExaminationRepositoryImpl(
-        ExaminationRemoteDataSource(supabase.client),
-      ),
-    ),
-    fetchOutputDetailsUseCase: FetchOutputDetailsUseCase(
-      ExaminationRepositoryImpl(
-        ExaminationRemoteDataSource(supabase.client),
-      ),
-    ),
-    updateOutputPriceUseCase: UpdateOutputPriceUseCase(
-      ExaminationRepositoryImpl(
-        ExaminationRemoteDataSource(supabase.client),
-      ),
-    ),
-    getRemoteVersionUsecase: GetRemoteVersionUsecase(
-      getVersionRepoImpl: GetVersionRepoImpl(
-        getRemoteVersionC: GetRemoteVersion(supabaseClient: supabase.client),
-      ),
-    ),
+  FetchAllDoctorsUseCase fetchAllDoctorsUseCase = FetchAllDoctorsUseCase(
+    doctorRepositoryImpl,
+  );
+  FetchDoctorOrdersUseCase fetchDoctorOrdersUseCase = FetchDoctorOrdersUseCase(
+    doctorRepositoryImpl,
+  );
+  FetchExaminationDetailsUseCase fetchExaminationDetailsUseCase =
+      FetchExaminationDetailsUseCase(examinationRepositoryImpl);
+  UpdatePriceUseCase updatePriceUseCase = UpdatePriceUseCase(
+    examinationRepositoryImpl,
+  );
+  FetchOutputDetailsUseCase fetchOutputDetailsUseCase =
+      FetchOutputDetailsUseCase(
+    examinationRepositoryImpl,
+  );
+  UpdateOutputPriceUseCase updateOutputPriceUseCase = UpdateOutputPriceUseCase(
+    examinationRepositoryImpl,
+  );
+  GetRemoteVersion getRemoteVersion =
+      GetRemoteVersion(supabaseClient: supabase.client);
+  GetVersionRepoImpl getVersionRepoImpl = GetVersionRepoImpl(
+    getRemoteVersionC: getRemoteVersion,
+  );
+  GetRemoteVersionUsecase getRemoteVersionUsecase = GetRemoteVersionUsecase(
+    getVersionRepoImpl: getVersionRepoImpl,
+  );
+  ClinicApp cliniApp = ClinicApp(
+    fetchExaminationDetailsUseCase: fetchExaminationDetailsUseCase,
+    fetchOrdersUseCase: fetchOrdersUseCase,
+    fetchAllDoctorsUseCase: fetchAllDoctorsUseCase,
+    fetchDoctorOrdersUseCase: fetchDoctorOrdersUseCase,
+    updatePriceUseCase: updatePriceUseCase,
+    fetchOutputDetailsUseCase: fetchOutputDetailsUseCase,
+    updateOutputPriceUseCase: updateOutputPriceUseCase,
+    getRemoteVersionUsecase: getRemoteVersionUsecase,
   );
   runApp(cliniApp);
 }
