@@ -29,7 +29,7 @@ class OrderDoctorItem extends StatelessWidget {
           Moving.navToPage(
               context: context,
               page: DoctorOrderDetailes(
-                data: order,
+                order: order,
                 doctorName: doctorName,
               ));
         },

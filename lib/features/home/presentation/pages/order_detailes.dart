@@ -59,36 +59,43 @@ class OrderDetailes extends StatelessWidget {
                 SizedBox(height: 40.h),
 
                 if (!order.isImaged)
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton.icon(
-                      onPressed: () => _confirmImaging(context),
-                      icon: const Icon(Icons.check_circle, color: Colors.white),
-                      label: const Text(
-                        'تأكيد عملية التصوير',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColor.primaryColor,
-                        minimumSize: Size(double.infinity, 50.h),
+                  Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () => _confirmImaging(context),
+                        icon:
+                            const Icon(Icons.check_circle, color: Colors.white),
+                        label: const Text(
+                          'تأكيد عملية التصوير',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColor.primaryColor,
+                          minimumSize: Size(double.infinity, 50.h),
+                        ),
                       ),
                     ),
                   ),
                 SizedBox(height: 20.h),
 
                 if (!order.isImaged)
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton.icon(
-                      onPressed: () => _showEditPriceSheet(context),
-                      icon: const Icon(Icons.discount, color: Colors.white),
-                      label: const Text(
-                        'إضافة حسم',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.teal, // لون متناسق مع التصميم
-                        minimumSize: Size(double.infinity, 50.h),
+                  Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () => _showEditPriceSheet(context),
+                        icon: const Icon(Icons.discount, color: Colors.white),
+                        label: const Text(
+                          'إضافة حسم',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.teal, // لون متناسق مع التصميم
+                          minimumSize: Size(double.infinity, 50.h),
+                        ),
                       ),
                     ),
                   ),

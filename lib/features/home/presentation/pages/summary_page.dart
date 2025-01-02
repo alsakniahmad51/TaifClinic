@@ -48,9 +48,11 @@ class SummaryPage extends StatelessWidget {
     // }
 
     for (var order in ordersToday) {
-      final typeName = order.detail!.type.typeName;
-      orderCounts[typeName] = (orderCounts[typeName] ?? 0) + 1;
-      totalPrice += order.detail!.price + order.output!.price;
+      if (order.isImaged) {
+        final typeName = order.detail!.type.typeName;
+        orderCounts[typeName] = (orderCounts[typeName] ?? 0) + 1;
+        totalPrice += order.detail!.price + order.output!.price;
+      }
     }
     final formattedPrice = intl.NumberFormat("#,###", "ar").format(totalPrice);
 
