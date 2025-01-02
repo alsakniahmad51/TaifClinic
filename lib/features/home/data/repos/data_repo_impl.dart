@@ -22,4 +22,9 @@ class DataRepositoryImpl implements DataRepository {
   Future<void> updateOrderPrice(int orderId, int newPrice) async {
     return await remoteDataSource.updateOrderPrice(orderId, newPrice);
   }
+
+  @override
+  Future<void> updateOrderState(int orderId) async {
+    return await remoteDataSource.updateOrderState(orderId);
+  }
 }

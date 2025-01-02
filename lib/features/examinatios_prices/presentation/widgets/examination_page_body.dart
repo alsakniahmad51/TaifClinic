@@ -1,3 +1,4 @@
+import 'package:clinic/features/home/presentation/widgets/offlin_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:clinic/core/util/constants.dart';
@@ -33,12 +34,26 @@ class ExaminationPageBody extends StatelessWidget {
             }
 
             if (examinationState is ExaminationError) {
+              if (examinationState.message.contains("SocketException")) {
+                return OfflinPage(onTap: () {
+                  BlocProvider.of<ExaminationCubit>(context)
+                      .fetchExaminationDetails();
+                  BlocProvider.of<OutputCubit>(context).fetchOutputDetails();
+                });
+              }
               return Center(
                 child:
                     Text('Error in Examination: ${examinationState.message}'),
               );
             }
             if (outputState is OutputError) {
+              if (outputState.message.contains("SocketException")) {
+                return OfflinPage(onTap: () {
+                  BlocProvider.of<ExaminationCubit>(context)
+                      .fetchExaminationDetails();
+                  BlocProvider.of<OutputCubit>(context).fetchOutputDetails();
+                });
+              }
               return Center(
                 child: Text('Error in Output: ${outputState.message}'),
               );

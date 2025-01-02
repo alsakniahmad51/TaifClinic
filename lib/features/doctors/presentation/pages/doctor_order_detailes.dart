@@ -1,12 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'package:clinic/core/util/constants.dart';
-import 'package:clinic/core/util/functions/navigator.dart';
 import 'package:clinic/core/util/widgets/custom_text_field.dart';
-import 'package:clinic/features/doctors/presentation/manager/docotr_cubit/doctors_cubit.dart';
 import 'package:clinic/features/home/domain/Entities/order.dart';
 import 'package:clinic/features/home/presentation/manager/fetch_order_cubit/order_cubit.dart';
 import 'package:clinic/features/home/presentation/manager/update_price_order_cubit/update_order_cubit.dart';
+import 'package:clinic/features/home/presentation/manager/update_state_order_cubit/update_state_order_cubit.dart';
 import 'package:clinic/features/home/presentation/pages/page_view.dart';
 import 'package:clinic/features/home/presentation/widgets/table_item_order_detailes.dart';
 import 'package:flutter/material.dart';
@@ -32,198 +30,274 @@ class DoctorOrderDetailes extends StatelessWidget {
     DateTime time = order.date;
     String formattedTime = intl.DateFormat('hh:mm a').format(time);
 
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          forceMaterialTransparency: true,
-          backgroundColor: Colors.white,
-          centerTitle: true,
-          title: Text(
-            'معلومات الطلب',
-            style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
-          ),
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<UpdateStateOrderCubit, UpdateStateOrderState>(
+          listener: (context, state) {
+            if (state is UpdateStateOrderLoading) {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            } else if (state is UpdateStateOrderSucsecc) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('تم تأكيد عملية التصوير بنجاح!'),
+                  backgroundColor: Colors.green,
+                ),
+              );
+
+              // ✅ الانتقال إلى الصفحة الرئيسية مع إزالة كل الصفحات السابقة
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const Pageview()),
+                (Route<dynamic> route) => false,
+              );
+            } else if (state is UpdateStateOrderFailure) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('فشلت عملية تأكيد التصوير!'),
+                  backgroundColor: Colors.red,
+                ),
+              );
+
+              Navigator.of(context).pop();
+            }
+          },
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                /// ✅ **تفاصيل الطلب (جدول)**
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Column(
-                    children: [
-                      TableItem(
-                        title: 'اسم المريض',
-                        value: order.patientName,
-                        topradius: 12,
-                        buttomradius: 0,
-                      ),
-                      TableItem(
-                        title: 'العمر',
-                        value: "${order.patientAge}",
-                        topradius: 0,
-                        buttomradius: 0,
-                      ),
-                      TableItem(
-                        title: 'رقم هاتف المريض',
-                        value: "${order.phoneNumber}",
-                        topradius: 0,
-                        buttomradius: 0,
-                      ),
-                      TableItem(
-                        title: 'اسم الطبيب',
-                        value: doctorName,
-                        topradius: 0,
-                        buttomradius: 0,
-                      ),
-                      TableItem(
-                        title: 'نوع الصورة',
-                        value: order.detail!.type.typeName,
-                        topradius: 0,
-                        buttomradius: 0,
-                      ),
-                      if (order.detail!.option.optionName != "لا يوجد")
-                        TableItem(
-                          title: 'الجزء المراد تصويره',
-                          value: order.detail!.option.optionName,
-                          topradius: 0,
-                          buttomradius: 0,
-                        ),
-                      if (order.detail!.option.optionName ==
-                          'ساحة 5*5 مميزة للبية')
-                        TableItem(
-                          title: 'رقم السن',
-                          value: order.toothNumber.toString(),
-                          topradius: 0,
-                          buttomradius: 0,
-                        ),
-                      if (order.detail!.mode.modeName != "لا يوجد")
-                        TableItem(
-                          title: 'وضعية الصورة',
-                          value: order.detail!.mode.modeName,
-                          topradius: 0,
-                          buttomradius: 0,
-                        ),
-                      if (order.detail!.type.typeName != "C.B.C.T")
-                        TableItem(
-                          title: 'شكل الصورة',
-                          value: order.output!.type,
-                          topradius: 0,
-                          buttomradius: 0,
-                        ),
-                      TableItem(
-                        title: 'التاريخ',
-                        value: date,
-                        topradius: 0,
-                        buttomradius: 0,
-                      ),
-                      TableItem(
-                        title: 'التوقيت',
-                        value: formattedTime,
-                        topradius: 0,
-                        buttomradius: 0,
-                      ),
-                      TableItem(
-                        title: 'قيمة الفاتورة',
-                        value: "${order.price} ل.س",
-                        topradius: 0,
-                        buttomradius: 0,
-                      ),
-                      TableItem(
-                        title: 'ملاحظات',
-                        value: order.additionalNotes ?? "",
-                        topradius: 0,
-                        buttomradius: 12,
-                      ),
-                    ],
-                  ),
+        BlocListener<UpdatePriceOrderCubit, UpdateOrderState>(
+          listener: (context, state) {
+            if (state is UpdateOrderLoading) {
+              // ✅ إظهار Loading Dialog
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) => const Center(
+                  child: CircularProgressIndicator(),
                 ),
-                SizedBox(height: 40.h),
+              );
+            } else if (state is UpdateOrderSuccess) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('تم تحديث السعر بنجاح!'),
+                  backgroundColor: Colors.green,
+                ),
+              );
 
-                /// ✅ **زر تأكيد عملية التصوير**
-                if (!order.isImaged)
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton.icon(
-                      onPressed: () => _confirmImaging(context),
-                      icon: const Icon(Icons.check_circle, color: Colors.white),
-                      label: const Text(
-                        'تأكيد عملية التصوير',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColor.primaryColor,
-                        minimumSize: Size(double.infinity, 50.h),
-                      ),
-                    ),
-                  ),
-                SizedBox(height: 20.h),
-
-                /// ✅ **زر إضافة حسم**
-                if (!order.isImaged)
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton.icon(
-                      onPressed: () => _showEditPriceSheet(context),
-                      icon: const Icon(Icons.discount, color: Colors.white),
-                      label: const Text(
-                        'إضافة حسم',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.teal,
-                        minimumSize: Size(double.infinity, 50.h),
-                      ),
-                    ),
-                  ),
-                SizedBox(height: 30.h),
-
-                /// ✅ **حالة الطلب**
-                Container(
-                  width: double.infinity,
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
-                  decoration: BoxDecoration(
-                    color: order.isImaged
-                        ? Colors.green.shade100
-                        : Colors.amber.shade100,
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        order.isImaged
-                            ? Icons.check_circle
-                            : Icons.access_time_filled,
-                        color: order.isImaged ? Colors.green : Colors.amber,
-                        size: 24.w,
-                      ),
-                      SizedBox(width: 10.w),
-                      Expanded(
-                        child: Text(
-                          order.isImaged
-                              ? 'تم إتمام عملية تصوير الأشعة بنجاح.'
-                              : 'بانتظار وصول المريض لاستكمال إجراءات الطلب.',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: order.isImaged
-                                ? Colors.green.shade800
-                                : Colors.amber.shade800,
-                            fontWeight: FontWeight.w500,
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const Pageview()),
+                (Route<dynamic> route) => false,
+              );
+            } else if (state is UpdateOrderError) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('فشل تحديث السعر!'),
+                  backgroundColor: Colors.red,
+                ),
+              );
+              // ✅ إغلاق Loading Dialog
+              Navigator.of(context).pop();
+            }
+          },
+        ),
+      ],
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            forceMaterialTransparency: true,
+            backgroundColor: Colors.white,
+            centerTitle: true,
+            title: Text(
+              'معلومات الطلب',
+              style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+            ),
+          ),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  /// ✅ **تفاصيل الطلب (جدول)**
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Column(
+                      children: [
+                        TableItem(
+                          title: 'اسم المريض',
+                          value: order.patientName,
+                          topradius: 12,
+                          buttomradius: 0,
+                        ),
+                        TableItem(
+                          title: 'العمر',
+                          value: "////${order.patientAge}",
+                          topradius: 0,
+                          buttomradius: 0,
+                        ),
+                        TableItem(
+                          title: 'رقم هاتف المريض',
+                          value: "${order.phoneNumber}",
+                          topradius: 0,
+                          buttomradius: 0,
+                        ),
+                        TableItem(
+                          title: 'اسم الطبيب',
+                          value: doctorName,
+                          topradius: 0,
+                          buttomradius: 0,
+                        ),
+                        TableItem(
+                          title: 'نوع الصورة',
+                          value: order.detail!.type.typeName,
+                          topradius: 0,
+                          buttomradius: 0,
+                        ),
+                        if (order.detail!.option.optionName != "لا يوجد")
+                          TableItem(
+                            title: 'الجزء المراد تصويره',
+                            value: order.detail!.option.optionName,
+                            topradius: 0,
+                            buttomradius: 0,
                           ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
+                        if (order.detail!.option.optionName ==
+                            'ساحة 5*5 مميزة للبية')
+                          TableItem(
+                            title: 'رقم السن',
+                            value: order.toothNumber.toString(),
+                            topradius: 0,
+                            buttomradius: 0,
+                          ),
+                        if (order.detail!.mode.modeName != "لا يوجد")
+                          TableItem(
+                            title: 'وضعية الصورة',
+                            value: order.detail!.mode.modeName,
+                            topradius: 0,
+                            buttomradius: 0,
+                          ),
+                        if (order.detail!.type.typeName != "C.B.C.T")
+                          TableItem(
+                            title: 'شكل الصورة',
+                            value: order.output!.type,
+                            topradius: 0,
+                            buttomradius: 0,
+                          ),
+                        TableItem(
+                          title: 'التاريخ',
+                          value: date,
+                          topradius: 0,
+                          buttomradius: 0,
+                        ),
+                        TableItem(
+                          title: 'التوقيت',
+                          value: formattedTime,
+                          topradius: 0,
+                          buttomradius: 0,
+                        ),
+                        TableItem(
+                          title: 'قيمة الفاتورة',
+                          value: "${order.price} ل.س",
+                          topradius: 0,
+                          buttomradius: 0,
+                        ),
+                        TableItem(
+                          title: 'ملاحظات',
+                          value: order.additionalNotes ?? "",
+                          topradius: 0,
+                          buttomradius: 12,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 40.h),
+
+                  /// ✅ **زر تأكيد عملية التصوير**
+                  if (!order.isImaged)
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () => _confirmImaging(context),
+                        icon:
+                            const Icon(Icons.check_circle, color: Colors.white),
+                        label: const Text(
+                          'تأكيد عملية التصوير',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColor.primaryColor,
+                          minimumSize: Size(double.infinity, 50.h),
                         ),
                       ),
-                    ],
+                    ),
+                  SizedBox(height: 20.h),
+
+                  /// ✅ **زر إضافة حسم**
+                  if (!order.isImaged)
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () => _showEditPriceSheet(context),
+                        icon: const Icon(Icons.discount, color: Colors.white),
+                        label: const Text(
+                          'إضافة حسم',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.teal,
+                          minimumSize: Size(double.infinity, 50.h),
+                        ),
+                      ),
+                    ),
+                  SizedBox(height: 30.h),
+
+                  Container(
+                    width: double.infinity,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+                    decoration: BoxDecoration(
+                      color: order.isImaged
+                          ? Colors.green.shade100
+                          : Colors.amber.shade100,
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          order.isImaged
+                              ? Icons.check_circle
+                              : Icons.access_time_filled,
+                          color: order.isImaged ? Colors.green : Colors.amber,
+                          size: 24.w,
+                        ),
+                        SizedBox(width: 10.w),
+                        Expanded(
+                          child: Text(
+                            order.isImaged
+                                ? 'تم إتمام عملية تصوير الأشعة بنجاح.'
+                                : 'بانتظار وصول المريض لاستكمال إجراءات الطلب.',
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: order.isImaged
+                                  ? Colors.green.shade800
+                                  : Colors.amber.shade800,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -231,7 +305,6 @@ class DoctorOrderDetailes extends StatelessWidget {
     );
   }
 
-  /// ✅ **مربع حوار التأكيد**
   void _confirmImaging(BuildContext context) {
     showDialog(
       context: context,
@@ -249,11 +322,9 @@ class DoctorOrderDetailes extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
+                BlocProvider.of<UpdateStateOrderCubit>(context)
+                    .updateOrderState(order.id);
                 Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                      content: Text('تم تأكيد عملية التصوير بنجاح!')),
-                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColor.primaryColor,
@@ -269,7 +340,6 @@ class DoctorOrderDetailes extends StatelessWidget {
     );
   }
 
-  /// ✅ **نافذة تعديل السعر (Bottom Sheet)**
   void _showEditPriceSheet(BuildContext context) {
     final TextEditingController priceController = TextEditingController();
     final formKey = GlobalKey<FormState>();
@@ -311,11 +381,8 @@ class DoctorOrderDetailes extends StatelessWidget {
                     return 'يجب إدخال قيمة رقمية صالحة';
                   }
                   // التحقق من أن الحسم أقل من سعر الطلب
-                  if (discount > order.price) {
+                  if (discount >= order.price) {
                     return 'يجب ألا يكون الحسم أكبر من أو يساوي الفاتورة';
-                  }
-                  if (discount == 0) {
-                    return 'لا فائدة لحسم صفري';
                   }
                   return null;
                 },
@@ -334,21 +401,9 @@ class DoctorOrderDetailes extends StatelessWidget {
                     if (newDiscount != null) {
                       final newPrice = order.price - newDiscount;
 
-                      try {
-                        await BlocProvider.of<UpdatePriceOrderCubit>(context)
-                            .updateOrderPrice(order.id, newPrice);
-                        Navigator.of(context).pop();
-                        Moving.navToPage(
-                            context: context, page: const Pageview());
-                        final now = DateTime.now();
-                        final startOfMonth = DateTime(now.year, now.month, 1);
-                        final endOfMonth = DateTime(now.year, now.month + 1, 0);
-                        BlocProvider.of<DoctorsCubit>(context).fetchDoctors();
-                      } catch (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('فشل تحديث السعر: $e')),
-                        );
-                      }
+                      BlocProvider.of<UpdatePriceOrderCubit>(context)
+                          .updateOrderPrice(order.id, newPrice);
+                      Navigator.pop(context);
                     }
                   }
                 },

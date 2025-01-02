@@ -9,6 +9,10 @@ class FetchOrdersUseCase {
     return await repository.updateOrderPrice(orderId, newPrice);
   }
 
+  Future<void> updateOredrStare(int orderId) async {
+    return await repository.updateOrderState(orderId);
+  }
+
   Future<List<Order>> call(DateTime startDate, DateTime endDate) async {
     final orders = await repository.fetchAllOrders(startDate, endDate);
 

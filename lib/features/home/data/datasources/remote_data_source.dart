@@ -47,7 +47,7 @@ class RemoteDataSource {
           .lte('date', endDate.toIso8601String()); // تاريخ النهاية
 
       final List<dynamic> data = response as List<dynamic>;
-      log(data.toString());
+
       return data.map((item) => Order.fromJson(item)).toList();
     } catch (e) {
       throw Exception('Failed to load orders: ${e.toString()}');
@@ -56,12 +56,21 @@ class RemoteDataSource {
 
   Future<void> updateOrderPrice(int orderId, int newPrice) async {
     try {
-      // استدعاء Supabase لتحديث السعر في جدول الطلبات
-      await supabase
+      final response = await supabase
           .from('orders')
           .update({'order_price': newPrice}).eq('order_id', orderId);
     } catch (e) {
       throw Exception('فشل في تحديث السعر: ${e.toString()}');
+    }
+  }
+
+  Future<void> updateOrderState(int orderId) async {
+    try {
+      final response = await supabase
+          .from('orders')
+          .update({'isImaged': true}).eq('order_id', orderId);
+    } catch (e) {
+      throw Exception('فشل في تحديث الحالة: ${e.toString()}');
     }
   }
 
@@ -72,8 +81,7 @@ class RemoteDataSource {
           .from('doctors')
           .select('doctor_id, doctor_name')
           .filter('doctor_id', 'in', '($doctorIdsString)');
-      log('************************************');
-      log(response.toString());
+
       return {for (var doc in response) doc['doctor_id']: doc['doctor_name']};
     } catch (e) {
       throw Exception('Failed to load doctor names: ${e.toString()}');

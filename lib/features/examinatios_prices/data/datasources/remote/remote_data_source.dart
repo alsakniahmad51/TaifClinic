@@ -31,8 +31,6 @@ class ExaminationRemoteDataSource {
       await supabase
           .from('examinationdetails')
           .update({'price': newPrice}).eq('detail_id', detailId);
-
-      log('Price updated successfully for detail_id: $detailId');
     } catch (e) {
       throw Exception('Failed to update price: ${e.toString()}');
     }
@@ -52,7 +50,6 @@ class ExaminationRemoteDataSource {
   Future<void> updateOutputPrice(int id, int newPrice) async {
     try {
       await supabase.from('output').update({'price': newPrice}).eq('id', id);
-      log('Price updated successfully for id: $id');
     } catch (e) {
       throw Exception('Failed to update price: ${e.toString()}');
     }

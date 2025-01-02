@@ -5,4 +5,5 @@ abstract class DataRepository {
   Future<Map<int, String>> fetchDoctorNames(
       Set<int> doctorIds); // جلب أسماء الأطباء دفعة واحدة
   Future<void> updateOrderPrice(int orderId, int newPrice);
+  Future<void> updateOrderState(int orderId);
 }

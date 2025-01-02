@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:clinic/features/home/domain/Entities/order.dart';
 import 'package:clinic/features/home/domain/usecase/fetch_order_usecase.dart';
@@ -15,7 +17,11 @@ class OrderCubit extends Cubit<OrderState> {
       final orders = await fetchOrdersUseCase(startDate, endDate);
       emit(OrderLoaded(orders));
     } catch (e) {
-      emit(OrderError(e.toString()));
+      if (e is SocketException) {
+        emit(OrderError("لا يوجد اتصال بالإنترنت"));
+      } else {
+        emit(OrderError(e.toString()));
+      }
     }
   }
 }

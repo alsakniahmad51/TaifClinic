@@ -122,7 +122,9 @@ class HomePageBody extends StatelessWidget {
             ),
           );
         } else if (state is OrderError) {
-          return state.message == errorOrderOffline
+          return state.message == errorOrderOffline ||
+                  state.message == "لا يوجد اتصال بالإنترنت" ||
+                  state.message.contains("SocketException")
               ? OfflinPage(
                   onTap: () {
                     final now = DateTime.now();

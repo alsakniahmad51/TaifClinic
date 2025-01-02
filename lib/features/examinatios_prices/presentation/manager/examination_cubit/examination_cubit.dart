@@ -18,7 +18,7 @@ class ExaminationCubit extends Cubit<ExaminationState> {
   Future<void> fetchExaminationDetails() async {
     emit(ExaminationLoading());
     try {
-      final details = await fetchDetailsUseCase();
+      final details = await fetchDetailsUseCase.call();
       emit(ExaminationLoaded(details: details));
     } catch (error) {
       emit(ExaminationError(message: error.toString()));
