@@ -27,6 +27,7 @@ class DoctorRemoteDataSource {
           order_id,
           doctor_id,
           tooth_number,
+          isImaged,
           patient_id,
           date,
           additional_notes,
@@ -96,14 +97,6 @@ class DoctorRemoteDataSource {
   //   return data.map((item) => Order.fromJson(item)).toList();
   // }
 }
-
-
-
-
-
-
-
-
 
 // class DoctorRemoteDataSource {
 //   final SupabaseClient supabase;

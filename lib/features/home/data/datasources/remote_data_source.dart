@@ -18,6 +18,7 @@ class RemoteDataSource {
           order_id,
           doctor_id,
           patient_id,
+          isImaged,
           date,
           additional_notes,
           tooth_number,

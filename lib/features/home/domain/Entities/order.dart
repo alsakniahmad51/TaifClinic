@@ -6,6 +6,7 @@ class Order {
   final int id;
   final int doctorId;
   final int patientId;
+  final bool isImaged;
   String patientName;
   String doctorName;
   final DateTime date;
@@ -16,7 +17,8 @@ class Order {
   final int price;
   final Output? output;
   Order(
-    this.toothNumber, {
+    this.toothNumber,
+    this.isImaged, {
     required this.output,
     required this.id,
     required this.doctorId,
@@ -34,6 +36,7 @@ class Order {
   factory Order.fromJson(Map<String, dynamic> json) {
     return Order(
       json['tooth_number'],
+      json['isImaged'],
       id: json['order_id'] ?? 0,
       doctorId: json['doctor_id'] ?? 0,
       patientId: json['patient_id'] ?? 0,

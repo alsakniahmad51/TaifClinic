@@ -16,16 +16,16 @@ import 'package:intl/intl.dart' as intl;
 class OrderDetailes extends StatelessWidget {
   const OrderDetailes({
     super.key,
-    required this.data,
+    required this.order,
   });
-  final Order data;
+  final Order order;
 
   @override
   Widget build(BuildContext context) {
-    String dateTime = data.date.toString();
+    String dateTime = order.date.toString();
     var parts = dateTime.split(' ');
     String date = parts[0];
-    DateTime time = data.date;
+    DateTime time = order.date;
     String formattedTime = intl.DateFormat('hh:mm a').format(time);
 
     return Directionality(
@@ -43,31 +43,96 @@ class OrderDetailes extends StatelessWidget {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.only(top: 34.h),
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                DetailesTable(
-                    data: data, date: date, formattedTime: formattedTime),
-                SizedBox(
-                  height: 80.h,
-                ),
-                InkWell(
-                  onTap: () {
-                    _showEditPriceSheet(context);
-                  },
-                  child: Container(
-                    height: 40.h,
-                    width: 200.w,
-                    decoration: BoxDecoration(
-                        color: AppColor.primaryColor,
-                        borderRadius: BorderRadius.circular(12.r)),
-                    child: const Center(
-                        child: Text(
-                      'إضافة حسم',
-                      style: TextStyle(color: Colors.white),
-                    )),
+                /// ✅ **تفاصيل الطلب**
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: DetailesTable(
+                    order: order,
+                    date: date,
+                    formattedTime: formattedTime,
                   ),
                 ),
+                SizedBox(height: 40.h),
+
+                if (!order.isImaged)
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      onPressed: () => _confirmImaging(context),
+                      icon: const Icon(Icons.check_circle, color: Colors.white),
+                      label: const Text(
+                        'تأكيد عملية التصوير',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColor.primaryColor,
+                        minimumSize: Size(double.infinity, 50.h),
+                      ),
+                    ),
+                  ),
+                SizedBox(height: 20.h),
+
+                if (!order.isImaged)
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      onPressed: () => _showEditPriceSheet(context),
+                      icon: const Icon(Icons.discount, color: Colors.white),
+                      label: const Text(
+                        'إضافة حسم',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.teal, // لون متناسق مع التصميم
+                        minimumSize: Size(double.infinity, 50.h),
+                      ),
+                    ),
+                  ),
+                SizedBox(height: 30.h),
+                Container(
+                  width: double.infinity,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+                  decoration: BoxDecoration(
+                    color: order.isImaged
+                        ? Colors.green.shade100
+                        : Colors.amber.shade100,
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        order.isImaged
+                            ? Icons.check_circle
+                            : Icons.access_time_filled,
+                        color: order.isImaged ? Colors.green : Colors.amber,
+                        size: 24.w,
+                      ),
+                      SizedBox(width: 10.w),
+                      Expanded(
+                        child: Text(
+                          order.isImaged
+                              ? 'تم إتمام عملية تصوير الأشعة بنجاح.'
+                              : 'بانتظار وصول المريض لاستكمال إجراءات الطلب.',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: order.isImaged
+                                ? Colors.green.shade800
+                                : Colors.amber.shade800,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
@@ -76,14 +141,52 @@ class OrderDetailes extends StatelessWidget {
     );
   }
 
+  /// ✅ **مربع حوار التأكيد**
+  void _confirmImaging(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Directionality(
+        textDirection: TextDirection.rtl,
+        child: AlertDialog(
+          title: const Text('تأكيد عملية التصوير'),
+          content: const Text(
+              'هل أنت متأكد من تأكيد عملية التصوير؟ هذا الإجراء نهائي.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('إلغاء'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      content: Text('تم تأكيد عملية التصوير بنجاح!')),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColor.primaryColor,
+              ),
+              child: const Text(
+                'تأكيد',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// ✅ **نافذة تعديل السعر (Bottom Sheet)**
   void _showEditPriceSheet(BuildContext context) {
-    final TextEditingController priceController =
-        TextEditingController(); // يتحكم بحقل النص
+    final TextEditingController priceController = TextEditingController();
     final formKey = GlobalKey<FormState>();
 
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true, // لضمان ملء الشاشة عند ظهور لوحة المفاتيح
+      isScrollControlled: true,
       builder: (context) => Padding(
         padding: EdgeInsets.only(
           left: 16.w,
@@ -112,6 +215,15 @@ class OrderDetailes extends StatelessWidget {
                   if (value == null || value.isEmpty) {
                     return 'يجب ألا يكون الحقل فارغًا';
                   }
+                  // التحقق من أن القيمة رقمية
+                  final int? discount = int.tryParse(value);
+                  if (discount == null) {
+                    return 'يجب إدخال قيمة رقمية صالحة';
+                  }
+                  // التحقق من أن الحسم أقل من سعر الطلب
+                  if (discount >= order.price) {
+                    return 'يجب ألا يكون الحسم أكبر من أو يساوي الفاتورة';
+                  }
                   return null;
                 },
               ),
@@ -127,11 +239,11 @@ class OrderDetailes extends StatelessWidget {
                     final newDiscount = int.tryParse(priceController.text);
 
                     if (newDiscount != null) {
-                      final newPrice = data.price - newDiscount;
+                      final newPrice = order.price - newDiscount;
 
                       try {
                         await BlocProvider.of<UpdatePriceOrderCubit>(context)
-                            .updateOrderPrice(data.id, newPrice);
+                            .updateOrderPrice(order.id, newPrice);
                         Navigator.of(context).pop();
                         Moving.navToPage(
                             context: context, page: const Pageview());

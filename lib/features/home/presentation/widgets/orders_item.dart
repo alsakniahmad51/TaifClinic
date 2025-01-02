@@ -26,7 +26,7 @@ class OrdersItem extends StatelessWidget {
             Moving.navToPage(
                 context: context,
                 page: OrderDetailes(
-                  data: data,
+                  order: data,
                 ));
           },
           child: SizedBox(
