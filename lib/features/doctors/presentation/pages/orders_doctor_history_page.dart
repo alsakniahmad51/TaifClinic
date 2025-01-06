@@ -1,4 +1,5 @@
 import 'package:clinic/core/util/constants.dart';
+import 'package:clinic/core/util/widgets/custom_button.dart';
 import 'package:clinic/features/doctors/presentation/manager/docotr_order_cubit/doctor_order_cubit.dart';
 import 'package:clinic/features/doctors/presentation/widgets/order_doctor_item.dart';
 import 'package:clinic/features/home/presentation/pages/summary_page.dart';
@@ -119,7 +120,8 @@ class DoctorOrdersHistory extends StatelessWidget {
             ),
           );
         } else if (state is DoctorOrdersError) {
-          return state.message == errorDoctorOrdersHistoryOffline
+          return state.message == errorDoctorOrdersHistoryOffline ||
+                  state.message.contains("SocketException")
               ? OfflinPage(onTap: () {
                   final nowTime = DateTime.now();
                   DateTime start = DateTime(nowTime.year, nowTime.month, 1);
@@ -131,9 +133,29 @@ class DoctorOrdersHistory extends StatelessWidget {
                       );
                 })
               : Center(
-                  child: Text(
-                    'حدث خطأ: ${state.message}',
-                    style: const TextStyle(color: Colors.red),
+                  child: Column(
+                    children: [
+                      Text(
+                        'حدث خطأ: ${state.message}',
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                      CustomButton(
+                          title: "إعادة التحميل",
+                          color: AppColor.primaryColor,
+                          onTap: () {
+                            final nowTime = DateTime.now();
+                            DateTime start =
+                                DateTime(nowTime.year, nowTime.month, 1);
+                            DateTime end =
+                                DateTime(nowTime.year, nowTime.month + 1, 0);
+                            context.read<DoctorOrdersCubit>().fetchOrders(
+                                  doctorId,
+                                  start,
+                                  end,
+                                );
+                          },
+                          titleColor: Colors.white)
+                    ],
                   ),
                 );
         }
