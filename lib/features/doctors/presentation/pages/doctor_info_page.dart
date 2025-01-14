@@ -4,6 +4,8 @@ import 'package:clinic/features/doctors/presentation/widgets/custom_doctor_info.
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DoctorInfo extends StatelessWidget {
   const DoctorInfo({
@@ -43,14 +45,54 @@ class DoctorInfo extends StatelessWidget {
                   line,
                 ),
               ),
-              CustomDoctorInfo(
-                title: 'رقم الهاتف',
-                value: doctor.phoneNumber,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomDoctorInfo(
+                    title: 'رقم الهاتف',
+                    value: doctor.phoneNumber,
+                  ),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () =>
+                            _launchPhone('tel:${doctor.phoneNumber}'),
+                        icon: const Icon(Icons.phone),
+                        color: AppColor.primaryColor,
+                      ),
+                      IconButton(
+                        onPressed: () => _launchWhatsApp(doctor.phoneNumber),
+                        icon: const Icon(FontAwesomeIcons.whatsapp),
+                        color: AppColor.primaryColor,
+                      ),
+                    ],
+                  )
+                ],
               ),
             ],
           ),
         ),
       ),
     );
+  }
+}
+
+void _launchPhone(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
+
+void _launchWhatsApp(String phoneNumber) async {
+  if (!phoneNumber.startsWith('+')) {
+    phoneNumber = '+963' + phoneNumber;
+  }
+  final url = 'https://wa.me/$phoneNumber';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }
