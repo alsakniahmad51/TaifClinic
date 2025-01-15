@@ -51,7 +51,7 @@ class SummaryPage extends StatelessWidget {
       if (order.isImaged) {
         final typeName = order.detail!.type.typeName;
         orderCounts[typeName] = (orderCounts[typeName] ?? 0) + 1;
-        totalPrice += order.price + order.output!.price;
+        totalPrice += order.price;
       }
     }
     final formattedPrice = intl.NumberFormat("#,###", "ar").format(totalPrice);

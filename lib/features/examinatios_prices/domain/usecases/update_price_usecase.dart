@@ -5,7 +5,7 @@ class UpdatePriceUseCase {
 
   UpdatePriceUseCase(this.repository);
 
-  Future<void> call(int detailId, int newPrice) async {
-    await repository.updateExaminationPrice(detailId, newPrice);
+  Future<void> call(int priceId, int newPrice) async {
+    await repository.updatePrice(priceId, newPrice);
   }
 }

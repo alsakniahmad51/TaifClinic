@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/features/doctors/domain/entities/doctor.dart';
 import 'package:clinic/features/doctors/presentation/widgets/custom_doctor_info.dart';
@@ -87,7 +89,7 @@ void _launchPhone(String url) async {
 
 void _launchWhatsApp(String phoneNumber) async {
   if (!phoneNumber.startsWith('+')) {
-    phoneNumber = '+963' + phoneNumber;
+    phoneNumber = '+963$phoneNumber';
   }
   final url = 'https://wa.me/$phoneNumber';
   if (await canLaunch(url)) {

@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/core/util/widgets/custom_text_field.dart';
 import 'package:clinic/features/examinatios_prices/presentation/manager/output_cubit/output_cubit.dart';
@@ -27,7 +29,6 @@ class OutputItem extends StatelessWidget {
               BoxShadow(
                 color: Colors.grey.withOpacity(0.2),
                 blurRadius: 4,
-
                 offset: const Offset(1, 1), // changes position of shadow
               ),
             ],
@@ -39,23 +40,30 @@ class OutputItem extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'نوع طباعة الصورة : ${output.type}',
-                        style: style(),
-                      ),
-                      SizedBox(
-                        height: 3.h,
-                      ),
-                      Text('السعر : ${output.price}',
-                          style:
-                              style().copyWith(color: AppColor.primaryColor)),
-                      SizedBox(
-                        height: 3.h,
-                      ),
-                    ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          output.type,
+                          style: style(),
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(
+                          height: 3.h,
+                        ),
+                        Text(
+                          'السعر : ${output.price}',
+                          style: style().copyWith(color: AppColor.primaryColor),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(
+                          height: 3.h,
+                        ),
+                      ],
+                    ),
                   ),
                   IconButton(
                     icon: const Icon(Icons.edit),

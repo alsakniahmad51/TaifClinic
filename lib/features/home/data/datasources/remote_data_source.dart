@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:clinic/features/home/domain/Entities/order.dart';
 
@@ -31,13 +29,12 @@ class RemoteDataSource {
             phone_number
           ),
           output:order_output(
-          id,
-          output_type,
-          price
-        ),
+            id,
+            output_type,
+            price
+          ),
           examinationdetails!inner(
             detail_id,
-            price,
             mode:examinationmodes(mode_id, mode_name),
             option:examinationoptions(option_id, option_name),
             type:examinationtypes(examination_type_id, type_name)
@@ -56,6 +53,7 @@ class RemoteDataSource {
 
   Future<void> updateOrderPrice(int orderId, int newPrice) async {
     try {
+      // ignore: unused_local_variable
       final response = await supabase
           .from('orders')
           .update({'order_price': newPrice}).eq('order_id', orderId);
@@ -66,6 +64,7 @@ class RemoteDataSource {
 
   Future<void> updateOrderState(int orderId) async {
     try {
+      // ignore: unused_local_variable
       final response = await supabase
           .from('orders')
           .update({'isImaged': true}).eq('order_id', orderId);

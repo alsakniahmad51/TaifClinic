@@ -1,5 +1,4 @@
 import 'package:clinic/clinic_app.dart';
-import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/core/util/supabase_keys.dart';
 import 'package:clinic/features/doctors/data/datasources/remote_doctor_datasource.dart';
 import 'package:clinic/features/doctors/data/repos/doctor_repo_impl.dart';
@@ -9,6 +8,7 @@ import 'package:clinic/features/examinatios_prices/data/datasources/remote/remot
 import 'package:clinic/features/examinatios_prices/data/repo/examination_repository_impl.dart';
 import 'package:clinic/features/examinatios_prices/domain/usecases/fetch_examination_details_usecase.dart';
 import 'package:clinic/features/examinatios_prices/domain/usecases/fetch_output_uscase.dart';
+import 'package:clinic/features/examinatios_prices/domain/usecases/fetch_prices_usecase.dart';
 import 'package:clinic/features/examinatios_prices/domain/usecases/update_output_price_usecase.dart';
 import 'package:clinic/features/examinatios_prices/domain/usecases/update_price_usecase.dart';
 import 'package:clinic/features/home/data/datasources/remote_data_source.dart';
@@ -63,6 +63,8 @@ Future<void> main() async {
   GetVersionRepoImpl getVersionRepoImpl = GetVersionRepoImpl(
     getRemoteVersionC: getRemoteVersion,
   );
+  FetchPricesUsecase fetchPricesUsecase =
+      FetchPricesUsecase(examinationRepository: examinationRepositoryImpl);
   GetRemoteVersionUsecase getRemoteVersionUsecase = GetRemoteVersionUsecase(
     getVersionRepoImpl: getVersionRepoImpl,
   );
@@ -75,6 +77,7 @@ Future<void> main() async {
     fetchOutputDetailsUseCase: fetchOutputDetailsUseCase,
     updateOutputPriceUseCase: updateOutputPriceUseCase,
     getRemoteVersionUsecase: getRemoteVersionUsecase,
+    fetchPricesUsecase: fetchPricesUsecase,
   );
   runApp(cliniApp);
 }

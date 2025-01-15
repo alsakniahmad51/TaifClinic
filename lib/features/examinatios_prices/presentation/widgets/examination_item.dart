@@ -1,7 +1,7 @@
 import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/core/util/widgets/custom_text_field.dart';
+import 'package:clinic/features/examinatios_prices/domain/Entities/prices.dart';
 import 'package:clinic/features/examinatios_prices/presentation/manager/examination_cubit/examination_cubit.dart';
-import 'package:clinic/features/home/domain/Entities/examination_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,10 +9,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class ExaminationItem extends StatelessWidget {
   const ExaminationItem({
     super.key,
-    required this.detail,
+    required this.prices,
   });
 
-  final ExaminationDetail detail;
+  final Prices prices;
 
   @override
   Widget build(BuildContext context) {
@@ -41,31 +41,14 @@ class ExaminationItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        _formatText('نوع الصورة : ${detail.type.typeName}'),
+                        _formatText(prices.descreption),
                         style: style(),
                       ),
                       SizedBox(
                         height: 3.h,
                       ),
-                      if (detail.mode.modeName != "لا يوجد")
-                        Text(
-                          _formatText('وضعية الصورة : ${detail.mode.modeName}'),
-                          style: style(),
-                        ),
-                      SizedBox(
-                        height: 3.h,
-                      ),
-                      if (detail.option.optionName != "لا يوجد")
-                        Text(
-                          _formatText(
-                              'الجزء المراد تصويره: ${detail.option.optionName}'),
-                          style: style(),
-                        ),
-                      SizedBox(
-                        height: 3.h,
-                      ),
                       Text(
-                        'السعر : ${detail.price}',
+                        'السعر : ${prices.price}',
                         style: style().copyWith(color: AppColor.primaryColor),
                       ),
                       SizedBox(
@@ -152,11 +135,9 @@ class ExaminationItem extends StatelessWidget {
                     if (newPrice != null) {
                       context
                           .read<ExaminationCubit>()
-                          .updateExaminationPrice(detail.detailId, newPrice);
+                          .updatePrice(prices.priceId, newPrice);
 
-                      context
-                          .read<ExaminationCubit>()
-                          .fetchExaminationDetails();
+                      context.read<ExaminationCubit>().fetchPricesUsecase();
                       Navigator.of(context).pop();
                     }
                   }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:clinic/features/doctors/domain/entities/doctor.dart';
 import 'package:clinic/features/home/domain/Entities/order.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -46,8 +44,7 @@ class DoctorRemoteDataSource {
         ),
           examinationdetails!inner(
             detail_id,
-            price,
-            mode:examinationmodes(mode_id, mode_name),
+                     mode:examinationmodes(mode_id, mode_name),
             option:examinationoptions(option_id, option_name),
             type:examinationtypes(examination_type_id, type_name)
           )

@@ -5,6 +5,7 @@ import 'package:clinic/features/doctors/presentation/manager/docotr_cubit/doctor
 import 'package:clinic/features/doctors/presentation/manager/docotr_order_cubit/doctor_order_cubit.dart';
 import 'package:clinic/features/examinatios_prices/domain/usecases/fetch_examination_details_usecase.dart';
 import 'package:clinic/features/examinatios_prices/domain/usecases/fetch_output_uscase.dart';
+import 'package:clinic/features/examinatios_prices/domain/usecases/fetch_prices_usecase.dart';
 import 'package:clinic/features/examinatios_prices/domain/usecases/update_output_price_usecase.dart';
 import 'package:clinic/features/examinatios_prices/domain/usecases/update_price_usecase.dart';
 import 'package:clinic/features/examinatios_prices/presentation/manager/examination_cubit/examination_cubit.dart';
@@ -33,6 +34,7 @@ class ClinicApp extends StatelessWidget {
     required this.fetchOutputDetailsUseCase,
     required this.updateOutputPriceUseCase,
     required this.getRemoteVersionUsecase,
+    required this.fetchPricesUsecase,
   });
 
   final FetchOrdersUseCase fetchOrdersUseCase;
@@ -40,6 +42,7 @@ class ClinicApp extends StatelessWidget {
   final FetchDoctorOrdersUseCase fetchDoctorOrdersUseCase;
   final FetchExaminationDetailsUseCase fetchExaminationDetailsUseCase;
   final UpdatePriceUseCase updatePriceUseCase;
+  final FetchPricesUsecase fetchPricesUsecase;
   final FetchOutputDetailsUseCase fetchOutputDetailsUseCase;
   final UpdateOutputPriceUseCase updateOutputPriceUseCase;
   final GetRemoteVersionUsecase getRemoteVersionUsecase;
@@ -68,6 +71,7 @@ class ClinicApp extends StatelessWidget {
               create: (context) => ExaminationCubit(
                     fetchDetailsUseCase: fetchExaminationDetailsUseCase,
                     updatePriceUseCase: updatePriceUseCase,
+                    fetchPricesUsecase: fetchPricesUsecase,
                   )),
           BlocProvider<OrderCubit>(
             create: (context) {

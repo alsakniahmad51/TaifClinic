@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:clinic/core/util/constants.dart';
 import 'package:clinic/core/util/functions/navigator.dart';
 import 'package:clinic/features/doctors/domain/entities/doctor.dart';

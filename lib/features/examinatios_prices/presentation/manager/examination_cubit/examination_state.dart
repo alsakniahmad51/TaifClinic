@@ -11,8 +11,12 @@ class ExaminationLoading extends ExaminationState {}
 
 class ExaminationLoaded extends ExaminationState {
   final List<ExaminationDetail> details;
+  final List<Prices> prices;
 
-  ExaminationLoaded({required this.details});
+  ExaminationLoaded({
+    required this.details,
+    required this.prices,
+  });
 
   @override
   List<Object?> get props => [details];
